@@ -1,0 +1,30 @@
+@theme {
+  /* Colors */
+  --color-primary: #f5ab35;
+  --color-primary-dark: #df9826;
+  --color-black: #222222;
+  --color-dark-gray: #333333;
+  --color-gray: #9f9f9f;
+  --color-light-gray: #acacac;
+  --color-lighter-gray: #c7c7c7;
+  --color-border: #e7e8ec;
+  --color-bg-light: #f2f2f2;
+  --color-bg-lighter: #f6f6f6;
+  --color-green: #33be61;
+  --color-red: #ff0000;
+  --color-blue: #0099cc;
+
+  /* Font Families */
+  --font-family-primary: 'Roboto', sans-serif;
+  --font-family-secondary: 'Poppins', sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 10px;
+  --spacing-sm: 20px;
+  --spacing-md: 50px;
+  --spacing-lg: 80px;
+  --spacing-xl: 120px;
+
+  /* Container */
+  --max-width-container: 1170px;
+}

@@ -1,0 +1,73 @@
+/* Design Tokens - Extracted from GO Template */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #f5ab35;        /* Theme color (orange/gold) */
+  --color-primary-dark: #df9826;   /* Darker shade for hover states */
+
+  /* Neutral Colors */
+  --color-black: #222222;          /* Headings, dark text */
+  --color-dark-gray: #333333;      /* Secondary text */
+  --color-gray: #9f9f9f;           /* Muted text */
+  --color-light-gray: #acacac;     /* Body text */
+  --color-lighter-gray: #c7c7c7;   /* Placeholder text */
+  --color-border: #e7e8ec;         /* Borders, dividers */
+  --color-bg-light: #f2f2f2;       /* Light backgrounds */
+  --color-bg-lighter: #f6f6f6;     /* Lighter backgrounds */
+  --color-white: #ffffff;          /* White backgrounds */
+
+  /* Accent Colors */
+  --color-green: #33be61;          /* Success states */
+  --color-red: #ff0000;            /* Error states */
+  --color-blue: #0099cc;           /* Info states */
+
+  /* Font Families */
+  --font-primary: 'Roboto', sans-serif;     /* Body text */
+  --font-secondary: 'Poppins', sans-serif;  /* Headings, titles */
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  /* Font Sizes */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 48px;
+  --font-size-2xl: 114px;
+
+  /* Spacing Scale */
+  --spacing-xs: 10px;
+  --spacing-sm: 20px;
+  --spacing-md: 50px;
+  --spacing-lg: 80px;
+  --spacing-xl: 120px;
+
+  /* Layout */
+  --container-max-width: 1170px;
+  --border-radius-sm: 3px;
+
+  /* Transitions */
+  --transition-base: all 0.4s ease-out;
+  --transition-fast: all 0.2s ease-out;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+  /* Z-index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
