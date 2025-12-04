@@ -1,0 +1,9 @@
+/* BackgroundText component styles are defined in go-patterns.css */
+/* This file is kept for consistency with component structure */
+
+/* Additional responsive adjustments if needed */
+@media (max-width: 576px) {
+  .bg-text {
+    font-size: 80px;
+  }
+}

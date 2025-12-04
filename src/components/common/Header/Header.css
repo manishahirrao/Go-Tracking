@@ -1,0 +1,159 @@
+.header-main {
+  position: relative;
+  z-index: 100;
+}
+
+.header-main.sticky {
+  position: sticky;
+  top: 0;
+}
+
+/* Menu Bar */
+.menu-bar {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  padding: 15px 0;
+  font-family: var(--font-secondary);
+}
+
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 40px;
+  width: auto;
+}
+
+/* Mobile Toggle */
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.icon-bar {
+  width: 25px;
+  height: 3px;
+  background: var(--color-black);
+  transition: var(--transition-fast);
+}
+
+/* Navigation */
+.navbar-collapse {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theme-menu li a,
+.theme-menu li button {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  color: var(--color-black);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.theme-menu li a:hover,
+.theme-menu li button:hover,
+.theme-menu li.active a {
+  color: var(--color-primary);
+}
+
+.search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .navbar-toggle {
+    display: flex;
+    order: -1;
+  }
+
+  .navbar-logo {
+    order: 0;
+  }
+
+  .navbar-collapse {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--color-white);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .navbar-collapse.open {
+    left: 0;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 80px 30px 30px;
+  }
+
+  .theme-menu li {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .theme-menu li a,
+  .theme-menu li button {
+    display: block;
+    padding: 15px 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .search-btn {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-logo img {
+    height: 35px;
+  }
+
+  .menu-bar {
+    padding: 10px 0;
+  }
+}

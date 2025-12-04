@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { FaBox, FaMapMarkerAlt, FaClock, FaCheckCircle } from 'react-icons/fa';
+import { FaBox, FaMapMarkerAlt, FaClock, FaCheckCircle, FaTruck, FaShippingFast } from 'react-icons/fa';
 import Timeline from '../Timeline';
 
 const TrackingResult = ({ data }) => {
@@ -19,93 +19,179 @@ const TrackingResult = ({ data }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'delivered':
-        return 'text-green bg-green/10 border-green';
+        return 'border-green shadow-green/20';
       case 'in-transit':
-        return 'text-blue bg-blue/10 border-blue';
+        return 'border-blue shadow-blue/20';
       case 'pending':
-        return 'text-primary bg-primary/10 border-primary';
+        return 'border-primary shadow-primary/20';
       case 'exception':
-        return 'text-red bg-red/10 border-red';
+        return 'border-red shadow-red/20';
       default:
-        return 'text-gray bg-gray/10 border-gray';
+        return 'border-gray shadow-gray/20';
+    }
+  };
+
+  const getStatusBgColor = (status) => {
+    switch (status) {
+      case 'delivered':
+        return { backgroundColor: '#f0fdf4' }; // Light green
+      case 'in-transit':
+        return { backgroundColor: '#eff6ff' }; // Light blue
+      case 'pending':
+        return { backgroundColor: '#fffbeb' }; // Light yellow
+      case 'exception':
+        return { backgroundColor: '#fef2f2' }; // Light red
+      default:
+        return { backgroundColor: '#f9fafb' }; // Light gray
+    }
+  };
+
+  const getStatusTextColor = (status) => {
+    switch (status) {
+      case 'delivered':
+        return { color: '#15803d' }; // Dark green
+      case 'in-transit':
+        return { color: '#1e40af' }; // Dark blue
+      case 'pending':
+        return { color: '#b45309' }; // Dark orange
+      case 'exception':
+        return { color: '#dc2626' }; // Dark red
+      default:
+        return { color: '#4b5563' }; // Dark gray
     }
   };
 
   const getStatusIcon = (status) => {
     switch (status) {
       case 'delivered':
-        return <FaCheckCircle className="text-2xl" />;
+        return <FaCheckCircle />;
       case 'in-transit':
-        return <FaBox className="text-2xl" />;
+        return <FaTruck />;
+      case 'pending':
+        return <FaClock />;
       default:
-        return <FaClock className="text-2xl" />;
+        return <FaBox />;
+    }
+  };
+
+  const getStatusMessage = (status) => {
+    switch (status) {
+      case 'delivered':
+        return 'Your package has been delivered successfully';
+      case 'in-transit':
+        return 'Your package is on its way';
+      case 'pending':
+        return 'Your package is being processed';
+      default:
+        return 'Package status';
     }
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto animate-fade-in-up">
-      {/* Status Card */}
-      <div className="bg-white p-8 rounded-sm shadow-lg mb-8">
-        <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
-          <div>
-            <h2 className="text-2xl font-secondary font-black uppercase mb-2 text-black">
+    <div className="w-full max-w-5xl mx-auto animate-fade-in-up">
+      {/* Status Banner */}
+      <div 
+        className={`mb-6 p-6 rounded-lg border-2 shadow-xl ${getStatusColor(data.status)}`}
+        style={getStatusBgColor(data.status)}
+      >
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="flex-shrink-0" style={{ ...getStatusTextColor(data.status), fontSize: '1.75rem' }}>
+              {getStatusIcon(data.status)}
+            </div>
+            <div>
+              <h2 
+                className="font-secondary font-black uppercase mb-1" 
+                style={{ ...getStatusTextColor(data.status), letterSpacing: '0.5px', fontSize: '1.5rem' }}
+              >
+                {data.status.replace('-', ' ')}
+              </h2>
+              <p className="font-medium" style={{ color: '#4a5568', fontSize: '0.9rem' }}>
+                {getStatusMessage(data.status)}
+              </p>
+            </div>
+          </div>
+          <div className="text-center md:text-right">
+            <p className="font-secondary font-semibold uppercase mb-1" style={{ color: '#718096', letterSpacing: '0.8px', fontSize: '0.7rem' }}>
               Tracking Number
-            </h2>
-            <p className="text-xl font-mono text-primary">
+            </p>
+            <p className="font-mono font-bold" style={{ color: '#2d3748', fontSize: '1.1rem' }}>
               {data.trackingNumber}
             </p>
           </div>
-          <div className={`flex items-center space-x-3 px-6 py-3 rounded-sm border-2 ${getStatusColor(data.status)}`}>
-            {getStatusIcon(data.status)}
-            <span className="font-secondary font-bold uppercase">
-              {data.status.replace('-', ' ')}
-            </span>
-          </div>
         </div>
+      </div>
 
-        {/* Info Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-start space-x-3">
-            <FaMapMarkerAlt className="text-2xl text-primary mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-secondary font-semibold uppercase text-sm text-gray mb-1">
-                Current Location
-              </h3>
-              <p className="text-black">
-                {data.currentLocation}
-              </p>
+      {/* Package Details Card */}
+      <div className="bg-white rounded-lg shadow-xl mb-6 overflow-hidden border border-border">
+        <div className="bg-gradient-to-r from-primary to-primary-dark p-4">
+          <h3 className="font-secondary font-black uppercase text-white flex items-center gap-2" style={{ letterSpacing: '0.8px', fontSize: '1.1rem' }}>
+            <FaShippingFast style={{ fontSize: '1.3rem' }} />
+            Package Details
+          </h3>
+        </div>
+        
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-light-gray p-4 rounded-lg border-l-4 border-primary hover:shadow-lg transition-shadow">
+              <div className="flex items-start gap-3">
+                <FaMapMarkerAlt className="text-primary mt-1 flex-shrink-0" style={{ fontSize: '1.5rem' }} />
+                <div>
+                  <h4 className="font-secondary font-bold uppercase mb-2" style={{ color: '#718096', letterSpacing: '1px', fontSize: '0.65rem' }}>
+                    Current Location
+                  </h4>
+                  <p className="font-semibold leading-snug" style={{ color: '#2d3748', fontSize: '0.875rem' }}>
+                    {data.currentLocation}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-start space-x-3">
-            <FaClock className="text-2xl text-primary mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-secondary font-semibold uppercase text-sm text-gray mb-1">
-                Estimated Delivery
-              </h3>
-              <p className="text-black">
-                {formatDate(data.estimatedDelivery)}
-              </p>
+            <div className="bg-light-gray p-4 rounded-lg border-l-4 border-primary hover:shadow-lg transition-shadow">
+              <div className="flex items-start gap-3">
+                <FaClock className="text-primary mt-1 flex-shrink-0" style={{ fontSize: '1.5rem' }} />
+                <div>
+                  <h4 className="font-secondary font-bold uppercase mb-2" style={{ color: '#718096', letterSpacing: '1px', fontSize: '0.65rem' }}>
+                    Estimated Delivery
+                  </h4>
+                  <p className="font-semibold leading-snug" style={{ color: '#2d3748', fontSize: '0.875rem' }}>
+                    {formatDate(data.estimatedDelivery)}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-start space-x-3">
-            <FaBox className="text-2xl text-primary mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-secondary font-semibold uppercase text-sm text-gray mb-1">
-                Route
-              </h3>
-              <p className="text-black text-sm">
-                {data.origin} → {data.destination}
-              </p>
+            <div className="bg-light-gray p-4 rounded-lg border-l-4 border-primary hover:shadow-lg transition-shadow">
+              <div className="flex items-start gap-3">
+                <FaBox className="text-primary mt-1 flex-shrink-0" style={{ fontSize: '1.5rem' }} />
+                <div>
+                  <h4 className="font-secondary font-bold uppercase mb-2" style={{ color: '#718096', letterSpacing: '1px', fontSize: '0.65rem' }}>
+                    Shipping Route
+                  </h4>
+                  <p className="font-semibold leading-snug" style={{ color: '#2d3748', fontSize: '0.8rem' }}>
+                    {data.origin}
+                  </p>
+                  <p className="text-primary font-bold my-1" style={{ fontSize: '1rem' }}>↓</p>
+                  <p className="font-semibold leading-snug" style={{ color: '#2d3748', fontSize: '0.8rem' }}>
+                    {data.destination}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Timeline */}
-      <div className="bg-white p-8 rounded-sm shadow-lg">
-        <Timeline history={data.history} />
+      {/* Timeline Card */}
+      <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-border">
+        <div className="bg-gradient-to-r from-primary to-primary-dark p-4">
+          <h3 className="font-secondary font-black uppercase text-white" style={{ letterSpacing: '0.8px', fontSize: '1.1rem' }}>
+            Tracking History
+          </h3>
+        </div>
+        <div className="p-6">
+          <Timeline history={data.history} />
+        </div>
       </div>
     </div>
   );

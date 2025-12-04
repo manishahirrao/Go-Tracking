@@ -1,35 +1,65 @@
 .testimonial-card {
   background: var(--color-white);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-sm);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
-  min-height: 280px;
+  gap: 25px;
+  min-height: 320px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(245, 171, 53, 0.1);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: var(--color-primary);
 }
 
 .quote-icon {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   border-radius: 50%;
   color: var(--color-white);
-  font-size: 24px;
-  margin-bottom: var(--spacing-xs);
+  font-size: 28px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 15px rgba(245, 171, 53, 0.3);
 }
 
 .testimonial-text {
   color: var(--color-dark-gray);
-  font-size: var(--font-size-md);
-  line-height: 1.8;
+  font-size: 17px;
+  line-height: 1.9;
   font-style: italic;
   flex: 1;
   margin: 0;
+  position: relative;
+}
+
+.testimonial-text::before {
+  content: '"';
+  position: absolute;
+  left: -15px;
+  top: -10px;
+  font-size: 60px;
+  color: var(--color-primary);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+}
+
+.testimonial-text::after {
+  content: '"';
+  font-size: 60px;
+  color: var(--color-primary);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+  margin-left: 5px;
 }
 
 .testimonial-author {
@@ -41,11 +71,12 @@
 }
 
 .author-photo {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--color-primary);
+  border: 4px solid var(--color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .author-info {

@@ -109,147 +109,124 @@ const CostCalculator = () => {
 
   return (
     <div className="cost-calculator">
-      <div className="calculator-header">
-        <h2>Shipping Cost Calculator</h2>
-        <p>Calculate your shipping costs instantly</p>
-      </div>
-
       <form onSubmit={handleSubmit} className="calculator-form">
-        <div className="form-section">
-          <h3>Package Dimensions</h3>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="height">
-                Height (cm) <span className="required">*</span>
-              </label>
-              <input
-                type="number"
-                id="height"
-                name="height"
-                value={formData.height}
-                onChange={handleInputChange}
-                placeholder="Enter height"
-                min="0"
-                step="0.1"
-                inputMode="decimal"
-              />
-              {errors.height && <span className="error-message">{errors.height}</span>}
-            </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="height">Height (cm)</label>
+            <input
+              type="number"
+              id="height"
+              name="height"
+              value={formData.height}
+              onChange={handleInputChange}
+              placeholder="0"
+              min="0"
+              step="0.1"
+              className="form-control"
+            />
+            {errors.height && <span className="error-message">{errors.height}</span>}
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="width">
-                Width (cm) <span className="required">*</span>
-              </label>
-              <input
-                type="number"
-                id="width"
-                name="width"
-                value={formData.width}
-                onChange={handleInputChange}
-                placeholder="Enter width"
-                min="0"
-                step="0.1"
-                inputMode="decimal"
-              />
-              {errors.width && <span className="error-message">{errors.width}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="depth">
-                Depth (cm) <span className="required">*</span>
-              </label>
-              <input
-                type="number"
-                id="depth"
-                name="depth"
-                value={formData.depth}
-                onChange={handleInputChange}
-                placeholder="Enter depth"
-                min="0"
-                step="0.1"
-                inputMode="decimal"
-              />
-              {errors.depth && <span className="error-message">{errors.depth}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="weight">
-                Weight (kg) <span className="required">*</span>
-              </label>
-              <input
-                type="number"
-                id="weight"
-                name="weight"
-                value={formData.weight}
-                onChange={handleInputChange}
-                placeholder="Enter weight"
-                min="0"
-                step="0.1"
-                inputMode="decimal"
-              />
-              {errors.weight && <span className="error-message">{errors.weight}</span>}
-            </div>
+          <div className="form-group">
+            <label htmlFor="width">Width (cm)</label>
+            <input
+              type="number"
+              id="width"
+              name="width"
+              value={formData.width}
+              onChange={handleInputChange}
+              placeholder="0"
+              min="0"
+              step="0.1"
+              className="form-control"
+            />
+            {errors.width && <span className="error-message">{errors.width}</span>}
           </div>
         </div>
 
-        <div className="form-section">
-          <h3>Locations</h3>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="from">
-                From <span className="required">*</span>
-              </label>
-              <input
-                type="text"
-                id="from"
-                name="from"
-                value={formData.from}
-                onChange={handleInputChange}
-                placeholder="Origin location"
-              />
-              {errors.from && <span className="error-message">{errors.from}</span>}
-            </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="depth">Depth (cm)</label>
+            <input
+              type="number"
+              id="depth"
+              name="depth"
+              value={formData.depth}
+              onChange={handleInputChange}
+              placeholder="0"
+              min="0"
+              step="0.1"
+              className="form-control"
+            />
+            {errors.depth && <span className="error-message">{errors.depth}</span>}
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="to">
-                To <span className="required">*</span>
-              </label>
-              <input
-                type="text"
-                id="to"
-                name="to"
-                value={formData.to}
-                onChange={handleInputChange}
-                placeholder="Destination location"
-              />
-              {errors.to && <span className="error-message">{errors.to}</span>}
-            </div>
+          <div className="form-group">
+            <label htmlFor="weight">Weight (kg)</label>
+            <input
+              type="number"
+              id="weight"
+              name="weight"
+              value={formData.weight}
+              onChange={handleInputChange}
+              placeholder="0"
+              min="0"
+              step="0.1"
+              className="form-control"
+            />
+            {errors.weight && <span className="error-message">{errors.weight}</span>}
           </div>
         </div>
 
-        <div className="form-section">
-          <h3>Delivery Speed</h3>
-          <div className="delivery-options">
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="from">From</label>
+            <input
+              type="text"
+              id="from"
+              name="from"
+              value={formData.from}
+              onChange={handleInputChange}
+              placeholder="Origin city"
+              className="form-control"
+            />
+            {errors.from && <span className="error-message">{errors.from}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="to">To</label>
+            <input
+              type="text"
+              id="to"
+              name="to"
+              value={formData.to}
+              onChange={handleInputChange}
+              placeholder="Destination city"
+              className="form-control"
+            />
+            {errors.to && <span className="error-message">{errors.to}</span>}
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="deliverySpeed">Delivery Speed</label>
+          <select
+            id="deliverySpeed"
+            name="deliverySpeed"
+            value={formData.deliverySpeed}
+            onChange={handleDeliverySpeedChange}
+            className="form-control"
+          >
             {Object.values(DELIVERY_OPTIONS).map((option) => (
-              <label key={option.type} className="delivery-option">
-                <input
-                  type="radio"
-                  name="deliverySpeed"
-                  value={option.type}
-                  checked={formData.deliverySpeed === option.type}
-                  onChange={handleDeliverySpeedChange}
-                />
-                <div className="option-content">
-                  <span className="option-name">{option.name}</span>
-                  <span className="option-days">{option.estimatedDays} day(s)</span>
-                </div>
-              </label>
+              <option key={option.type} value={option.type}>
+                {option.name} ({option.estimatedDays} days)
+              </option>
             ))}
-          </div>
+          </select>
         </div>
 
         <Button type="submit" variant="primary" className="calculate-btn">
-          Calculate Cost
+          Calculate Shipping Cost
         </Button>
       </form>
 

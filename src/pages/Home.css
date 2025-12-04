@@ -1,38 +1,100 @@
+/* Home Page Styles */
+
 .testimonials-section {
-  padding: var(--spacing-lg) 0;
-  background: var(--color-bg-lighter);
+  position: relative;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  padding: 100px 0;
+  overflow: hidden;
 }
 
-.section-title {
-  color: var(--color-black);
-  font-size: 36px;
+.testimonials-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/testimonial-bg.jpg') center center;
+  background-size: cover;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.testimonials-section .container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.testimonials-section .section-title {
+  color: var(--color-white);
   text-align: center;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 15px;
+  font-size: 42px;
+  font-weight: var(--font-weight-black);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.section-subtitle {
-  color: var(--color-gray);
-  font-size: var(--font-size-md);
+.testimonials-section .section-subtitle {
+  color: rgba(255, 255, 255, 0.85);
   text-align: center;
-  margin-bottom: var(--spacing-md);
-  max-width: 600px;
+  font-size: 18px;
+  margin-bottom: 60px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .testimonials-section {
-    padding: var(--spacing-md) 0;
+    padding: 80px 0;
   }
 
-  .section-title {
-    font-size: 28px;
+  .testimonials-section .section-subtitle {
+    margin-bottom: 30px;
+  }
+}
+
+
+/* Pricing Section */
+.pricing-wrap {
+  position: relative;
+  background: var(--color-white);
+  padding-bottom: 80px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.title-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .pricing-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pricing-wrap {
+    padding-top: 60px;
+    padding-bottom: 60px;
   }
 
-  .section-subtitle {
-    font-size: var(--font-size-base);
+  .pricing-grid {
+    grid-template-columns: 1fr;
   }
 }

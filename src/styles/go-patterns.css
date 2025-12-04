@@ -1,0 +1,368 @@
+/* GO Template Pattern Utility Classes */
+
+/* Padding Classes - Vertical padding utilities from GO template */
+.pad-10 {
+  padding: 10px 0;
+}
+
+.pad-20 {
+  padding: 20px 0;
+}
+
+.pad-30 {
+  padding: 30px 0;
+}
+
+.pad-50 {
+  padding: 50px 0;
+}
+
+.pad-80 {
+  padding: 80px 0;
+}
+
+.pad-100 {
+  padding: 100px 0;
+}
+
+.pad-120 {
+  padding: 120px 0;
+}
+
+/* Padding Top */
+.pt-10 {
+  padding-top: 10px;
+}
+
+.pt-50 {
+  padding-top: 50px;
+}
+
+.pt-80 {
+  padding-top: 80px;
+}
+
+.pt-100 {
+  padding-top: 100px;
+}
+
+.pt-120 {
+  padding-top: 120px;
+}
+
+/* Padding Bottom */
+.pb-10 {
+  padding-bottom: 10px;
+}
+
+.pb-50 {
+  padding-bottom: 50px;
+}
+
+.pb-80 {
+  padding-bottom: 80px;
+}
+
+.pb-100 {
+  padding-bottom: 100px;
+}
+
+.pb-120 {
+  padding-bottom: 120px;
+}
+
+/* Background Text Pattern - Large decorative text behind content */
+.bg-text {
+  position: absolute;
+  font-size: 200px;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-black);
+  text-transform: uppercase;
+  opacity: 0.05;
+  pointer-events: none;
+  line-height: 1;
+  z-index: 0;
+  user-select: none;
+}
+
+.bg-text.left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.bg-text.center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bg-text.right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Decorative Element Pattern - Small colored bar above sections */
+.clrbg-before {
+  position: relative;
+}
+
+.clrbg-before::before {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 5px;
+  background: var(--color-primary);
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Mask Overlay Pattern - Dark overlay on background images */
+.mask-overlay {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mask-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.mask-overlay > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Section Wrapper */
+.section-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Theme Container */
+.theme-container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Relative Div */
+.rel-div {
+  position: relative;
+}
+
+/* Font Sizes from GO Template */
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-48 {
+  font-size: 48px;
+}
+
+.fs-50 {
+  font-size: 50px;
+}
+
+/* Font Weights */
+.fw-300 {
+  font-weight: 300;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.fw-900 {
+  font-weight: 900;
+}
+
+/* Title Styles from GO Template */
+.title-1 {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-black);
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin-bottom: 10px;
+}
+
+.title-2 {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin-bottom: 8px;
+}
+
+.title-3 {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-bold);
+  font-size: 24px;
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-black);
+  font-size: 36px;
+  text-transform: uppercase;
+  color: var(--color-black);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+/* Transition Classes */
+.transition {
+  transition: var(--transition-base);
+}
+
+/* Box Shadow */
+.box-shadow {
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive Utilities */
+.visible-lg {
+  display: block;
+}
+
+.hidden-lg {
+  display: none;
+}
+
+.visible-xs {
+  display: none;
+}
+
+.hidden-xs {
+  display: block;
+}
+
+@media (max-width: 1199px) {
+  .visible-lg {
+    display: none;
+  }
+  
+  .hidden-lg {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .visible-xs {
+    display: block;
+  }
+  
+  .hidden-xs {
+    display: none;
+  }
+  
+  .bg-text {
+    font-size: 100px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+  }
+}
+
+/* List Items */
+.list-items {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-items li {
+  display: inline-block;
+}
+
+.list-items li a {
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.list-items li a:hover {
+  color: var(--color-primary);
+}
+
+/* No Padding */
+.no-pad {
+  padding: 0 !important;
+}
+
+/* No Margin */
+.no-margin {
+  margin: 0 !important;
+}
+
+/* Pull Right */
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+/* Clearfix */
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Text Alignment */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+

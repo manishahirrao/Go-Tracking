@@ -1,84 +1,79 @@
-import PropTypes from 'prop-types';
-import Button from '../../common/Button';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Hero.css';
 
-const Hero = ({ 
-  title = "Awesome Template for Courier & Delivery Services",
-  subtitle,
-  backgroundImage,
-  ctaText = "Get Started",
-  ctaLink = "/services"
-}) => {
+const Hero = () => {
+  const [trackingNumber, setTrackingNumber] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const validateTrackingNumber = (value) => {
+    const regex = /^[A-Za-z0-9]{10,15}$/;
+    return regex.test(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+
+    if (!trackingNumber.trim()) {
+      setError('Please enter a tracking number');
+      return;
+    }
+
+    if (!validateTrackingNumber(trackingNumber)) {
+      setError('Invalid tracking number format');
+      return;
+    }
+
+    navigate(`/tracking?id=${trackingNumber}`);
+  };
+
   return (
-    <section 
-      className="relative bg-black text-white py-xl min-h-[600px] flex items-center"
-      style={backgroundImage ? {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      } : {}}
-    >
-      <div className="container mx-auto max-w-container px-4 relative z-10">
-        <div className="max-w-3xl">
-          {/* Feature Tags */}
-          <ul className="flex flex-wrap gap-4 mb-6 animate-fade-in-up">
-            <li>
-              <span className="text-sm font-secondary font-semibold uppercase tracking-wide text-primary hover:text-primary-dark transition-colors cursor-pointer">
-                Fast
-              </span>
-            </li>
-            <li>
-              <span className="text-sm font-secondary font-semibold uppercase tracking-wide text-primary hover:text-primary-dark transition-colors cursor-pointer">
-                Secured
-              </span>
-            </li>
-            <li>
-              <span className="text-sm font-secondary font-semibold uppercase tracking-wide text-primary hover:text-primary-dark transition-colors cursor-pointer">
-                Worldwide
-              </span>
-            </li>
-          </ul>
+    <section className="hero-banner" style={{ backgroundImage: 'url(/Courier1.jpg)' }}>
+      <div className="container mx-auto max-w-container px-4 relative">
+        <img 
+          src="/icons/icon-1.png" 
+          alt="Delivery Icon" 
+          className="hero-icon"
+        />
+        <ul className="hero-tags">
+          <li><a href="#about">fast</a></li>
+          <li><a href="#about">secured</a></li>
+          <li><a href="#about">worldwide</a></li>
+        </ul>
+        <h1 className="hero-title">
+          Fast & Reliable <br />
+          <span className="text-primary">Courier</span> & <span className="text-primary">Delivery</span> Services
+        </h1>
+        <p className="hero-subtitle">
+          Delivering excellence across the globe with speed, security, and reliability you can trust
+        </p>
 
-          {/* Main Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-secondary font-black uppercase leading-tight mb-6 animate-fade-in-up animate-delay-1">
-            Awesome Template for <br />
-            <span className="text-primary">Courier</span> & <span className="text-primary">Delivery</span> Services
-          </h1>
-
-          {/* Subtitle */}
-          {subtitle && (
-            <p className="text-lg md:text-xl text-gray mb-8 animate-fade-in-up animate-delay-2">
-              {subtitle}
-            </p>
-          )}
-
-          {/* CTA Button */}
-          <div className="animate-fade-in-up animate-delay-3">
-            <Link to={ctaLink}>
-              <Button variant="primary" size="lg">
-                {ctaText}
-              </Button>
-            </Link>
-          </div>
+        {/* Track Product Box */}
+        <div className="hero-track-box">
+          <h2 className="track-box-title">Track Your Product</h2>
+          <p className="track-box-subtitle">Enter your tracking number to see real-time updates</p>
+          <form onSubmit={handleSubmit} className="hero-track-form">
+            <div className="track-form-group">
+              <input
+                type="text"
+                placeholder="Enter your product ID"
+                value={trackingNumber}
+                onChange={(e) => setTrackingNumber(e.target.value)}
+                className={`track-input ${error ? 'error' : ''}`}
+                aria-label="Tracking number"
+              />
+              <button type="submit" className="track-button">
+                Track Now
+              </button>
+            </div>
+            {error && <span className="track-error-message">{error}</span>}
+          </form>
         </div>
-      </div>
-
-      {/* Decorative Icon */}
-      <div className="absolute top-10 right-10 opacity-20 animate-fade-in-left hidden lg:block">
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 10L90 30V70L50 90L10 70V30L50 10Z" stroke="currentColor" strokeWidth="2" className="text-primary"/>
-        </svg>
       </div>
     </section>
   );
-};
-
-Hero.propTypes = {
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  backgroundImage: PropTypes.string,
-  ctaText: PropTypes.string,
-  ctaLink: PropTypes.string,
 };
 
 export default Hero;

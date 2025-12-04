@@ -1,0 +1,9 @@
+.footer {
+  position: relative;
+  width: 100%;
+}
+
+/* Ensure footer sections stack properly */
+.footer > * {
+  width: 100%;
+}

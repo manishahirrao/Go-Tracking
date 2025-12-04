@@ -3,9 +3,10 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import TestimonialCard from '../TestimonialCard/TestimonialCard';
 import './TestimonialCarousel.css';
 
-const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 5000 }) => {
+const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isAutoRotating, setIsAutoRotating] = useState(true);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const autoAdvanceRef = useRef(null);
@@ -22,12 +23,16 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 5000
     setCurrentIndex(index);
   };
 
+  const handleUserInteraction = () => {
+    setIsAutoRotating(false);
+  };
+
   // Auto-advance functionality
   useEffect(() => {
-    if (!autoAdvance || isPaused) return;
+    if (!autoAdvance || isPaused || !isAutoRotating) return;
 
     autoAdvanceRef.current = setInterval(() => {
-      goToNext();
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
     }, interval);
 
     return () => {
@@ -35,7 +40,7 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 5000
         clearInterval(autoAdvanceRef.current);
       }
     };
-  }, [autoAdvance, interval, isPaused, currentIndex]);
+  }, [autoAdvance, interval, isPaused, isAutoRotating, testimonials.length]);
 
   // Touch/swipe support
   const handleTouchStart = (e) => {
@@ -74,7 +79,10 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 5000
       <div className="carousel-container">
         <button
           className="carousel-button prev"
-          onClick={goToPrevious}
+          onClick={() => {
+            handleUserInteraction();
+            goToPrevious();
+          }}
           aria-label="Previous testimonial"
         >
           <FaChevronLeft />
@@ -95,7 +103,14 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 5000
           </div>
         </div>
 
-        <button className="carousel-button next" onClick={goToNext} aria-label="Next testimonial">
+        <button 
+          className="carousel-button next" 
+          onClick={() => {
+            handleUserInteraction();
+            goToNext();
+          }} 
+          aria-label="Next testimonial"
+        >
           <FaChevronRight />
         </button>
       </div>
@@ -105,7 +120,10 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 5000
           <button
             key={index}
             className={`dot ${index === currentIndex ? 'active' : ''}`}
-            onClick={() => goToSlide(index)}
+            onClick={() => {
+              handleUserInteraction();
+              goToSlide(index);
+            }}
             aria-label={`Go to testimonial ${index + 1}`}
           />
         ))}

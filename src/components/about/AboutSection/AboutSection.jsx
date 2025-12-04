@@ -105,9 +105,11 @@ const AboutSection = () => {
               </p>
             </div>
             <div className="story-image">
-              <div className="image-placeholder">
-                <FaTruck size={80} />
-              </div>
+              <img 
+                src="/Courier5.jpg" 
+                alt="Our Courier Service Story" 
+                className="story-img"
+              />
             </div>
           </div>
 

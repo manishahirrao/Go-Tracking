@@ -14,8 +14,17 @@
   font-size: 20px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: var(--transition-fast);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, background 0.2s ease-out;
   z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   animation: fadeIn 0.3s ease-in-out;
 }
 

@@ -29,18 +29,15 @@ const ScrollToTop = () => {
   };
 
   return (
-    <>
-      {isVisible && (
-        <button
-          onClick={scrollToTop}
-          className="scroll-to-top"
-          aria-label="Scroll to top"
-          title="Scroll to top"
-        >
-          <FaArrowUp />
-        </button>
-      )}
-    </>
+    <button
+      onClick={scrollToTop}
+      className={`scroll-to-top ${isVisible ? 'visible' : ''}`}
+      aria-label="Scroll to top"
+      title="Scroll to top"
+      aria-hidden={!isVisible}
+    >
+      <FaArrowUp />
+    </button>
   );
 };
 

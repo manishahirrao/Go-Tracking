@@ -14,34 +14,40 @@ const mockTrackingData = {
     destination: 'Boston, MA',
     history: [
       {
-        timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-        status: 'Order Placed',
-        location: 'Los Angeles, CA',
-        description: 'Package information received'
+        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+        status: 'Out for Delivery',
+        location: 'Distribution Center, New York, NY',
+        description: 'Package is out for delivery and will arrive today'
       },
       {
-        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-        status: 'Picked Up',
-        location: 'Los Angeles, CA',
-        description: 'Package picked up by courier'
+        timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
+        status: 'Arrived at Facility',
+        location: 'Distribution Center, New York, NY',
+        description: 'Package arrived at local distribution center'
       },
       {
         timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        status: 'In Transit',
+        location: 'Dallas, TX',
+        description: 'Package departed from sorting facility'
+      },
+      {
+        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
         status: 'In Transit',
         location: 'Phoenix, AZ',
         description: 'Package in transit to next facility'
       },
       {
-        timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
-        status: 'In Transit',
-        location: 'Dallas, TX',
-        description: 'Package arrived at sorting facility'
+        timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+        status: 'Picked Up',
+        location: 'Los Angeles, CA',
+        description: 'Package picked up by courier from sender'
       },
       {
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-        status: 'In Transit',
-        location: 'Distribution Center, New York, NY',
-        description: 'Package out for delivery'
+        timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 - 2 * 60 * 60 * 1000),
+        status: 'Order Placed',
+        location: 'Los Angeles, CA',
+        description: 'Shipping label created and package information received'
       }
     ]
   },
@@ -54,34 +60,40 @@ const mockTrackingData = {
     destination: 'Seattle, WA',
     history: [
       {
-        timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-        status: 'Order Placed',
-        location: 'San Francisco, CA',
-        description: 'Package information received'
+        timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        status: 'Delivered',
+        location: '123 Main Street, Seattle, WA 98101',
+        description: 'Package delivered successfully. Signed by: John Smith'
       },
       {
-        timestamp: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
-        status: 'Picked Up',
-        location: 'San Francisco, CA',
-        description: 'Package picked up by courier'
+        timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 - 2 * 60 * 60 * 1000),
+        status: 'Out for Delivery',
+        location: 'Seattle Distribution Center, WA',
+        description: 'Package loaded on delivery vehicle'
+      },
+      {
+        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        status: 'Arrived at Facility',
+        location: 'Seattle Distribution Center, WA',
+        description: 'Package arrived at destination facility'
       },
       {
         timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
         status: 'In Transit',
         location: 'Portland, OR',
-        description: 'Package in transit'
+        description: 'Package in transit to destination city'
       },
       {
-        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-        status: 'Out for Delivery',
-        location: 'Seattle, WA',
-        description: 'Package out for delivery'
+        timestamp: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
+        status: 'Picked Up',
+        location: 'San Francisco, CA',
+        description: 'Package picked up by courier from sender'
       },
       {
-        timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-        status: 'Delivered',
-        location: 'Seattle, WA',
-        description: 'Package delivered successfully'
+        timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        status: 'Order Placed',
+        location: 'San Francisco, CA',
+        description: 'Shipping label created and package information received'
       }
     ]
   },
@@ -94,10 +106,16 @@ const mockTrackingData = {
     destination: 'Chicago, IL',
     history: [
       {
-        timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000),
+        timestamp: new Date(Date.now() - 30 * 60 * 1000),
+        status: 'Processing',
+        location: 'Warehouse, Miami, FL',
+        description: 'Package is being prepared for shipment'
+      },
+      {
+        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
         status: 'Order Placed',
         location: 'Miami, FL',
-        description: 'Package information received'
+        description: 'Shipping label created and awaiting pickup'
       }
     ]
   }
