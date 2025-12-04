@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import Breadcrumb from '../components/common/Breadcrumb/Breadcrumb';
+import PageHeader from '../components/common/PageHeader/PageHeader';
 import './FAQ.css';
 
 const FAQItem = ({ question, answer, isOpen, onToggle }) => {
@@ -121,8 +121,7 @@ const FAQ = () => {
 
   return (
     <div className="faq-page">
-      <Breadcrumb 
-        items={breadcrumbItems}
+      <PageHeader 
         title="Frequently Asked Questions"
         subtitle="Find answers to common questions about our services"
       />

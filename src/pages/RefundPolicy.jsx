@@ -1,16 +1,10 @@
-import Breadcrumb from '../components/common/Breadcrumb/Breadcrumb';
+import PageHeader from '../components/common/PageHeader/PageHeader';
 import './LegalPage.css';
 
 const RefundPolicy = () => {
-  const breadcrumbItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Refund Policy' }
-  ];
-
   return (
     <div className="legal-page">
-      <Breadcrumb 
-        items={breadcrumbItems}
+      <PageHeader 
         title="Refund Policy"
         subtitle="Our policy for refunds and cancellations"
       />

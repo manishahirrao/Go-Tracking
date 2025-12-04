@@ -1,16 +1,10 @@
-import Breadcrumb from '../components/common/Breadcrumb/Breadcrumb';
+import PageHeader from '../components/common/PageHeader/PageHeader';
 import './LegalPage.css';
 
 const TermsConditions = () => {
-  const breadcrumbItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Terms & Conditions' }
-  ];
-
   return (
     <div className="legal-page">
-      <Breadcrumb 
-        items={breadcrumbItems}
+      <PageHeader 
         title="Terms & Conditions"
         subtitle="Terms of service for using GO Courier"
       />

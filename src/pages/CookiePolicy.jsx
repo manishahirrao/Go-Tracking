@@ -1,16 +1,10 @@
-import Breadcrumb from '../components/common/Breadcrumb/Breadcrumb';
+import PageHeader from '../components/common/PageHeader/PageHeader';
 import './LegalPage.css';
 
 const CookiePolicy = () => {
-  const breadcrumbItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Cookie Policy' }
-  ];
-
   return (
     <div className="legal-page">
-      <Breadcrumb 
-        items={breadcrumbItems}
+      <PageHeader 
         title="Cookie Policy"
         subtitle="How we use cookies and tracking technologies"
       />
