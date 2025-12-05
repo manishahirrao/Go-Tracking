@@ -5,12 +5,12 @@ import ScrollToTop from '../common/ScrollToTop/ScrollToTop';
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <a href="#main-content" className="skip-to-main">
         Skip to main content
       </a>
       <Header sticky={true} />
-      <main id="main-content" className="flex-grow">
+      <main id="main-content" className="flex-grow ">
         <Outlet />
       </main>
       <Footer />

@@ -12,7 +12,6 @@ const Home = () => {
     <div>
       <Hero />
       <AboutHome />
-      <CalculateHome />
       <Steps />
       <ProductDelivery />
       <section className="testimonials-section">
@@ -24,6 +23,7 @@ const Home = () => {
           <TestimonialCarousel testimonials={TESTIMONIALS} autoAdvance={true} interval={2000} />
         </div>
       </section>
+      <CalculateHome />
     </div>
   );
 };

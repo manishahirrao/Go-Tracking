@@ -210,6 +210,38 @@
 }
 
 /* Responsive */
+/* Laptop (1024px - 1366px) */
+@media (max-width: 1366px) {
+  .hero-banner {
+    min-height: 700px;
+  }
+
+  .hero-title {
+    font-size: 42px;
+  }
+
+  .hero-track-box {
+    max-width: 650px;
+    padding: 35px 45px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-banner {
+    min-height: 650px;
+  }
+
+  .hero-title {
+    font-size: 38px;
+  }
+
+  .hero-track-box {
+    max-width: 600px;
+    padding: 35px 40px;
+  }
+}
+
+/* Tablet */
 @media (max-width: 991px) {
   .hero-banner {
     min-height: 650px;

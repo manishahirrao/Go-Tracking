@@ -1,6 +1,7 @@
-import { FaTruck, FaGlobeAmericas, FaAward, FaUsers } from 'react-icons/fa';
+import { FaTruck, FaGlobeAmericas, FaAward } from 'react-icons/fa';
 import { useScrollAnimation, useCounterAnimation } from '../../../hooks/useScrollAnimation';
 import './AboutSection.css';
+import MoreAboutUs from '../MoreAboutUs/MoreAboutUs';
 
 const StatCard = ({ stat, index }) => {
   const { ref, isVisible } = useScrollAnimation();
@@ -32,7 +33,6 @@ const AboutSection = () => {
   const storyRef = useScrollAnimation();
   const missionRef = useScrollAnimation();
   const diffRef = useScrollAnimation();
-  const teamRef = useScrollAnimation();
 
   const statistics = [
     {
@@ -51,7 +51,7 @@ const AboutSection = () => {
       label: 'Packages Delivered',
     },
     {
-      icon: FaUsers,
+      icon: FaTruck,
       value: '10K+',
       label: 'Happy Customers',
     },
@@ -114,31 +114,42 @@ const AboutSection = () => {
           </div>
 
           {/* Mission & Values */}
-          <div ref={missionRef.ref} className={`mission-values ${missionRef.isVisible ? 'animate-in' : ''}`}>
-            <div className="mission-card">
-              <h3>Our Mission</h3>
-              <p>
-                To connect people and businesses worldwide through reliable, efficient, and
-                innovative delivery solutions that exceed expectations.
-              </p>
-            </div>
-            <div className="values-card">
-              <h3>Our Values</h3>
-              <ul>
-                <li>
-                  <strong>Reliability:</strong> We deliver on our promises, every time.
-                </li>
-                <li>
-                  <strong>Innovation:</strong> We continuously improve our services through
-                  technology.
-                </li>
-                <li>
-                  <strong>Customer Focus:</strong> Your satisfaction is our top priority.
-                </li>
-                <li>
-                  <strong>Integrity:</strong> We operate with honesty and transparency.
-                </li>
-              </ul>
+          <div ref={missionRef.ref} className={`mission-values-section ${missionRef.isVisible ? 'animate-in' : ''}`}>
+            <MoreAboutUs/>
+          </div>
+
+          {/* Core Values */}
+          <div className="values-section">
+            <h2>Our Core Values</h2>
+            <div className="values-grid">
+              <div className="value-card">
+                <div className="value-icon">
+                  <span>🎯</span>
+                </div>
+                <h3>Reliability</h3>
+                <p>We deliver on our promises, every time. Your trust is our foundation.</p>
+              </div>
+              <div className="value-card">
+                <div className="value-icon">
+                  <span>💡</span>
+                </div>
+                <h3>Innovation</h3>
+                <p>We continuously improve our services through cutting-edge technology.</p>
+              </div>
+              <div className="value-card">
+                <div className="value-icon">
+                  <span>❤️</span>
+                </div>
+                <h3>Customer Focus</h3>
+                <p>Your satisfaction is our top priority in everything we do.</p>
+              </div>
+              <div className="value-card">
+                <div className="value-icon">
+                  <span>✨</span>
+                </div>
+                <h3>Integrity</h3>
+                <p>We operate with honesty, transparency, and ethical practices.</p>
+              </div>
             </div>
           </div>
 
@@ -162,20 +173,6 @@ const AboutSection = () => {
                   <p>{item.description}</p>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Team Section */}
-          <div ref={teamRef.ref} className={`team-section ${teamRef.isVisible ? 'animate-in' : ''}`}>
-            <h2>Our Team</h2>
-            <p className="team-intro">
-              Behind every successful delivery is a dedicated team of professionals committed to
-              excellence. From our drivers to our customer service representatives, every team
-              member plays a crucial role in ensuring your packages arrive safely and on time.
-            </p>
-            <div className="team-image-placeholder">
-              <FaUsers size={60} />
-              <p>Our dedicated team working together</p>
             </div>
           </div>
         </div>

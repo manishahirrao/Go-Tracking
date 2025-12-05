@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 // Lazy load pages for code splitting
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
+const Quote = lazy(() => import('./pages/Quote'));
 const Tracking = lazy(() => import('./pages/Tracking'));
 const Contact = lazy(() => import('./pages/Contact'));
 const FAQ = lazy(() => import('./pages/FAQ'));
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="quote" element={<Quote />} />
             <Route path="tracking" element={<Tracking />} />
             <Route path="contact" element={<Contact />} />
             <Route path="faq" element={<FAQ />} />

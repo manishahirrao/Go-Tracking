@@ -37,9 +37,7 @@ const Steps = ({ steps }) => {
           ))}
         </div>
       </div>
-      <div className="step-img">
-        <img src="/step-img.png" alt="Delivery Steps" />
-      </div>
+     
     </section>
   );
 };

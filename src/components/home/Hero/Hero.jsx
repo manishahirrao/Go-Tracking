@@ -30,7 +30,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="hero-banner" style={{ backgroundImage: 'url(/Courier1.jpg)' }}>
+    <section className="hero-banner" >
       <div className="container mx-auto max-w-container px-4 relative">
         <img 
           src="/icons/icon-1.png" 

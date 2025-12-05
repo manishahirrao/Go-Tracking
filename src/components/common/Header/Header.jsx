@@ -1,16 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes, FaSearch } from 'react-icons/fa';
+import { FaPhone } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-import TopBar from './TopBar';
-import SearchOverlay from './SearchOverlay';
-import LoginModal from '../../auth/LoginModal/LoginModal';
 import './Header.css';
 
-const Header = ({ transparent = false, sticky = true }) => {
+const Header = ({ sticky = true }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const navItems = [
     { label: 'Home', path: '/' },
@@ -23,42 +18,18 @@ const Header = ({ transparent = false, sticky = true }) => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const handleSearch = (query) => {
-    console.log('Search query:', query);
-    setSearchOpen(false);
-    // Implement search functionality here
-  };
-
-  const handleSignIn = () => {
-    setLoginModalOpen(true);
-  };
-
-  const handleLogin = (credentials) => {
-    console.log('Login credentials:', credentials);
-    setLoginModalOpen(false);
-    // Implement login logic here
-  };
-
   const headerClasses = `header-main ${sticky ? 'sticky' : ''}`;
 
   return (
     <header className={headerClasses}>
-      {/* Top Bar */}
-      <TopBar showSignIn={true} onSignInClick={handleSignIn} />
-
-      {/* Search Overlay */}
-      <SearchOverlay 
-        isOpen={searchOpen} 
-        onClose={() => setSearchOpen(false)} 
-        onSearch={handleSearch}
-      />
-
-      {/* Login Modal */}
-      <LoginModal
-        isOpen={loginModalOpen}
-        onClose={() => setLoginModalOpen(false)}
-        onLogin={handleLogin}
-      />
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="mobile-menu-overlay"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Main Navigation */}
       <nav className="menu-bar">
@@ -98,14 +69,21 @@ const Header = ({ transparent = false, sticky = true }) => {
                     </Link>
                   </li>
                 ))}
+                <li className="nav-phone">
+                  <a href="tel:+18005550123" className="phone-link">
+                    <FaPhone className="phone-icon" />
+                    <span>+1 (800) 555-0123</span>
+                  </a>
+                </li>
                 <li>
-                  <button 
-                    onClick={() => setSearchOpen(true)}
-                    className="search-btn"
-                    aria-label="Open search"
+                  <Link 
+                    to="/quote"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="quote-btn"
+                    aria-label="Get a quote"
                   >
-                    <FaSearch className="theme-clr" />
-                  </button>
+                    <span>Get a Quote</span>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -117,7 +95,6 @@ const Header = ({ transparent = false, sticky = true }) => {
 };
 
 Header.propTypes = {
-  transparent: PropTypes.bool,
   sticky: PropTypes.bool,
 };
 

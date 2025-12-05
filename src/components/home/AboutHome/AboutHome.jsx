@@ -54,7 +54,7 @@ const AboutHome = ({ features }) => {
               </ul>
             </div>
           </div>
-          <div className="about-home-image">
+          <div className="about-home-image ">
             <img
               alt="About GO Courier"
               src="/Courier2.jpg"

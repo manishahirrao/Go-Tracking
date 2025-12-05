@@ -9,7 +9,7 @@ const ProductDelivery = ({
     <section className="prod-delivery pad-120">
       <div className="theme-container container">
         <div className="delivery-content-wrapper">
-          <div className="pt-120 rel-div">
+          <div className=" rel-div">
             <div className="pb-50 hidden-xs"></div>
             <h2 className="section-title">
               Get the <span className="theme-clr">fastest</span> product delivery
@@ -25,9 +25,9 @@ const ProductDelivery = ({
                 <li>✓ Secure handling and insurance included</li>
               </ul>
             </div>
-            <div className="pb-120 hidden-xs"></div>
+            <div className=" hidden-xs"></div>
           </div>
-          <div className="delivery-img pt-10">
+          <div className="delivery-img ">
             <img
               alt="Fast Delivery"
               src="/Courier4.jpg"

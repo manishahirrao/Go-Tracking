@@ -4,28 +4,18 @@ import './CalculateHome.css';
 
 const CalculateHome = () => {
   return (
-    <section className="calculate-home-section calculate pt-100">
+    <section id="quote-form" className="calculate-home-section quote-section">
       <div className="theme-container container">
-        <BackgroundText text="calculate" position="right" />
-        <div className="calculate-home-grid">
-          <div className="calculate-home-image">
-            <img
-              src="/Courier3.jpg"
-              alt="Courier Service"
-              className="courier-man-img"
-            />
-          </div>
-          <div className="calculate-home-content">
-            <div className="pad-10"></div>
-            <h2 className="section-title pb-10">calculate your cost</h2>
-            <p className="fs-16">
-              Get an instant shipping quote by entering your package dimensions and destination. 
+        <div className="quote-content-wrapper">
+          <div className="quote-header">
+            <h2 className="section-title">Get Your Instant Quote</h2>
+            <p className="section-description">
+              Request a shipping quote by entering your package details and destination. 
               Our transparent pricing ensures you know exactly what you'll pay before you ship.
             </p>
-            <div className="calculate-form-wrapper">
-              <CostCalculator />
-            </div>
-            <div className="pt-80 hidden-lg"></div>
+          </div>
+          <div className="quote-form-container">
+            <CostCalculator />
           </div>
         </div>
       </div>
