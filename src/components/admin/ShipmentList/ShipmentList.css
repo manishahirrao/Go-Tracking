@@ -12,9 +12,9 @@
   padding: 1rem 1.5rem;
   background: #f8f9fa;
   border-bottom: 2px solid #e0e0e0;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.875rem;
-  color: #666;
+  color: #000;
   text-transform: uppercase;
 }
 
@@ -38,6 +38,8 @@
 
 .cell {
   font-size: 0.875rem;
+  color: #000;
+  font-weight: 500;
 }
 
 .cell.tracking strong {
@@ -98,17 +100,18 @@
 
 .update-btn {
   padding: 0.5rem 1rem;
-  background: var(--primary-color);
+  background: #e74c3c;
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .update-btn:hover {
-  background: var(--primary-dark);
+  background: #c0392b;
 }
 
 .empty-state {

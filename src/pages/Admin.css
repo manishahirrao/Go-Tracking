@@ -31,6 +31,7 @@
 .sidebar-header h2 {
   font-size: 1.25rem;
   margin: 0;
+  color: white;
 }
 
 .admin-sidebar.closed .sidebar-header h2 {

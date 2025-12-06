@@ -63,11 +63,7 @@ const Admin = () => {
           </Link>
         </nav>
 
-        <div className="sidebar-footer">
-          <Link to="/" className="back-to-site">
-            ← Back to Site
-          </Link>
-        </div>
+       
       </aside>
 
       <main className="admin-content">

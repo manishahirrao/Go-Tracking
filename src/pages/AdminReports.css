@@ -26,34 +26,36 @@
 
 .control-group label {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #666;
+  color: #000;
 }
 
 .control-group select,
 .control-group input {
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
+  color: #000;
+  font-weight: 500;
 }
 
 .generate-btn {
   padding: 0.75rem 2rem;
-  background: var(--primary-color);
+  background: #e74c3c;
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
   align-self: end;
 }
 
 .generate-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
+  background: #c0392b;
 }
 
 .generate-btn:disabled {

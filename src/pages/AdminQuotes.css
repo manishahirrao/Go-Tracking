@@ -20,10 +20,12 @@
 .filter-tabs button {
   padding: 0.75rem 1.5rem;
   background: white;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.875rem;
+  color: #000;
+  font-weight: 600;
   transition: all 0.2s;
 }
 
@@ -32,9 +34,10 @@
 }
 
 .filter-tabs button.active {
-  background: var(--primary-color);
+  background: #e74c3c;
   color: white;
-  border-color: var(--primary-color);
+  border-color: #e74c3c;
+  font-weight: 700;
 }
 
 .quotes-grid {
@@ -61,7 +64,8 @@
 
 .quote-date {
   font-size: 0.875rem;
-  color: #666;
+  color: #000;
+  font-weight: 600;
 }
 
 .quote-details {
@@ -79,8 +83,9 @@
 }
 
 .detail-row strong {
-  color: #666;
+  color: #000;
   min-width: 100px;
+  font-weight: 700;
 }
 
 .detail-row span {
@@ -114,12 +119,13 @@
 }
 
 .quote-btn {
-  background: var(--primary-color);
+  background: #e74c3c;
   color: white;
+  font-weight: 600;
 }
 
 .quote-btn:hover {
-  background: var(--primary-dark);
+  background: #c0392b;
 }
 
 .accept-btn {
