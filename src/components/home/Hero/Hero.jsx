@@ -1,3 +1,9 @@
+
+
+
+// ============================================
+// Hero.jsx - FIXED VERSION
+// ============================================
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Hero.css';
@@ -8,7 +14,8 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const validateTrackingNumber = (value) => {
-    const regex = /^[A-Za-z0-9]{10,15}$/;
+    // Allow alphanumeric and dashes, minimum 10 characters
+    const regex = /^[A-Za-z0-9\-]{10,}$/;
     return regex.test(value);
   };
 
@@ -16,21 +23,23 @@ const Hero = () => {
     e.preventDefault();
     setError('');
 
-    if (!trackingNumber.trim()) {
+    const cleaned = trackingNumber.trim();
+
+    if (!cleaned) {
       setError('Please enter a tracking number');
       return;
     }
 
-    if (!validateTrackingNumber(trackingNumber)) {
-      setError('Invalid tracking number format');
+    if (!validateTrackingNumber(cleaned)) {
+      setError('Invalid tracking number format (min 10 characters, letters/numbers/dashes only)');
       return;
     }
 
-    navigate(`/tracking?id=${trackingNumber}`);
+    navigate(`/tracking?id=${cleaned}`);
   };
 
   return (
-    <section className="hero-banner" >
+    <section className="hero-banner">
       <div className="container mx-auto max-w-container px-4 relative">
         <img 
           src="/icons/icon-1.png" 
@@ -50,7 +59,6 @@ const Hero = () => {
           Delivering excellence across the globe with speed, security, and reliability you can trust
         </p>
 
-        {/* Track Product Box */}
         <div className="hero-track-box">
           <h2 className="track-box-title">Track Your Product</h2>
           <p className="track-box-subtitle">Enter your tracking number to see real-time updates</p>
@@ -58,7 +66,7 @@ const Hero = () => {
             <div className="track-form-group">
               <input
                 type="text"
-                placeholder="Enter your product ID"
+                placeholder="Enter your product ID (e.g., TRK-2025-123456)"
                 value={trackingNumber}
                 onChange={(e) => setTrackingNumber(e.target.value)}
                 className={`track-input ${error ? 'error' : ''}`}

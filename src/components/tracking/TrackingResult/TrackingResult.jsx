@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { FaBox, FaMapMarkerAlt, FaClock, FaCheckCircle, FaTruck, FaShippingFast } from 'react-icons/fa';
 import Timeline from '../Timeline';
 
-const TrackingResult = ({ data }) => {
+const TrackingResult = ({ data, isRealtime = false }) => {
   if (!data) {
     return null;
   }
@@ -89,6 +89,17 @@ const TrackingResult = ({ data }) => {
 
   return (
     <div className="w-full max-w-5xl mx-auto animate-fade-in-up">
+      {/* Real-time Indicator */}
+      {isRealtime && (
+        <div className="mb-4 flex items-center justify-center gap-2 text-sm">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-green"></span>
+          </span>
+          <span className="font-medium text-green">Live Tracking Active</span>
+        </div>
+      )}
+
       {/* Status Banner */}
       <div 
         className={`mb-6 p-6 rounded-lg border-2 shadow-xl ${getStatusColor(data.status)}`}
@@ -104,7 +115,7 @@ const TrackingResult = ({ data }) => {
                 className="font-secondary font-black uppercase mb-1" 
                 style={{ ...getStatusTextColor(data.status), letterSpacing: '0.5px', fontSize: '1.5rem' }}
               >
-                {data.status.replace('-', ' ')}
+                {data.status.replace('-', ' ').replace('_', ' ')}
               </h2>
               <p className="font-medium" style={{ color: '#4a5568', fontSize: '0.9rem' }}>
                 {getStatusMessage(data.status)}
@@ -207,6 +218,7 @@ TrackingResult.propTypes = {
     destination: PropTypes.string.isRequired,
     history: PropTypes.array.isRequired,
   }),
+  isRealtime: PropTypes.bool,
 };
 
 export default TrackingResult;

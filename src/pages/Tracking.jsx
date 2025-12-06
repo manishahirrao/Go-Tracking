@@ -1,34 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader/PageHeader';
 import TrackingForm from '../components/tracking/TrackingForm/TrackingForm';
 import TrackingResult from '../components/tracking/TrackingResult/TrackingResult';
-import { getTrackingInfo } from '../services/trackingService';
+import { useShipmentTracking } from '../hooks/useShipmentTracking';
 import './Tracking.css';
 
 const Tracking = () => {
-  const [trackingData, setTrackingData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [searchParams] = useSearchParams();
+  const [submittedTrackingNumber, setSubmittedTrackingNumber] = useState('');
+  const [showResult, setShowResult] = useState(false);
 
-  const handleTrackingSubmit = async (trackingNumber) => {
-    setLoading(true);
-    setError('');
-    setTrackingData(null);
-
-    try {
-      const data = await getTrackingInfo(trackingNumber);
-      setTrackingData(data);
-    } catch (err) {
-      setError(err.message || 'Failed to fetch tracking information. Please try again.');
-    } finally {
-      setLoading(false);
+  // Auto-submit if tracking number is in URL
+  useEffect(() => {
+    const trackingId = searchParams.get('id');
+    if (trackingId && !submittedTrackingNumber) {
+      setSubmittedTrackingNumber(trackingId);
+      setShowResult(true);
     }
+  }, [searchParams, submittedTrackingNumber]);
+
+  // Use the custom hook for real-time tracking
+  const { shipment, history, loading, error, isConnected } = useShipmentTracking(
+    submittedTrackingNumber,
+    true // Enable real-time updates
+  );
+
+  const handleTrackingSubmit = (trackingNumber) => {
+    setSubmittedTrackingNumber(trackingNumber);
+    setShowResult(true);
   };
 
   const handleReset = () => {
-    setTrackingData(null);
-    setError('');
+    setSubmittedTrackingNumber('');
+    setShowResult(false);
   };
+
+  // Transform shipment data to match TrackingResult component format
+  const trackingData = shipment ? {
+    trackingNumber: shipment.tracking_number,
+    status: shipment.current_status,
+    currentLocation: shipment.current_location || 'Unknown',
+    estimatedDelivery: shipment.estimated_delivery || new Date(),
+    origin: shipment.sender_address,
+    destination: shipment.recipient_address,
+    history: history.map(h => ({
+      date: h.timestamp,
+      location: h.location || 'Unknown',
+      status: h.status,
+      description: h.notes || `Package ${h.status.replace('_', ' ')}`
+    }))
+  } : null;
 
   return (
     <div>
@@ -61,8 +83,24 @@ const Tracking = () => {
               <TrackingForm onSubmit={handleTrackingSubmit} loading={loading} />
             </div>
 
+            {/* Connection Status Indicator */}
+            {showResult && submittedTrackingNumber && !isConnected && (
+              <div className="max-w-2xl mx-auto mb-8 bg-yellow/10 border-l-4 border-yellow p-6 rounded-sm animate-fade-in-up">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <svg className="h-6 w-6 text-yellow" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm text-yellow font-medium">Real-time updates temporarily unavailable. Reconnecting...</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Error Message */}
-            {error && (
+            {error && showResult && (
               <div className="max-w-2xl mx-auto mb-8 bg-red/10 border-l-4 border-red p-6 rounded-sm animate-fade-in-up">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
@@ -78,9 +116,9 @@ const Tracking = () => {
             )}
 
             {/* Tracking Result */}
-            {trackingData && (
+            {trackingData && showResult && (
               <div>
-                <TrackingResult data={trackingData} />
+                <TrackingResult data={trackingData} isRealtime={isConnected} />
                 <div className="text-center mt-8">
                   <button
                     onClick={handleReset}
@@ -97,32 +135,31 @@ const Tracking = () => {
               </div>
             )}
 
-            {/* Demo Info */}
-            {!trackingData && !loading && (
+            {/* Info Box */}
+            {!showResult && !loading && (
               <div className="max-w-2xl mx-auto mt-12 border-l-4 border-blue p-6 rounded-sm shadow-lg" style={{ backgroundColor: '#eff6ff' }}>
                 <h3 className="font-secondary font-bold uppercase mb-4" style={{ color: '#1e40af', letterSpacing: '1px', fontSize: '0.875rem' }}>
-                  Try Demo Tracking Numbers:
+                  How to Track Your Package:
                 </h3>
                 <ul className="space-y-3">
-                  <li className="flex items-center">
-                    <span className="font-mono bg-white px-4 py-2 rounded shadow-sm mr-4 font-bold" style={{ color: '#1a1a1a', fontSize: '0.875rem' }}>
-                      ABC1234567890
-                    </span>
-                    <span className="font-medium" style={{ color: '#4a5568' }}>Package in transit</span>
+                  <li className="flex items-start">
+                    <span className="font-bold mr-3" style={{ color: '#1e40af' }}>1.</span>
+                    <span className="font-medium" style={{ color: '#4a5568' }}>Enter your tracking number in the format TRK-YYYY-NNNNNN</span>
                   </li>
-                  <li className="flex items-center">
-                    <span className="font-mono bg-white px-4 py-2 rounded shadow-sm mr-4 font-bold" style={{ color: '#1a1a1a', fontSize: '0.875rem' }}>
-                      XYZ9876543210
-                    </span>
-                    <span className="font-medium" style={{ color: '#4a5568' }}>Delivered package</span>
+                  <li className="flex items-start">
+                    <span className="font-bold mr-3" style={{ color: '#1e40af' }}>2.</span>
+                    <span className="font-medium" style={{ color: '#4a5568' }}>View real-time updates on your package location and status</span>
                   </li>
-                  <li className="flex items-center">
-                    <span className="font-mono bg-white px-4 py-2 rounded shadow-sm mr-4 font-bold" style={{ color: '#1a1a1a', fontSize: '0.875rem' }}>
-                      TEST1234567890
-                    </span>
-                    <span className="font-medium" style={{ color: '#4a5568' }}>Pending pickup</span>
+                  <li className="flex items-start">
+                    <span className="font-bold mr-3" style={{ color: '#1e40af' }}>3.</span>
+                    <span className="font-medium" style={{ color: '#4a5568' }}>Get automatic updates without refreshing the page</span>
                   </li>
                 </ul>
+                <div className="mt-4 pt-4 border-t border-blue/30">
+                  <p className="text-sm font-medium" style={{ color: '#4a5568' }}>
+                    <strong>Note:</strong> Tracking numbers are provided when you create a shipment. If you don't have a tracking number yet, please contact our support team.
+                  </p>
+                </div>
               </div>
             )}
           </div>

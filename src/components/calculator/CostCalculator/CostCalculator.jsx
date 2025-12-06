@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { calculateShippingCost, DELIVERY_OPTIONS } from '../../../services/calculatorService';
+import { useState, useEffect } from 'react';
+import { calculateShippingCost } from '../../../services/pricingService';
 import { validatePositiveNumber, validateLocation } from '../../../utils/validators';
 import Button from '../../common/Button/Button';
 import './CostCalculator.css';
@@ -12,11 +12,52 @@ const CostCalculator = () => {
     weight: '',
     from: '',
     to: '',
-    deliverySpeed: 'standard',
+    deliverySpeed: '', // Will be set after loading options
   });
 
   const [errors, setErrors] = useState({});
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [pricingOptions, setPricingOptions] = useState([]);
+
+  // Load all pricing options on mount
+  useEffect(() => {
+    const loadPricingOptions = async () => {
+      try {
+        // Calculate for all three service levels
+        const serviceLevels = ['standard', 'express', 'overnight'];
+        const options = await Promise.all(
+          serviceLevels.map(level =>
+            calculateShippingCost({
+              weight: 1,
+              origin: 'New York',
+              destination: 'Los Angeles',
+              service_level: level
+            })
+          )
+        );
+        
+        // Flatten the results (each call returns an array with one item)
+        const flatOptions = options.flat();
+        setPricingOptions(flatOptions);
+        
+        // Set default service level
+        if (flatOptions.length > 0 && !formData.deliverySpeed) {
+          setFormData(prev => ({ ...prev, deliverySpeed: flatOptions[0].service_level }));
+        }
+      } catch (error) {
+        console.error('Error loading pricing options:', error);
+        // Set default options if loading fails
+        setPricingOptions([
+          { service_level: 'standard' },
+          { service_level: 'express' },
+          { service_level: 'overnight' }
+        ]);
+        setFormData(prev => ({ ...prev, deliverySpeed: 'standard' }));
+      }
+    };
+    loadPricingOptions();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,23 +74,19 @@ const CostCalculator = () => {
       }));
     }
 
-    // Real-time calculation if all fields are valid
-    if (name !== 'deliverySpeed') {
-      const updatedData = { ...formData, [name]: value };
-      if (isFormValid(updatedData)) {
-        calculateCost(updatedData);
-      }
+    // Clear result when user changes input
+    if (result) {
+      setResult(null);
     }
   };
 
   const handleDeliverySpeedChange = (e) => {
     const { value } = e.target;
-    const updatedData = { ...formData, deliverySpeed: value };
-    setFormData(updatedData);
+    setFormData(prev => ({ ...prev, deliverySpeed: value }));
 
-    // Recalculate if form is valid
-    if (isFormValid(updatedData)) {
-      calculateCost(updatedData);
+    // Clear result when user changes service level
+    if (result) {
+      setResult(null);
     }
   };
 
@@ -84,22 +121,36 @@ const CostCalculator = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const calculateCost = (data = formData) => {
+  const calculateCost = async (data = formData) => {
     if (!isFormValid(data)) {
       return;
     }
 
-    const costResult = calculateShippingCost({
-      height: parseFloat(data.height),
-      width: parseFloat(data.width),
-      depth: parseFloat(data.depth),
-      weight: parseFloat(data.weight),
-      from: data.from,
-      to: data.to,
-      deliverySpeed: data.deliverySpeed,
-    });
+    setLoading(true);
+    setResult(null);
 
-    setResult(costResult);
+    try {
+      const costResults = await calculateShippingCost({
+        weight: parseFloat(data.weight),
+        dimensions: {
+          length: parseFloat(data.height),
+          width: parseFloat(data.width),
+          height: parseFloat(data.depth)
+        },
+        origin: data.from,
+        destination: data.to,
+        service_level: data.deliverySpeed
+      });
+
+      // Get the result for the selected service level
+      const selectedResult = costResults.find(r => r.service_level === data.deliverySpeed) || costResults[0];
+      setResult(selectedResult);
+    } catch (error) {
+      console.error('Error calculating cost:', error);
+      setErrors({ submit: error.message || 'Failed to calculate shipping cost' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -216,17 +267,28 @@ const CostCalculator = () => {
             value={formData.deliverySpeed}
             onChange={handleDeliverySpeedChange}
             className="form-control"
+            disabled={pricingOptions.length === 0}
           >
-            {Object.values(DELIVERY_OPTIONS).map((option) => (
-              <option key={option.type} value={option.type}>
-                {option.name} ({option.estimatedDays} days)
-              </option>
-            ))}
+            {pricingOptions.length === 0 ? (
+              <option value="">Loading options...</option>
+            ) : (
+              pricingOptions.map((option) => (
+                <option key={option.service_level} value={option.service_level}>
+                  {option.service_level.charAt(0).toUpperCase() + option.service_level.slice(1)}
+                </option>
+              ))
+            )}
           </select>
         </div>
 
-        <Button type="submit" variant="primary" className="calculate-btn">
-          Calculate Shipping Cost
+        {errors.submit && (
+          <div className="error-message" style={{ marginBottom: '1rem', color: '#dc2626' }}>
+            {errors.submit}
+          </div>
+        )}
+
+        <Button type="submit" variant="primary" className="calculate-btn" disabled={loading}>
+          {loading ? 'Calculating...' : 'Calculate Shipping Cost'}
         </Button>
       </form>
 
@@ -235,25 +297,30 @@ const CostCalculator = () => {
           <h3>Cost Breakdown</h3>
           <div className="result-details">
             <div className="result-row">
-              <span className="result-label">Base Cost:</span>
-              <span className="result-value">${result.baseCost.toFixed(2)}</span>
+              <span className="result-label">Service Level:</span>
+              <span className="result-value">
+                {result.service_level.charAt(0).toUpperCase() + result.service_level.slice(1)}
+              </span>
             </div>
             <div className="result-row">
-              <span className="result-label">Speed Surcharge:</span>
-              <span className="result-value">${result.speedSurcharge.toFixed(2)}</span>
+              <span className="result-label">Base Price:</span>
+              <span className="result-value">${result.base_price.toFixed(2)}</span>
             </div>
             <div className="result-row">
-              <span className="result-label">Discount:</span>
-              <span className="result-value discount">-${result.discount.toFixed(2)}</span>
+              <span className="result-label">Weight Charge ({result.weight_kg} kg):</span>
+              <span className="result-value">${result.weight_charge.toFixed(2)}</span>
+            </div>
+            <div className="result-row">
+              <span className="result-label">Distance Charge ({result.distance_km} km):</span>
+              <span className="result-value">${result.distance_charge.toFixed(2)}</span>
             </div>
             <div className="result-row total">
               <span className="result-label">Total Cost:</span>
-              <span className="result-value">${result.total.toFixed(2)}</span>
+              <span className="result-value">${result.total_cost.toFixed(2)}</span>
             </div>
             <div className="result-info">
-              <p>Estimated delivery: {result.estimatedDays} day(s)</p>
               <p className="result-note">
-                Dimensional weight: {result.breakdown.dimensionalWeight} kg
+                Prices are calculated based on current rates and may vary.
               </p>
             </div>
           </div>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { validateRequired, validateEmail, validatePhone } from '../../../utils/validators';
+import { validateRequired, validateEmail } from '../../../utils/validators';
+import { submitContactForm } from '../../../services/contactService';
 import Button from '../../common/Button/Button';
 import './ContactForm.css';
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,6 +16,7 @@ const ContactForm = ({ onSubmit }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [contactId, setContactId] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,12 +50,12 @@ const ContactForm = ({ onSubmit }) => {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    if (!validatePhone(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number';
-    }
-
-    if (!validateRequired(formData.subject)) {
-      newErrors.subject = 'Subject is required';
+    // Phone is optional, so only validate if provided
+    if (formData.phone && formData.phone.trim().length > 0) {
+      // Basic phone validation - just check it's not empty if provided
+      if (formData.phone.trim().length < 10) {
+        newErrors.phone = 'Please enter a valid phone number';
+      }
     }
 
     if (!validateRequired(formData.message)) {
@@ -72,19 +74,13 @@ const ContactForm = ({ onSubmit }) => {
     }
 
     setIsSubmitting(true);
+    setErrors({});
 
     try {
-      // Call the onSubmit prop if provided
-      if (onSubmit) {
-        await onSubmit(formData);
-      } else {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      }
-
-      // Show success message
+      const result = await submitContactForm(formData);
       setIsSuccess(true);
-
+      setContactId(result.contactId);
+      
       // Reset form
       setFormData({
         name: '',
@@ -94,8 +90,9 @@ const ContactForm = ({ onSubmit }) => {
         message: '',
       });
     } catch (error) {
+      console.error('Contact form error:', error);
       setErrors({
-        submit: 'Failed to send message. Please try again.',
+        submit: error.message || 'Failed to send message. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -108,6 +105,9 @@ const ContactForm = ({ onSubmit }) => {
         {isSuccess && (
           <div className="success-message">
             <p>Thank you for contacting us! We'll get back to you soon.</p>
+            {contactId && (
+              <p className="text-sm mt-2">Reference ID: {contactId.substring(0, 8)}</p>
+            )}
           </div>
         )}
 
@@ -154,7 +154,7 @@ const ContactForm = ({ onSubmit }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="phone">
-              Phone <span className="required">*</span>
+              Phone
             </label>
             <input
               type="tel"
@@ -171,7 +171,7 @@ const ContactForm = ({ onSubmit }) => {
 
           <div className="form-group">
             <label htmlFor="subject">
-              Subject <span className="required">*</span>
+              Subject
             </label>
             <input
               type="text"

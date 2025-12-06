@@ -1,0 +1,188 @@
+.admin-quotes {
+  max-width: 1400px;
+}
+
+.quotes-header {
+  margin-bottom: 2rem;
+}
+
+.quotes-header h1 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-tabs button {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.filter-tabs button:hover {
+  background: #f8f9fa;
+}
+
+.filter-tabs button.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+}
+
+.quote-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quote-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.quote-date {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.quote-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.detail-row strong {
+  color: #666;
+  min-width: 100px;
+}
+
+.detail-row span {
+  color: #1a1a1a;
+  text-align: right;
+}
+
+.detail-row .price {
+  font-weight: 600;
+  color: #2e7d32;
+  font-size: 1rem;
+}
+
+.quote-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quote-btn,
+.accept-btn,
+.reject-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quote-btn {
+  background: var(--primary-color);
+  color: white;
+}
+
+.quote-btn:hover {
+  background: var(--primary-dark);
+}
+
+.accept-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.accept-btn:hover {
+  background: #45a049;
+}
+
+.reject-btn {
+  background: #f44336;
+  color: white;
+}
+
+.reject-btn:hover {
+  background: #da190b;
+}
+
+.quote-form {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.quote-form input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.quote-form .submit-btn,
+.quote-form .cancel-btn {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.quote-form .submit-btn {
+  background: var(--primary-color);
+  color: white;
+}
+
+.quote-form .cancel-btn {
+  background: #f5f5f5;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .quotes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filter-tabs {
+    flex-direction: column;
+  }
+  
+  .filter-tabs button {
+    width: 100%;
+  }
+}
