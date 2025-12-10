@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { validateRequired, validateEmail } from '../../../utils/validators';
-import { submitContactForm } from '../../../services/contactService';
 import Button from '../../common/Button/Button';
 import './ContactForm.css';
 
@@ -77,10 +76,12 @@ const ContactForm = () => {
     setErrors({});
 
     try {
-      const result = await submitContactForm(formData);
+      // Mock contact form submission
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      const mockContactId = 'CT-' + Date.now();
+      setContactId(mockContactId);
       setIsSuccess(true);
-      setContactId(result.contactId);
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -90,10 +91,8 @@ const ContactForm = () => {
         message: '',
       });
     } catch (error) {
-      console.error('Contact form error:', error);
-      setErrors({
-        submit: error.message || 'Failed to send message. Please try again.',
-      });
+      console.error('Error submitting contact form:', error);
+      setErrors({ submit: error.message || 'Failed to submit contact form' });
     } finally {
       setIsSubmitting(false);
     }

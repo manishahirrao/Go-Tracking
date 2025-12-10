@@ -17,14 +17,6 @@ const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
 const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-// Admin pages
-const Admin = lazy(() => import('./pages/Admin'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-const AdminShipments = lazy(() => import('./pages/AdminShipments'));
-const AdminQuotes = lazy(() => import('./pages/AdminQuotes'));
-const AdminContacts = lazy(() => import('./pages/AdminContacts'));
-const AdminReports = lazy(() => import('./pages/AdminReports'));
-
 // Loading fallback component
 const LoadingFallback = () => (
   <div className="loading-fallback">
@@ -40,7 +32,6 @@ function App() {
         <Router>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
-              {/* Public routes */}
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="about" element={<About />} />
@@ -53,15 +44,6 @@ function App() {
                 <Route path="cookie-policy" element={<CookiePolicy />} />
                 <Route path="refund-policy" element={<RefundPolicy />} />
                 <Route path="*" element={<NotFound />} />
-              </Route>
-
-              {/* Admin routes */}
-              <Route path="/admin" element={<Admin />}>
-                <Route index element={<AdminDashboard />} />
-                <Route path="shipments" element={<AdminShipments />} />
-                <Route path="quotes" element={<AdminQuotes />} />
-                <Route path="contacts" element={<AdminContacts />} />
-                <Route path="reports" element={<AdminReports />} />
               </Route>
             </Routes>
           </Suspense>

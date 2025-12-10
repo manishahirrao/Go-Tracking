@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { calculateShippingCost } from '../../../services/pricingService';
 import { validatePositiveNumber, validateLocation } from '../../../utils/validators';
 import Button from '../../common/Button/Button';
 import './CostCalculator.css';
@@ -130,20 +129,27 @@ const CostCalculator = () => {
     setResult(null);
 
     try {
-      const costResults = await calculateShippingCost({
-        weight: parseFloat(data.weight),
-        dimensions: {
-          length: parseFloat(data.height),
-          width: parseFloat(data.width),
-          height: parseFloat(data.depth)
-        },
-        origin: data.from,
-        destination: data.to,
-        service_level: data.deliverySpeed
-      });
+      // Mock cost calculation
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      const weight = parseFloat(data.weight);
+      const volume = parseFloat(data.height) * parseFloat(data.width) * parseFloat(data.depth);
+      const baseRate = data.deliverySpeed === 'express' ? 25.99 : data.deliverySpeed === 'priority' ? 18.99 : 12.99;
+      const weightCharge = Math.max(0, weight - 1) * 2.50;
+      const volumeCharge = volume > 1000 ? (volume - 1000) * 0.01 : 0;
+      const totalCost = baseRate + weightCharge + volumeCharge;
 
-      // Get the result for the selected service level
-      const selectedResult = costResults.find(r => r.service_level === data.deliverySpeed) || costResults[0];
+      const selectedResult = {
+        service_level: data.deliverySpeed,
+        total_cost: totalCost,
+        estimated_delivery: data.deliverySpeed === 'express' ? '1-2 business days' : data.deliverySpeed === 'priority' ? '2-3 business days' : '3-5 business days',
+        breakdown: {
+          base_rate: baseRate,
+          weight_charge: weightCharge,
+          volume_charge: volumeCharge
+        }
+      };
+      
       setResult(selectedResult);
     } catch (error) {
       console.error('Error calculating cost:', error);

@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader/PageHeader';
 import TrackingForm from '../components/tracking/TrackingForm/TrackingForm';
 import TrackingResult from '../components/tracking/TrackingResult/TrackingResult';
-import { useShipmentTracking } from '../hooks/useShipmentTracking';
 import './Tracking.css';
 
 const Tracking = () => {
@@ -20,15 +19,44 @@ const Tracking = () => {
     }
   }, [searchParams, submittedTrackingNumber]);
 
-  // Use the custom hook for real-time tracking
-  const { shipment, history, loading, error, isConnected } = useShipmentTracking(
-    submittedTrackingNumber,
-    true // Enable real-time updates
-  );
+  // Mock tracking data for demo purposes
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [shipment, setShipment] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [isConnected] = useState(true);
 
   const handleTrackingSubmit = (trackingNumber) => {
     setSubmittedTrackingNumber(trackingNumber);
     setShowResult(true);
+    setLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      if (trackingNumber === 'DEMO-123456') {
+        setShipment({
+          id: trackingNumber,
+          status: 'in_transit',
+          estimated_delivery: '2025-12-15',
+          current_location: 'Distribution Center, New York',
+          recipient: 'John Doe',
+          sender: 'Jane Smith',
+          weight: '2.5 kg',
+          service_type: 'express'
+        });
+        setHistory([
+          { date: '2025-12-10 14:30', location: 'New York, NY', status: 'Package picked up', description: 'Package picked up from sender' },
+          { date: '2025-12-10 16:45', location: 'Distribution Center, New York', status: 'In transit', description: 'Package arrived at distribution center' },
+          { date: '2025-12-11 09:20', location: 'Distribution Center, New York', status: 'In transit', description: 'Package processed for delivery' }
+        ]);
+        setError(null);
+      } else {
+        setError('Tracking number not found. Please check and try again.');
+        setShipment(null);
+        setHistory([]);
+      }
+      setLoading(false);
+    }, 1500);
   };
 
   const handleReset = () => {

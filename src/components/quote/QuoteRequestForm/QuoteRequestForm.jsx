@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { submitQuoteRequest } from '../../../services/quoteService';
 import Button from '../../common/Button/Button';
 
 const QuoteRequestForm = () => {
@@ -33,9 +32,11 @@ const QuoteRequestForm = () => {
     setSuccess(false);
 
     try {
-      const result = await submitQuoteRequest(formData);
+      // Mock quote submission
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      const mockQuoteId = 'QT-' + Date.now();
       setSuccess(true);
-      setQuoteId(result.quoteId);
+      setQuoteId(mockQuoteId);
       // Reset form
       setFormData({
         customer_name: '',
