@@ -10,18 +10,11 @@ export const validateTrackingNumber = (trackingNumber) => {
     return false;
   }
 
-  // Remove whitespace
   const cleaned = trackingNumber.trim();
-
-  // Check if it matches our format: TRK-YYYY-NNNNNN
-  const trackingRegex = /^[A-Za-z0-9]{3,}-[0-9]{4}-[0-9]{6}$/;
-  if (trackingRegex.test(cleaned)) {
-    return true;
-  }
-
-  // Also accept any alphanumeric with optional dashes/spaces (5-30 characters)
-  const flexibleRegex = /^[A-Za-z0-9][A-Za-z0-9\- ]{3,28}[A-Za-z0-9]$/;
-  return flexibleRegex.test(cleaned);
+  
+  // Only check basic requirements - let AfterShip handle format validation
+  // Minimum 3 characters, maximum 50 characters (typical tracking number limits)
+  return cleaned.length >= 3 && cleaned.length <= 50;
 };
 
 /**
