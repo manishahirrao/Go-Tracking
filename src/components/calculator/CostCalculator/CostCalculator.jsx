@@ -23,26 +23,17 @@ const CostCalculator = () => {
   useEffect(() => {
     const loadPricingOptions = async () => {
       try {
-        // Calculate for all three service levels
-        const serviceLevels = ['standard', 'express', 'overnight'];
-        const options = await Promise.all(
-          serviceLevels.map(level =>
-            calculateShippingCost({
-              weight: 1,
-              origin: 'New York',
-              destination: 'Los Angeles',
-              service_level: level
-            })
-          )
-        );
-        
-        // Flatten the results (each call returns an array with one item)
-        const flatOptions = options.flat();
-        setPricingOptions(flatOptions);
+        // Mock pricing options (no API call)
+        const mockOptions = [
+          { service_level: 'standard', total_cost: 12.99, estimated_delivery: '3-5 business days' },
+          { service_level: 'express', total_cost: 18.99, estimated_delivery: '2-3 business days' },
+          { service_level: 'overnight', total_cost: 25.99, estimated_delivery: '1-2 business days' },
+        ];
+        setPricingOptions(mockOptions);
         
         // Set default service level
-        if (flatOptions.length > 0 && !formData.deliverySpeed) {
-          setFormData(prev => ({ ...prev, deliverySpeed: flatOptions[0].service_level }));
+        if (mockOptions.length > 0 && !formData.deliverySpeed) {
+          setFormData(prev => ({ ...prev, deliverySpeed: mockOptions[0].service_level }));
         }
       } catch (error) {
         console.error('Error loading pricing options:', error);

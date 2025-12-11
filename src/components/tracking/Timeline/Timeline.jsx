@@ -85,10 +85,10 @@ const Timeline = ({ history = [] }) => {
                     </div>
                     <div className="text-right">
                       <div className="font-bold" style={{ color: '#2d3748', fontSize: '0.8rem' }}>
-                        {formatDateOnly(event.timestamp)}
+                        {formatDateOnly(event.date)}
                       </div>
                       <div className="font-medium" style={{ color: '#718096', fontSize: '0.7rem' }}>
-                        {formatTime(event.timestamp)}
+                        {formatTime(event.date)}
                       </div>
                     </div>
                   </div>
@@ -116,7 +116,7 @@ const Timeline = ({ history = [] }) => {
 Timeline.propTypes = {
   history: PropTypes.arrayOf(
     PropTypes.shape({
-      timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
+      date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
       status: PropTypes.string.isRequired,
       location: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,

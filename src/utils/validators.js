@@ -19,9 +19,9 @@ export const validateTrackingNumber = (trackingNumber) => {
     return true;
   }
 
-  // Also accept alphanumeric only (10-15 characters) for other formats
-  const alphanumericRegex = /^[A-Za-z0-9]{10,15}$/;
-  return alphanumericRegex.test(cleaned);
+  // Also accept any alphanumeric with optional dashes/spaces (5-30 characters)
+  const flexibleRegex = /^[A-Za-z0-9][A-Za-z0-9\- ]{3,28}[A-Za-z0-9]$/;
+  return flexibleRegex.test(cleaned);
 };
 
 /**

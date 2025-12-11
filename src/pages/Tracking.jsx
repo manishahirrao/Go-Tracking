@@ -19,66 +19,84 @@ const Tracking = () => {
     }
   }, [searchParams, submittedTrackingNumber]);
 
-  // Mock tracking data for demo purposes
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [shipment, setShipment] = useState(null);
-  const [history, setHistory] = useState([]);
+  const [trackingData, setTrackingData] = useState(null);
   const [isConnected] = useState(true);
 
-  const handleTrackingSubmit = (trackingNumber) => {
+  const apiBaseUrl = import.meta.env.VITE_TRACKING_API_BASE_URL || '';
+
+  const handleTrackingSubmit = async (trackingNumber) => {
     setSubmittedTrackingNumber(trackingNumber);
     setShowResult(true);
     setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      if (trackingNumber === 'DEMO-123456') {
-        setShipment({
-          id: trackingNumber,
-          status: 'in_transit',
-          estimated_delivery: '2025-12-15',
-          current_location: 'Distribution Center, New York',
-          recipient: 'John Doe',
-          sender: 'Jane Smith',
-          weight: '2.5 kg',
-          service_type: 'express'
-        });
-        setHistory([
-          { date: '2025-12-10 14:30', location: 'New York, NY', status: 'Package picked up', description: 'Package picked up from sender' },
-          { date: '2025-12-10 16:45', location: 'Distribution Center, New York', status: 'In transit', description: 'Package arrived at distribution center' },
-          { date: '2025-12-11 09:20', location: 'Distribution Center, New York', status: 'In transit', description: 'Package processed for delivery' }
-        ]);
-        setError(null);
-      } else {
-        setError('Tracking number not found. Please check and try again.');
-        setShipment(null);
-        setHistory([]);
+    setError(null);
+    setTrackingData(null);
+
+    try {
+      const query = new URLSearchParams({
+        trackingId: trackingNumber.trim(),
+        courier: '', // optional: let AfterShip auto-detect
+      });
+
+      const response = await fetch(`${apiBaseUrl}/api/track?${query.toString()}`);
+
+      const json = await response.json().catch(() => ({}));
+
+      if (!json.success) {
+        const errorMsg = json.error || 'Unable to track this shipment.';
+        if (json.error?.includes('Tracking not found')) {
+          setError('Tracking number not found. Please double-check the number and try again.');
+        } else if (json.error?.includes('missing API key')) {
+          setError('Service temporarily unavailable. Please try again later.');
+        } else if (json.error?.includes('Too many requests')) {
+          setError('Too many requests. Please wait a moment and try again.');
+        } else {
+          setError(errorMsg);
+        }
+        setTrackingData(null);
+        return;
       }
+
+      const data = json.data;
+      if (!data) {
+        setError('No tracking data available for this shipment.');
+        setTrackingData(null);
+        return;
+      }
+
+      const mappedTracking = {
+        trackingNumber: data.trackingNumber,
+        status: (data.status || 'pending').toLowerCase().replace(' ', '-'),
+        currentLocation: data.currentLocation || 'Unknown',
+        estimatedDelivery: data.estimatedDelivery || new Date(),
+        origin: data.origin || 'Origin not available',
+        destination: data.destination || 'Destination not available',
+        history: Array.isArray(data.history)
+          ? data.history.map((h) => ({
+              date: h.date,
+              location: h.location || 'Unknown',
+              status: h.status || 'update',
+              description: h.description || 'Status update',
+            }))
+          : [],
+      };
+
+      setTrackingData(mappedTracking);
+    } catch (err) {
+      setError('Network error while contacting tracking service.');
+      setTrackingData(null);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   const handleReset = () => {
     setSubmittedTrackingNumber('');
     setShowResult(false);
+    setTrackingData(null);
+    setError(null);
   };
-
-  // Transform shipment data to match TrackingResult component format
-  const trackingData = shipment ? {
-    trackingNumber: shipment.tracking_number,
-    status: shipment.current_status,
-    currentLocation: shipment.current_location || 'Unknown',
-    estimatedDelivery: shipment.estimated_delivery || new Date(),
-    origin: shipment.sender_address,
-    destination: shipment.recipient_address,
-    history: history.map(h => ({
-      date: h.timestamp,
-      location: h.location || 'Unknown',
-      status: h.status,
-      description: h.notes || `Package ${h.status.replace('_', ' ')}`
-    }))
-  } : null;
 
   return (
     <div>
@@ -128,7 +146,7 @@ const Tracking = () => {
             )}
 
             {/* Error Message */}
-            {error && showResult && (
+            {error && (
               <div className="max-w-2xl mx-auto mb-8 bg-red/10 border-l-4 border-red p-6 rounded-sm animate-fade-in-up">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
@@ -137,7 +155,25 @@ const Tracking = () => {
                     </svg>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-red font-medium">{error}</p>
+                    <p className="text-sm text-red font-medium mb-2">{error}</p>
+                    {error.includes('not found') && (
+                      <p className="text-xs text-red/80">
+                        Please check: <br />
+                        • Tracking number is entered correctly <br />
+                        • No extra spaces or characters <br />
+                        • Package was shipped recently
+                      </p>
+                    )}
+                    {error.includes('temporarily unavailable') && (
+                      <p className="text-xs text-red/80">
+                        Our tracking service is temporarily down. Please try again in a few minutes.
+                      </p>
+                    )}
+                    {error.includes('Too many requests') && (
+                      <p className="text-xs text-red/80">
+                        Please wait a moment before making another tracking request.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -172,7 +208,7 @@ const Tracking = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <span className="font-bold mr-3" style={{ color: '#1e40af' }}>1.</span>
-                    <span className="font-medium" style={{ color: '#4a5568' }}>Enter your tracking number in the format TRK-YYYY-NNNNNN</span>
+                    <span className="font-medium" style={{ color: '#4a5568' }}>Enter your tracking number (letters, numbers, dashes allowed)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="font-bold mr-3" style={{ color: '#1e40af' }}>2.</span>

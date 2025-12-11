@@ -1,0 +1,6 @@
+name = "aftership-tracker-worker"
+main = "worker.js"
+compatibility_date = "2024-12-01"
+
+[vars]
+# AFTERSHIP_API_KEY is stored as a secret via `wrangler secret put AFTERSHIP_API_KEY`

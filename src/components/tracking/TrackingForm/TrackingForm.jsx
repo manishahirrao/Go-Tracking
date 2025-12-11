@@ -13,11 +13,11 @@ const TrackingForm = ({ onSubmit, loading = false }) => {
 
     // Validate tracking number
     if (!validateTrackingNumber(trackingNumber)) {
-      setError('Please enter a valid tracking number (10-15 alphanumeric characters)');
-      return;
+      setError('Please enter a valid tracking number (5-30 characters, letters/numbers/dashes only)');
+      return; // Don't call onSubmit for validation errors
     }
 
-    // Call parent submit handler
+    // Call parent submit handler only for valid tracking numbers
     onSubmit(trackingNumber.trim());
   };
 
@@ -55,9 +55,41 @@ const TrackingForm = ({ onSubmit, loading = false }) => {
             aria-describedby={error ? 'tracking-error' : undefined}
           />
           {error && (
-            <p id="tracking-error" className="mt-2 text-sm text-red" role="alert">
-              {error}
-            </p>
+            <div 
+              id="tracking-error" 
+              className="mt-3 p-4 rounded-sm" 
+              role="alert"
+              style={{ 
+                backgroundColor: '#7f1d1d', 
+                borderLeft: '4px solid #450a0a',
+                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <div className="flex items-start">
+                <svg className="h-5 w-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" style={{ color: '#ffffff' }}>
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                <div className="ml-3 flex-1">
+                  <p style={{ color: '#ffffff', fontSize: '14px', fontWeight: '600', marginBottom: '4px' }}>
+                    Invalid Tracking Number
+                  </p>
+                  <p style={{ color: '#fca5a5', fontSize: '13px', marginBottom: '8px' }}>
+                    {error}
+                  </p>
+                  <div style={{ borderTop: '1px solid #991b1b', paddingTop: '8px' }}>
+                    <p style={{ fontSize: '12px', fontWeight: '500', color: '#fca5a5', marginBottom: '4px' }}>
+                      Valid format examples:
+                    </p>
+                    <ul style={{ listStyleType: 'disc', paddingLeft: '20px', fontSize: '11px', color: '#fca5a5', margin: '0' }}>
+                      <li style={{ marginBottom: '2px' }}>ABC1234567890 (letters + numbers)</li>
+                      <li style={{ marginBottom: '2px' }}>1Z9999W99999999999 (UPS style)</li>
+                      <li style={{ marginBottom: '2px' }}>TRACK-123-ABCDEF (with dashes)</li>
+                      <li style={{ marginBottom: '0' }}>1234567890 (numbers only)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
 

@@ -4,7 +4,6 @@ import './Contact.css';
 const Contact = () => {
   const handleFormSubmit = async (formData) => {
     // In a real application, this would send data to an API
-    console.log('Form submitted:', formData);
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };

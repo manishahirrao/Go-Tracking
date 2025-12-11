@@ -13,9 +13,6 @@ const TrackingFormSimple = ({ onSubmit }) => {
     e.preventDefault();
     
     const cleaned = trackingNumber.trim();
-    console.log('=== TRACKING SUBMISSION ===');
-    console.log('Input:', cleaned);
-    console.log('Length:', cleaned.length);
     
     // Allow letters, numbers, and dashes, minimum 10 characters
     if (cleaned.length >= 10) {
