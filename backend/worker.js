@@ -113,11 +113,20 @@ async function getOrCreateTracking(trackingNumber, courier, apiKey) {
     }
     
     // Other errors
-    throw new Error(createJson?.meta?.message || 'Failed to create tracking');
+    const errorMessage = createJson?.meta?.message || 'Failed to create tracking';
+    
+    // If AfterShip says tracking not found, return 404
+    if (errorCode === 404 || errorMessage.includes('not found') || errorMessage.includes('does not exist')) {
+      return { error: 'Tracking not found', code: 404, message: errorMessage, trackingNumber: trackingNumber, errorCode: errorCode, errorDetails: createJson };
+    }
+    
+    // Return error response instead of throwing an error
+    return { error: 'Failed to create tracking', code: 500, message: errorMessage, trackingNumber: trackingNumber, errorCode: errorCode, errorDetails: createJson };
     
   } catch (error) {
     console.error('Error in getOrCreateTracking:', error);
-    throw error;
+    // Return error response instead of throwing an error
+    return { error: 'Failed to create tracking', code: 500, message: error.message, trackingNumber: trackingNumber, errorDetails: error };
   }
 }
 
