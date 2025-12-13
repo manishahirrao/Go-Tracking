@@ -85,12 +85,12 @@ const Tracking = () => {
   useEffect(() => {
     const trackingId = searchParams.get('id');
     if (trackingId && !submittedTrackingNumber) {
-      setSubmittedTrackingNumber(trackingId);
-      setShowResult(true);
-      // Auto-fetch tracking data
-      handleTrackingSubmit(trackingId);
+      // Small delay to ensure everything is mounted
+      setTimeout(() => {
+        handleTrackingSubmit(trackingId);
+      }, 100);
     }
-  }, [searchParams, submittedTrackingNumber]);
+  }, [searchParams, submittedTrackingNumber, handleTrackingSubmit]);
     const handleReset = () => {
     setSubmittedTrackingNumber('');
     setShowResult(false);
