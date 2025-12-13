@@ -1,4 +1,4 @@
-const AFTERSHIP_BASE_URL = 'https://api.aftership.com/v4';
+const AFTERSHIP_BASE_URL = 'https://api.aftership.com/tracking/2025-07';
 
 function jsonResponse(body, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
@@ -14,7 +14,7 @@ function jsonResponse(body, status = 200, extraHeaders = {}) {
 }
 
 // Rate limiting with automatic cleanup
-const RATE_LIMIT = 10; // requests per minute
+const RATE_LIMIT = 10;
 const rateLimitMap = new Map();
 
 function cleanupRateLimit() {
@@ -43,7 +43,6 @@ function checkRateLimit(clientIP) {
   recentRequests.push(now);
   rateLimitMap.set(clientIP, recentRequests);
   
-  // Periodic cleanup (every ~100 requests)
   if (Math.random() < 0.01) {
     cleanupRateLimit();
   }
@@ -51,87 +50,85 @@ function checkRateLimit(clientIP) {
   return true;
 }
 
-async function getOrCreateTracking(trackingNumber, courier, apiKey) {
-  console.log('getOrCreateTracking called:', { trackingNumber, courier, apiKey: apiKey ? 'exists' : 'missing' });
+async function getTracking(trackingNumber, courier, apiKey) {
+  console.log('Getting tracking:', { trackingNumber, courier });
   
-  try {
-    // Just try POST first to create tracking
-    const createUrl = `${AFTERSHIP_BASE_URL}/trackings`;
-    const createBody = {
-      tracking: {
-        tracking_number: trackingNumber
-      }
-    };
-    
-    // Add courier slug only if provided
-    if (courier) {
-      createBody.tracking.slug = courier;
-    }
-    
-    console.log('POST URL:', createUrl);
-    console.log('POST body:', JSON.stringify(createBody));
-    
-    const createRes = await fetch(createUrl, {
-      method: 'POST',
-      headers: {
-        'aftership-api-key': apiKey,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createBody)
-    });
-    
-    console.log('POST response status:', createRes.status);
-    
-    const createJson = await createRes.json().catch(() => ({}));
-    console.log('POST response:', createJson);
-    
-    // If create succeeded, return the created tracking
-    if (createRes.ok && createJson?.data?.tracking) {
-      return createJson;
-    }
-    
-    // If tracking already exists (4003 or 4004 error codes), fetch it
-    const errorCode = createJson?.meta?.code;
-    if (errorCode === 4003 || errorCode === 4004 || createRes.status === 409) {
-      console.log('Tracking already exists, fetching it');
-      const getUrl = `${AFTERSHIP_BASE_URL}/trackings/${encodeURIComponent(trackingNumber)}`;
-      
-      const getRes = await fetch(getUrl, {
-        method: 'GET',
-        headers: {
-          'aftership-api-key': apiKey,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      if (!getRes.ok) {
-        const getJson = await getRes.json().catch(() => ({}));
-        throw new Error(getJson?.meta?.message || 'Failed to fetch tracking');
-      }
-      
-      return await getRes.json();
-    }
-    
-    // Other errors
-    const errorMessage = createJson?.meta?.message || 'Failed to create tracking';
-    
-    // If AfterShip says tracking not found, return 404
-    if (errorCode === 404 || errorMessage.includes('not found') || errorMessage.includes('does not exist')) {
-      return { error: 'Tracking not found', code: 404, message: errorMessage, trackingNumber: trackingNumber, errorCode: errorCode, errorDetails: createJson };
-    }
-    
-    // Return error response instead of throwing an error
-    return { error: 'Failed to create tracking', code: 500, message: errorMessage, trackingNumber: trackingNumber, errorCode: errorCode, errorDetails: createJson };
-    
-  } catch (error) {
-    console.error('Error in getOrCreateTracking:', error);
-    // Return error response instead of throwing an error
-    return { error: 'Failed to create tracking', code: 500, message: error.message, trackingNumber: trackingNumber, errorDetails: error };
+  // Use GET /trackings with query parameters to search for the tracking
+  const params = new URLSearchParams({
+    tracking_numbers: trackingNumber,
+    ...(courier && { slug: courier }),
+  });
+  
+  const searchUrl = `${AFTERSHIP_BASE_URL}/trackings?${params.toString()}`;
+  console.log('Searching with URL:', searchUrl);
+  
+  const searchRes = await fetch(searchUrl, {
+    method: 'GET',
+    headers: {
+      'as-api-key': apiKey,
+      'Content-Type': 'application/json',
+    },
+  });
+  
+  console.log('Search response status:', searchRes.status);
+  
+  const searchJson = await searchRes.json().catch(() => ({}));
+  console.log('Search response:', JSON.stringify(searchJson).substring(0, 500));
+  
+  if (!searchRes.ok) {
+    const errorMsg = searchJson?.meta?.message || 'Failed to search tracking';
+    console.error('Search failed:', errorMsg);
+    throw new Error(errorMsg);
   }
+  
+  // Check if we found the tracking
+  const trackings = searchJson?.data?.trackings || [];
+  
+  if (trackings.length === 0) {
+    console.log('No tracking found, will try to create it');
+    return null; // Will create it
+  }
+  
+  // Found it! Return the first match
+  console.log('Found tracking:', trackings[0].id);
+  return { data: { tracking: trackings[0] } };
+}
+
+async function createTracking(trackingNumber, courier, apiKey) {
+  console.log('Creating tracking:', { trackingNumber, courier });
+  
+  const createUrl = `${AFTERSHIP_BASE_URL}/trackings`;
+  const createBody = {
+    tracking_number: trackingNumber,
+  };
+  
+  if (courier) {
+    createBody.slug = courier;
+  }
+  
+  const createRes = await fetch(createUrl, {
+    method: 'POST',
+    headers: {
+      'as-api-key': apiKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(createBody)
+  });
+  
+  console.log('Create response status:', createRes.status);
+  
+  const createJson = await createRes.json().catch(() => ({}));
+  console.log('Create response:', JSON.stringify(createJson).substring(0, 500));
+  
+  if (!createRes.ok) {
+    const errorMsg = createJson?.meta?.message || 'Failed to create tracking';
+    throw new Error(errorMsg);
+  }
+  
+  return createJson;
 }
 
 async function handleTrackRequest(request, env) {
-  // Handle CORS preflight
   if (request.method === 'OPTIONS') {
     return jsonResponse({}, 204);
   }
@@ -151,7 +148,6 @@ async function handleTrackRequest(request, env) {
     );
   }
   
-  // Rate limiting
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
   if (!checkRateLimit(clientIP)) {
     return jsonResponse(
@@ -166,20 +162,29 @@ async function handleTrackRequest(request, env) {
   }
   
   if (!env.AFTERSHIP_API_KEY) {
-    console.log('API KEY MISSING from env');
     return jsonResponse(
-      { success: false, error: 'Service temporarily unavailable - API key missing' },
+      { success: false, error: 'Service temporarily unavailable' },
       500
     );
   }
   
-  console.log('API KEY exists:', env.AFTERSHIP_API_KEY.substring(0, 10) + '...');
-  
   try {
-    const json = await getOrCreateTracking(trackingId, courier, env.AFTERSHIP_API_KEY);
+    console.log('Fetching tracking for:', trackingId);
+    
+    // Try to get existing tracking first
+    let json = await getTracking(trackingId, courier, env.AFTERSHIP_API_KEY);
+    
+    // If not found, create it
+    if (!json) {
+      console.log('Tracking not found, creating new one');
+      json = await createTracking(trackingId, courier, env.AFTERSHIP_API_KEY);
+    }
+    
+    console.log('Received tracking data');
     
     const tracking = json?.data?.tracking;
     if (!tracking) {
+      console.error('No tracking object in response');
       return jsonResponse(
         { success: false, error: 'Invalid response from tracking provider' },
         500
@@ -189,20 +194,21 @@ async function handleTrackRequest(request, env) {
     const checkpoints = Array.isArray(tracking.checkpoints) ? tracking.checkpoints : [];
     const lastCheckpoint = checkpoints[checkpoints.length - 1] || null;
     
-    // Map to your response format
     const mapped = {
-      trackingNumber: tracking.tracking_number || trackingId,
-      courier: tracking.slug || courier,
+      trackingNumber: tracking.tracking_number,
+      courier: tracking.slug,
       courierName: tracking.courier_name || null,
       status: tracking.tag || 'unknown',
       statusDetail: tracking.subtag || null,
       currentLocation: lastCheckpoint?.location || lastCheckpoint?.city || 'Unknown',
       estimatedDelivery: tracking.expected_delivery || null,
-      actualDelivery: tracking.delivery_time || null,
-      origin: tracking.origin_country_iso3 || null,
-      destination: tracking.destination_country_iso3 || null,
+      actualDelivery: tracking.delivery_time || tracking.shipment_delivery_date || null,
+      origin: tracking.origin_country_region || null,
+      destination: tracking.destination_country_region || null,
       shipmentType: tracking.shipment_type || null,
+      signedBy: tracking.signed_by || null,
       lastUpdated: tracking.updated_at || null,
+      isActive: tracking.active !== false,
       history: checkpoints.map((cp) => ({
         date: cp.checkpoint_time || cp.created_at || null,
         location: cp.location || cp.city || 'Unknown',
@@ -218,12 +224,10 @@ async function handleTrackRequest(request, env) {
     console.error('Tracking error:', err);
     console.error('Error details:', {
       message: err?.message,
-      stack: err?.stack,
       trackingId,
       courier
     });
     
-    // Check for specific error types
     const errMsg = err?.message || String(err);
     
     if (errMsg.includes('not found') || errMsg.includes('404')) {
@@ -251,7 +255,12 @@ async function handleTrackRequest(request, env) {
       { 
         success: false, 
         error: 'Unable to fetch tracking information',
-        details: process.env.NODE_ENV === 'development' ? errMsg : undefined
+        debugInfo: {
+          errorMessage: errMsg,
+          trackingId: trackingId,
+          courier: courier,
+          timestamp: new Date().toISOString()
+        }
       },
       500
     );
@@ -261,34 +270,60 @@ async function handleTrackRequest(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-
+    
     if (url.pathname === '/api/track') {
       return handleTrackRequest(request, env);
     }
-
+    
+    // Endpoint to list all trackings
+    if (url.pathname === '/api/list') {
+      try {
+        const listRes = await fetch(`${AFTERSHIP_BASE_URL}/trackings?page=1&limit=50`, {
+          method: 'GET',
+          headers: {
+            'as-api-key': env.AFTERSHIP_API_KEY,
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        const data = await listRes.json();
+        const trackings = data?.data?.trackings || [];
+        const simplified = trackings.map(t => ({
+          id: t.id,
+          tracking_number: t.tracking_number,
+          slug: t.slug,
+          courier_name: t.courier_name,
+          tag: t.tag,
+          active: t.active,
+          origin: t.origin_country_region,
+          destination: t.destination_country_region
+        }));
+        
+        return jsonResponse({
+          success: listRes.ok,
+          total: data?.data?.pagination?.total || 0,
+          trackings: simplified
+        });
+      } catch (error) {
+        return jsonResponse({
+          success: false,
+          error: error.message
+        }, 500);
+      }
+    }
+    
     if (url.pathname === '/') {
       return jsonResponse({ 
         service: 'AfterShip Tracking API',
-        version: '2.0',
+        version: '3.0',
         apiVersion: '2025-07',
         endpoints: {
           track: '/api/track?trackingId=XXX&courier=YYY (courier optional)',
-          test: '/test'
+          list: '/api/list (view all trackings in your account)'
         }
       });
     }
-
-    if (url.pathname === '/test') {
-      return jsonResponse({ 
-        message: 'Worker is working!',
-        timestamp: new Date().toISOString(),
-        env: {
-          hasApiKey: !!env.AFTERSHIP_API_KEY,
-          apiKeyPreview: env.AFTERSHIP_API_KEY ? env.AFTERSHIP_API_KEY.substring(0, 10) + '...' : 'missing'
-        }
-      });
-    }
-
+    
     return jsonResponse({ success: false, error: 'Not found' }, 404);
   },
 };
