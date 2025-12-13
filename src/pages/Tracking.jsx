@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader/PageHeader';
 import TrackingForm from '../components/tracking/TrackingForm/TrackingForm';
 import TrackingResult from '../components/tracking/TrackingResult/TrackingResult';
@@ -7,6 +7,7 @@ import './Tracking.css';
 
 const Tracking = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [submittedTrackingNumber, setSubmittedTrackingNumber] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -90,12 +91,15 @@ const Tracking = () => {
         handleTrackingSubmit(trackingId);
       }, 100);
     }
-  }, [searchParams, submittedTrackingNumber, handleTrackingSubmit]);
+  }, [searchParams]);
+
     const handleReset = () => {
     setSubmittedTrackingNumber('');
     setShowResult(false);
     setTrackingData(null);
     setError(null);
+    // Navigate to clean URL
+    navigate('/tracking');
   };
 
   return (
