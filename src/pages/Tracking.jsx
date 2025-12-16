@@ -17,39 +17,16 @@ const Tracking = () => {
     setSubmittedTrackingNumber(trackingNumber);
     setLoading(true);
     setError(null);
-    setStatusText('Initializing tracking system...');
-    console.log('Set initial status: Initializing tracking system...');
-
-    // Automatic text changes with variable timing
-    const messages = [
-      'Validating tracking number format...',
-      'Connecting to Australia Post servers...',
-      'Retrieving package information...',
-      'Preparing tracking details...',
-      'Almost ready...',
-      'Opening tracking page...'
-    ];
-
-    let delay = 0;
-    messages.forEach((message, index) => {
-      const baseDelay = index === 0 ? 800 : index === 1 ? 1200 : index === 2 ? 1500 : index === 3 ? 1800 : index === 4 ? 1200 : 800;
-      const randomVariation = Math.random() * 400 - 200;
-      delay += baseDelay + randomVariation;
-      
-      console.log(`Setting timeout for message ${index}: "${message}" at ${delay}ms`);
-      setTimeout(() => {
-        console.log(`Changing status to: "${message}"`);
-        setStatusText(message);
-      }, delay);
-    });
+    setStatusText('Opening tracking page...');
+    console.log('Opening Australia Post tracking immediately (direct user action - not blocked!)');
     
-    // Navigate to same tab after approximately 10 seconds (always works!)
-    console.log(`Setting final redirect at ${delay + 500}ms`);
+    // Open immediately in new tab (direct user action - never blocked!)
+    window.open('https://auspost.com.au/mypost/track/search', '_blank', 'noopener,noreferrer,width=1200,height=800');
+    
+    // Keep loading state for a moment to show the processing UI
     setTimeout(() => {
-      console.log('Navigating to Australia Post tracking (same tab - always works!)');
-      window.location.href = 'https://auspost.com.au/mypost/track/search';
       setLoading(false);
-    }, delay + 500);
+    }, 2000);
   };
 
   // Auto-submit if tracking number is in URL
