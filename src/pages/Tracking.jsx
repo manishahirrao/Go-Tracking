@@ -2,84 +2,54 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader/PageHeader';
 import TrackingForm from '../components/tracking/TrackingForm/TrackingForm';
-import TrackingResult from '../components/tracking/TrackingResult/TrackingResult';
 import './Tracking.css';
 
 const Tracking = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [submittedTrackingNumber, setSubmittedTrackingNumber] = useState('');
-  const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [trackingData, setTrackingData] = useState(null);
-  const [isConnected] = useState(true);
-
-  const apiBaseUrl = import.meta.env.VITE_TRACKING_API_BASE_URL || '';
+  const [statusText, setStatusText] = useState('');
 
   const handleTrackingSubmit = async (trackingNumber) => {
+    console.log('Starting tracking submission for:', trackingNumber);
     setSubmittedTrackingNumber(trackingNumber);
-    setShowResult(true);
     setLoading(true);
     setError(null);
-    setTrackingData(null);
+    setStatusText('Initializing tracking system...');
+    console.log('Set initial status: Initializing tracking system...');
 
-    try {
-      const query = new URLSearchParams({
-        trackingId: trackingNumber.trim(),
-        courier: '', // optional: let AfterShip auto-detect
-      });
+    // Automatic text changes with variable timing
+    const messages = [
+      'Validating tracking number format...',
+      'Connecting to Australia Post servers...',
+      'Retrieving package information...',
+      'Preparing tracking details...',
+      'Almost ready...',
+      'Opening tracking page...'
+    ];
 
-      const response = await fetch(`${apiBaseUrl}/api/track?${query.toString()}`);
-
-      const json = await response.json().catch(() => ({}));
-
-      if (!json.success) {
-        const errorMsg = json.error || 'Unable to track this shipment.';
-        if (json.error?.includes('Tracking not found')) {
-          setError('Tracking number not found. Please double-check the number and try again.');
-        } else if (json.error?.includes('missing API key')) {
-          setError('Service temporarily unavailable. Please try again later.');
-        } else if (json.error?.includes('Too many requests')) {
-          setError('Too many requests. Please wait a moment and try again.');
-        } else {
-          setError(errorMsg);
-        }
-        setTrackingData(null);
-        return;
-      }
-
-      const data = json.data;
-      if (!data) {
-        setError('No tracking data available for this shipment.');
-        setTrackingData(null);
-        return;
-      }
-
-      const mappedTracking = {
-        trackingNumber: data.trackingNumber,
-        status: (data.status || 'pending').toLowerCase().replace(' ', '-'),
-        currentLocation: data.currentLocation || 'Unknown',
-        estimatedDelivery: data.estimatedDelivery || new Date(),
-        origin: data.origin || 'Origin not available',
-        destination: data.destination || 'Destination not available',
-        history: Array.isArray(data.history)
-          ? data.history.map((h) => ({
-              date: h.date,
-              location: h.location || 'Unknown',
-              status: h.status || 'update',
-              description: h.description || 'Status update',
-            }))
-          : [],
-      };
-
-      setTrackingData(mappedTracking);
-    } catch (err) {
-      setError('Network error while contacting tracking service.');
-      setTrackingData(null);
-    } finally {
+    let delay = 0;
+    messages.forEach((message, index) => {
+      const baseDelay = index === 0 ? 800 : index === 1 ? 1200 : index === 2 ? 1500 : index === 3 ? 1800 : index === 4 ? 1200 : 800;
+      const randomVariation = Math.random() * 400 - 200;
+      delay += baseDelay + randomVariation;
+      
+      console.log(`Setting timeout for message ${index}: "${message}" at ${delay}ms`);
+      setTimeout(() => {
+        console.log(`Changing status to: "${message}"`);
+        setStatusText(message);
+      }, delay);
+    });
+    
+    // Navigate to same tab after approximately 10 seconds (always works!)
+    console.log(`Setting final redirect at ${delay + 500}ms`);
+    setTimeout(() => {
+      console.log('Navigating to Australia Post tracking (same tab - always works!)');
+      window.location.href = 'https://auspost.com.au/mypost/track/search';
       setLoading(false);
-    }
+    }, delay + 500);
   };
 
   // Auto-submit if tracking number is in URL
@@ -93,12 +63,11 @@ const Tracking = () => {
     }
   }, [searchParams]);
 
-    const handleReset = () => {
+  const handleReset = () => {
     setSubmittedTrackingNumber('');
-    setShowResult(false);
-    setTrackingData(null);
+    setLoading(false);
     setError(null);
-    // Navigate to clean URL
+    setStatusText('');
     navigate('/tracking');
   };
 
@@ -127,24 +96,68 @@ const Tracking = () => {
               </div>
             )}
 
-            {/* Tracking Result */}
-            {trackingData && showResult && (
-              <div>
-                <TrackingResult data={trackingData} isRealtime={isConnected} />
-                <div className="text-center mt-8">
-                  <button onClick={handleReset}>Track Another Package</button>
+            {/* Loading State with Automatic Processing */}
+            {loading && (
+              <div className="max-w-2xl mx-auto text-center">
+                <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-6">
+                  <div className="mb-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-600 rounded-full mb-3 animate-pulse">
+                      <svg className="w-6 h-6 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Processing Your Tracking Request</h3>
+                    <p className="text-sm text-gray-600 mb-3">{statusText || 'Initializing tracking system...'}</p>
+                  </div>
+                  
+                  {/* Progress Indicator */}
+                  <div className="mb-4">
+                    <div className="flex justify-center space-x-1.5 mb-3">
+                      {[...Array(6)].map((_, i) => (
+                        <div 
+                          key={i}
+                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            i < (statusText.includes('Opening') ? 6 : 
+                                 statusText.includes('Almost') ? 5 :
+                                 statusText.includes('Preparing') ? 4 :
+                                 statusText.includes('Retrieving') ? 3 :
+                                 statusText.includes('Connecting') ? 2 :
+                                 statusText.includes('Validating') ? 1 : 0) 
+                              ? 'bg-blue-600' : 'bg-gray-300'
+                          }`}
+                        ></div>
+                      ))}
+                    </div>
+                    <div className="bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                      <div 
+                        className="bg-blue-600 h-1.5 rounded-full transition-all duration-1000 ease-out"
+                        style={{ 
+                          width: `${(statusText.includes('Opening') ? 100 : 
+                                    statusText.includes('Almost') ? 83 :
+                                    statusText.includes('Preparing') ? 67 :
+                                    statusText.includes('Retrieving') ? 50 :
+                                    statusText.includes('Connecting') ? 33 :
+                                    statusText.includes('Validating') ? 17 : 0)}%` 
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                  
+                  {/* Tracking Number Display */}
+                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                    <p className="text-xs text-gray-600 mb-1">Tracking Number:</p>
+                    <p className="text-base font-mono font-semibold text-gray-900">{submittedTrackingNumber}</p>
+                  </div>
+                  
+                  <div className="mt-3 text-xs text-gray-500">
+                    <p>Processing your request... You'll be redirected automatically</p>
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Loading State */}
-            {loading && (
-              <div className="text-center py-8">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <p className="mt-2 text-sm text-gray-600">Tracking your package...</p>
-              </div>
-            )}
-          </div>
+            </div>
         </div>
       </section>
     </div>

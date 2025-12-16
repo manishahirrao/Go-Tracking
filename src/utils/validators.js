@@ -12,7 +12,7 @@ export const validateTrackingNumber = (trackingNumber) => {
 
   const cleaned = trackingNumber.trim();
   
-  // Only check basic requirements - let AfterShip handle format validation
+  // Basic validation for tracking numbers
   // Minimum 3 characters, maximum 50 characters (typical tracking number limits)
   return cleaned.length >= 3 && cleaned.length <= 50;
 };
