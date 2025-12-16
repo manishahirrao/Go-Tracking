@@ -11,6 +11,7 @@ const Tracking = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [statusText, setStatusText] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleTrackingSubmit = async (trackingNumber) => {
     console.log('Starting tracking submission for:', trackingNumber);
@@ -21,12 +22,14 @@ const Tracking = () => {
     console.log('Opening Australia Post tracking immediately (direct user action - not blocked!)');
     
     // Open immediately in new tab (direct user action - never blocked!)
-    window.open('https://auspost.com.au/mypost/track/search', '_blank', 'noopener,noreferrer,width=1200,height=800');
+    window.open('https://auspost.com.au/mypost/track/search', '_blank');
     
-    // Keep loading state for a moment to show the processing UI
+    // Show success message after opening
     setTimeout(() => {
+      setStatusText('Tracking page opened successfully!');
+      setShowSuccess(true);
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   // Auto-submit if tracking number is in URL
@@ -45,6 +48,7 @@ const Tracking = () => {
     setLoading(false);
     setError(null);
     setStatusText('');
+    setShowSuccess(false);
     navigate('/tracking');
   };
 
@@ -129,6 +133,43 @@ const Tracking = () => {
                   
                   <div className="mt-3 text-xs text-gray-500">
                     <p>Processing your request... You'll be redirected automatically</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Success Message */}
+            {showSuccess && (
+              <div className="max-w-2xl mx-auto text-center">
+                <div className="bg-white border border-green-200 rounded-xl p-6 shadow-lg">
+                  <div className="mb-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-green-600 rounded-full mb-3">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-green-800 mb-2">Tracking Page Opened Successfully!</h3>
+                    <p className="text-green-700 mb-4">Australia Post tracking page has been opened in a new tab</p>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                    <p className="text-sm text-green-600 mb-1">Tracking Number:</p>
+                    <p className="text-base font-mono font-semibold text-green-800">{submittedTrackingNumber}</p>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <button 
+                      onClick={() => window.open('https://auspost.com.au/mypost/track/search', '_blank')}
+                      className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors font-medium mr-2"
+                    >
+                      Open Tracking Page Again
+                    </button>
+                    <button 
+                      onClick={handleReset}
+                      className="text-green-600 hover:text-green-800 underline font-medium"
+                    >
+                      Track Another Package
+                    </button>
                   </div>
                 </div>
               </div>
