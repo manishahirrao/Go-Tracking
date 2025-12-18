@@ -27,7 +27,39 @@ const Header = ({ sticky = true }) => {
           className="mobile-menu-overlay"
           onClick={() => setMobileMenuOpen(false)}
           aria-hidden="true"
-        />
+        >
+          <div className="mobile-menu-content">
+            {/* Mobile Logo */}
+            <div className="mobile-menu-logo">
+              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                <img 
+                  src="/logo-black.png" 
+                  alt="GO Courier Logo"
+                />
+              </Link>
+            </div>
+            
+            {/* Mobile Navigation */}
+            <ul className="mobile-menu-nav">
+              {navItems.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={location.pathname === item.path ? 'active' : ''}
+                    style={location.pathname === item.path ? { 
+                      color: '#b71521', 
+                      fontWeight: '700', 
+                      textDecoration: 'none' 
+                    } : {}}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       )}
 
       {/* Main Navigation */}
@@ -47,7 +79,7 @@ const Header = ({ sticky = true }) => {
               <span className="icon-bar"></span>
             </button>
 
-            {/* Logo */}
+            {/* Logo - Left Side */}
             <Link to="/" className="navbar-logo">
               <img 
                 src="/logo-black.png" 
@@ -55,8 +87,8 @@ const Header = ({ sticky = true }) => {
               />
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className={`navbar-collapse ${mobileMenuOpen ? 'open' : ''}`}>
+            {/* Desktop Navigation Only */}
+            <div className="navbar-nav">
               <ul className="navbar-nav theme-menu">
                 {navItems.map((item) => (
                   <li key={item.path}>
