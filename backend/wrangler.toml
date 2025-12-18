@@ -1,6 +1,0 @@
-name = "courier-tracking-worker"
-main = "worker.js"
-compatibility_date = "2024-12-01"
-
-[vars]
-# API keys removed - using mock data instead

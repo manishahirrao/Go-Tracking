@@ -1,6 +1,6 @@
 /* Tracking Page Styles */
 .tracking-wrap {
-  background: #f8f9fa;
+  background: #b71521;
 }
 
 /* Tracking Hero Section with Background */
@@ -334,6 +334,104 @@
 /* Enhanced Tracking Results Styles */
 .tracking-results-section {
   min-height: 400px;
+}
+
+/* Unified tracking result cards (loading + success) */
+.tracking-result-wrap {
+  margin-top: 30px;
+}
+
+.tracking-result-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--color-black);
+}
+
+.tracking-result-card--loading {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.tracking-result-card--success {
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+/* Typography inside tracking results */
+.tracking-result-card h3 {
+  color: var(--color-black);
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-bold);
+}
+
+.tracking-result-card p {
+  color: var(--color-gray);
+}
+
+.tracking-result-card .tracking-number-display {
+  color: var(--color-black);
+  font-family: var(--font-mono, monospace);
+  font-weight: var(--font-weight-bold);
+}
+
+.tracking-result-card .tracking-icon {
+  color: var(--color-white);
+}
+
+.tracking-result-card .success-icon {
+  color: var(--color-white);
+}
+
+
+
+/* Tracking number container */
+.tracking-number-container {
+  background: var(--color-white);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius-sm);
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(183, 21, 33, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tracking-result-secondary-actions {
+  margin-top: 10px;
+}
+
+.tracking-result-primary-btn {
+  background: #b71521;
+  color: var(--color-white);
+  border-radius: var(--border-radius-sm);
+  text-transform: uppercase;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.03em;
+  padding: 12px 30px;
+  box-shadow: 0 4px 15px rgba(183, 21, 33, 0.25);
+  transition: var(--transition-fast);
+  cursor: pointer;
+  border: none;
+}
+
+.tracking-result-primary-btn:hover {
+  background: #9a4018;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(183, 21, 33, 0.35);
+}
+
+.tracking-result-link-btn {
+  font-size: var(--font-size-sm);
+  color: #b71521;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.tracking-result-link-btn:hover {
+  color: #9a4018;
+  text-decoration: underline;
 }
 
 /* Spinner for loading state */

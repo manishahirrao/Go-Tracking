@@ -83,9 +83,25 @@
 }
 
 .theme-menu li a:hover,
-.theme-menu li button:hover,
+.theme-menu li button:hover {
+  color: #b71521 !important;
+  font-weight: 700 !important;
+}
+
+.navbar-nav.theme-menu li.active a {
+  color: #b71521 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
 .theme-menu li.active a {
-  color: var(--color-primary);
+  color: #b71521 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+.theme-menu li.active a::after {
+  display: none;
 }
 
 .search-btn {

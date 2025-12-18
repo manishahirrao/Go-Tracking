@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 0 80px;
+  padding: 0px 0 80px;
 }
 
 .hero-banner::before {
@@ -40,7 +40,7 @@
   list-style: none;
   margin: 0 0 30px;
   padding: 0;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
+  
 }
 
 .hero-tags li a {
@@ -49,7 +49,7 @@
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   text-decoration: none;
-  transition: var(--transition-fast);
+  
   position: relative;
   padding-bottom: 5px;
 }
@@ -62,7 +62,7 @@
   width: 0;
   height: 2px;
   background: var(--color-primary);
-  transition: width 0.3s ease;
+  
 }
 
 .hero-tags li a:hover::after {
@@ -77,7 +77,7 @@
   color: var(--color-white);
   text-transform: uppercase;
   margin: 0 0 20px 0;
-  animation: fadeInUp 0.8s ease-out 0.4s both;
+  
 }
 
 .hero-title .text-primary {
@@ -91,7 +91,7 @@
   max-width: 700px;
   margin: 0 auto 40px;
   line-height: 1.6;
-  animation: fadeInUp 0.8s ease-out 0.6s both;
+ 
 }
 
 /* Hero Track Box */
@@ -102,7 +102,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   max-width: 700px;
   margin: 0 auto;
-  animation: fadeInUp 0.8s ease-out 0.8s both;
+ 
 }
 
 .track-box-title {
@@ -141,6 +141,7 @@
   font-size: var(--font-size-base);
   transition: var(--transition-fast);
   font-family: var(--font-primary);
+  color: black;
 }
 
 .track-input:focus {

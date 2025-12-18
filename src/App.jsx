@@ -7,14 +7,11 @@ import { ToastProvider } from './contexts/ToastContext';
 // Lazy load pages for code splitting
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
-const Quote = lazy(() => import('./pages/Quote'));
 const Tracking = lazy(() => import('./pages/Tracking'));
-const Contact = lazy(() => import('./pages/Contact'));
-const FAQ = lazy(() => import('./pages/FAQ'));
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const TermsConditions = lazy(() => import('./pages/TermsConditions'));
-const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
-const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Cookies = lazy(() => import('./pages/Cookies'));
+const Disclaimer = lazy(() => import('./pages/Disclaimer'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Loading fallback component
@@ -35,14 +32,11 @@ function App() {
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="about" element={<About />} />
-                <Route path="quote" element={<Quote />} />
                 <Route path="tracking" element={<Tracking />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="faq" element={<FAQ />} />
-                <Route path="privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="terms-conditions" element={<TermsConditions />} />
-                <Route path="cookie-policy" element={<CookiePolicy />} />
-                <Route path="refund-policy" element={<RefundPolicy />} />
+                <Route path="privacy" element={<Privacy />} />
+                <Route path="terms" element={<Terms />} />
+                <Route path="cookies" element={<Cookies />} />
+                <Route path="disclaimer" element={<Disclaimer />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>

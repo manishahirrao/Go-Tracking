@@ -1,52 +1,37 @@
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import './FooterMain.css';
 
 const FooterMain = () => {
   const quickLinks = [
     { label: 'Home', url: '/' },
     { label: 'Track Package', url: '/tracking' },
-    { label: 'About Us', url: '/about' },
-    { label: 'Contact Us', url: '/contact' }
+    { label: 'About', url: '/about' },
   ];
 
-  const importantLinks = [
-    { label: 'FAQ', url: '/faq' },
-    { label: 'Privacy Policy', url: '/privacy-policy' },
-    { label: 'Terms & Conditions', url: '/terms-conditions' },
-    { label: 'Refund Policy', url: '/refund-policy' }
-  ];
-
-  const socialLinks = [
-    { icon: <FaFacebook />, url: 'https://facebook.com/gocourier', label: 'Facebook' },
-    { icon: <FaTwitter />, url: 'https://twitter.com/gocourier', label: 'Twitter' },
-    { icon: <FaInstagram />, url: 'https://instagram.com/gocourier', label: 'Instagram' },
-    { icon: <FaLinkedin />, url: 'https://linkedin.com/company/gocourier', label: 'LinkedIn' }
+  const legalLinks = [
+    { label: 'Privacy Policy', url: '/privacy' },
+    { label: 'Terms of Service', url: '/terms' },
+    { label: 'Cookie Policy', url: '/cookies' },
+    { label: 'Disclaimer', url: '/disclaimer' },
   ];
 
   return (
-    <div className="footer-main pad-120 white-clr">
+    <div className="footer-main">
       <div className="theme-container container">
         <div className="footer-grid">
           {/* Logo Column */}
           <div className="footer-widget">
             <Link to="/">
-              <img className="footer-logo" alt="GO Courier Logo" src="/logo-white.png" />
+              <img className="footer-logo" alt="Australia Post Tracking Helper" src="/logo-2.png" />
             </Link>
             <p className="footer-description">
-              Your trusted courier partner since 2008. Fast, secure, and reliable delivery 
-              services to over 200 countries worldwide. Available 24/7 for all your shipping needs.
+              Your independent Australia Post tracking helper. Quick access to official tracking pages.
             </p>
-            <div className="footer-contact-info">
-              <p><strong>Email:</strong> support@gocourier.com</p>
-              <p><strong>Phone:</strong> +1 (800) 555-0123</p>
-              <p><strong>Hours:</strong> 24/7 Customer Support</p>
-            </div>
           </div>
 
           {/* Quick Links Column */}
           <div className="footer-widget">
-            <h2 className="title-1 fw-900">quick links</h2>
+            <h2 className="title-1 fw-900">Quick Links</h2>
             <ul className="footer-links">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -56,54 +41,27 @@ const FooterMain = () => {
             </ul>
           </div>
 
-          {/* Important Links Column */}
+          {/* Legal Pages Column */}
           <div className="footer-widget">
-            <h2 className="title-1 fw-900">legal</h2>
+            <h2 className="title-1 fw-900">Legal</h2>
             <ul className="footer-links">
-              {importantLinks.map((link, index) => (
+              {legalLinks.map((link, index) => (
                 <li key={index}>
                   <Link to={link.url}>{link.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
-
-          {/* Get in Touch Column */}
-          <div className="footer-widget">
-            <h2 className="title-1 fw-900">get in touch</h2>
-            <ul className="social-icons list-inline">
-              {socialLinks.map((social, index) => (
-                <li key={index}>
-                  <a 
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="social-icon"
-                  >
-                    {social.icon}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <div className="payment-icons-wrapper">
-              <p className="payment-label">We Accept:</p>
-              <ul className="payment-icons list-inline">
-                <li>
-                  <img alt="Visa" src="/icons/payment-1.png" />
-                </li>
-                <li>
-                  <img alt="Mastercard" src="/icons/payment-2.png" />
-                </li>
-                <li>
-                  <img alt="PayPal" src="/icons/payment-3.png" />
-                </li>
-                <li>
-                  <img alt="American Express" src="/icons/payment-4.png" />
-                </li>
-              </ul>
-            </div>
-          </div>
+        </div>
+      </div>
+      
+      {/* Horizontal Disclaimer at Bottom */}
+      <div className="footer-disclaimer-bottom">
+        <div className="theme-container container">
+          <p className="disclaimer-text">
+            Independent tracking platform - Not affiliated with Australia Post. All data redirects to official sites. 
+            <Link to="/disclaimer" className="disclaimer-link">Full Disclaimer</Link>
+          </p>
         </div>
       </div>
     </div>

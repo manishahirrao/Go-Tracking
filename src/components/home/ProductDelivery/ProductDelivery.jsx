@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import './ProductDelivery.css';
 
 const ProductDelivery = ({ 
-  title = "Get the fastest product delivery",
-  description = "Experience lightning-fast delivery with our advanced logistics network. We leverage cutting-edge technology and strategic partnerships to ensure your packages reach their destination in record time. With real-time tracking, multiple delivery speed options, and a 99.8% on-time delivery rate, we're committed to exceeding your expectations every single time."
+  title = "Why use this Australia Post tracking helper?",
+  description = "Instead of searching around the web, you can use this simple tool to jump straight to the official Australia Post tracking page. No extra forms, no confusion  just enter your tracking ID and go directly to your shipment details."
 }) => {
   return (
     <section className="prod-delivery pad-120">
@@ -12,17 +12,17 @@ const ProductDelivery = ({
           <div className=" rel-div">
             <div className="pb-50 hidden-xs"></div>
             <h2 className="section-title">
-              Get the <span className="theme-clr">fastest</span> product delivery
+              Simple, <span className="theme-clr">trusted</span> tracking assistance
             </h2>
             <p className="fs-16 delivery-description">
               {description}
             </p>
             <div className="delivery-features">
               <ul className="features-list">
-                <li>✓ Same-day delivery available in major cities</li>
-                <li>✓ 99.8% on-time delivery rate</li>
-                <li>✓ Real-time GPS tracking</li>
-                <li>✓ Secure handling and insurance included</li>
+                <li>Direct link to official Australia Post tracking</li>
+                <li>No account or login required</li>
+                <li>Clear messaging that we are not an official AusPost site</li>
+                <li>Designed for quick, hassle-free tracking checks</li>
               </ul>
             </div>
             <div className=" hidden-xs"></div>

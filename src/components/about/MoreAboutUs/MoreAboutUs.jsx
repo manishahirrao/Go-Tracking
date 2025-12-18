@@ -4,17 +4,20 @@ import './MoreAboutUs.css';
 const MoreAboutUs = ({ cards }) => {
   const defaultCards = [
     {
-      title: 'what we do',
-      description: 'We provide comprehensive courier and logistics solutions for businesses and individuals worldwide. From same-day local deliveries to international freight shipping, our services are designed to meet diverse shipping needs with reliability and efficiency. Our advanced tracking technology ensures complete visibility throughout the delivery process.'
+      title: 'What We Do',
+      description:
+        'We help you quickly access the official Australia Post tracking page for your parcel. Instead of searching through menus, you enter your tracking number once and we guide you straight to the right place.',
     },
     {
-      title: 'Our History',
-      description: 'Established in 2008, we started as a small local courier service with just 5 delivery vehicles. Through dedication to customer satisfaction and continuous innovation, we have grown into a global logistics provider serving over 200 countries. Our journey reflects our commitment to excellence and adapting to the evolving needs of modern commerce.'
+      title: 'How We Work',
+      description:
+        'You enter your tracking ID here, we verify the format, and then we open the official Australia Post tracking details in a new tab. All final shipment information always comes from Australia Post directly.',
     },
     {
-      title: 'our mission',
-      description: 'Our mission is to connect people and businesses across the globe through fast, secure, and reliable delivery services. We strive to exceed customer expectations by combining cutting-edge technology with personalized service, ensuring every package is treated with the utmost care and delivered with precision and professionalism.'
-    }
+      title: 'Our Mission',
+      description:
+        'Our mission is to make Australia Post tracking simple, clear, and stress-free. We are an independent helpernever a replacement for the official AusPost website.',
+    },
   ];
 
   const displayCards = cards || defaultCards;

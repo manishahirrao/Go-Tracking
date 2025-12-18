@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer">
       <FooterMain />
       <FooterBottom 
-        copyrightText="© Copyright 2024, All rights reserved"
+        copyrightText="© Copyright 2025, All rights reserved"
         designerCredit="GO Courier"
       />
     </footer>

@@ -6,6 +6,7 @@
 // ============================================
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Hero.css';
 
 const Hero = () => {
@@ -47,16 +48,16 @@ const Hero = () => {
           className="hero-icon"
         />
         <ul className="hero-tags">
-          <li><a href="#about">fast</a></li>
-          <li><a href="#about">secured</a></li>
-          <li><a href="#about">worldwide</a></li>
+          <li>australia post</li>
+          <li>tracking helper</li>
+          <li>independent</li>
         </ul>
         <h1 className="hero-title">
-          Fast & Reliable <br />
-          <span className="text-primary">Courier</span> & <span className="text-primary">Delivery</span> Services
+          Fast & Simple <br />
+          <span className="text-primary">Australia Post</span> Tracking Helper
         </h1>
         <p className="hero-subtitle">
-          Delivering excellence across the globe with speed, security, and reliability you can trust
+          Track your Australia Post shipments instantly with real-time updates — an independent helper, not an official AusPost website.
         </p>
 
         <div className="hero-track-box">
@@ -66,7 +67,7 @@ const Hero = () => {
             <div className="track-form-group">
               <input
                 type="text"
-                placeholder="Enter your product ID (e.g., TRK-2025-123456)"
+                placeholder="Enter your Australia Post tracking number (e.g., 1234567890, AB123456789, 9B0001234567890)"
                 value={trackingNumber}
                 onChange={(e) => setTrackingNumber(e.target.value)}
                 className={`track-input ${error ? 'error' : ''}`}

@@ -5,19 +5,19 @@ const Steps = ({ steps }) => {
   const defaultSteps = [
     {
       number: 1,
-      title: 'Order',
-      description: 'Book your shipment online or call us. Get instant quotes and schedule pickup.'
+      title: 'Enter Tracking Number',
+      description: 'Paste your Australia Post tracking ID into the box on the home or tracking page.',
     },
     {
       number: 2,
-      title: 'Wait',
-      description: 'We collect your package and process it through our secure logistics network.'
+      title: 'We Verify & Prepare',
+      description: 'We quickly check the format and get your link to the official Australia Post tracking page ready.',
     },
     {
       number: 3,
-      title: 'Deliver',
-      description: 'Track in real-time as we deliver your package safely to its destination.'
-    }
+      title: 'View Official Updates',
+      description: 'You are redirected to the Australia Post tracking page to see live, official shipment updates.',
+    },
   ];
 
   const stepsToDisplay = steps || defaultSteps;

@@ -1,31 +1,47 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader/PageHeader';
 import TrackingForm from '../components/tracking/TrackingForm/TrackingForm';
+import TrackingFAQ from '../components/tracking/TrackingFAQ/TrackingFAQ';
 import './Tracking.css';
 
 const Tracking = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [submittedTrackingNumber, setSubmittedTrackingNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [statusText, setStatusText] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const successRef = useRef(null);
+
+  // Get tracking ID from URL for form prepopulation
+  const urlTrackingId = searchParams.get('id');
 
   const handleTrackingSubmit = async (trackingNumber) => {
     console.log('Starting tracking submission for:', trackingNumber);
+    // Clear previous success state immediately
+    setShowSuccess(false);
     setSubmittedTrackingNumber(trackingNumber);
     setLoading(true);
     setError(null);
-    setStatusText('Finding tracking details in website...');
+    setStatusText('Preparing your link to the official Australia Post tracking page...');
     console.log('Processing tracking request...');
+    
+    // Scroll to loading box immediately
+    setTimeout(() => {
+      const loadingElement = document.querySelector('.tracking-result-card--loading');
+      if (loadingElement) {
+        loadingElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
     
     // Show processing steps
     setTimeout(() => setStatusText('Validating tracking number format...'), 800);
-    setTimeout(() => setStatusText('Searching for tracking details in database...'), 1600);
-    setTimeout(() => setStatusText('Retrieving package information...'), 2400);
-    setTimeout(() => setStatusText('Preparing tracking results...'), 3200);
+    setTimeout(() => setStatusText('Connecting to Australia Post tracking...'), 1600);
+    setTimeout(() => setStatusText('Opening official tracking details...'), 2400);
+    setTimeout(() => setStatusText('Finalising your tracking link...'), 3200);
     
     // Show success message with button after processing
     setTimeout(() => {
@@ -54,7 +70,33 @@ const Tracking = () => {
     }
   }, [searchParams]);
 
+  // Clear form when reset is called
+  useEffect(() => {
+    if (!loading && !showSuccess && !submittedTrackingNumber) {
+      // Clear the tracking form input
+      const trackingInput = document.getElementById('tracking-number');
+      if (trackingInput) {
+        trackingInput.value = '';
+      }
+    }
+  }, [loading, showSuccess, submittedTrackingNumber]);
+
+  // Scroll to tracking page top if coming from FAQ
+  useEffect(() => {
+    if (location.state?.scrollToForm) {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    }
+  }, [location.state]);
+
   const handleReset = () => {
+    // Clear form input immediately
+    const trackingInput = document.getElementById('tracking-number');
+    if (trackingInput) {
+      trackingInput.value = '';
+    }
+    
     setSubmittedTrackingNumber('');
     setLoading(false);
     setError(null);
@@ -62,6 +104,13 @@ const Tracking = () => {
     setShowSuccess(false);
     navigate('/tracking');
   };
+
+  // Scroll success box into view when it appears
+  useEffect(() => {
+    if (showSuccess && successRef.current) {
+      successRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [showSuccess]);
 
   return (
     <div>
@@ -73,12 +122,18 @@ const Tracking = () => {
         ]}
       />
       
-      <section className="tracking-hero-section py-20">
+      <section className="tracking-hero-section py-20 tracking-form-section">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             {/* Tracking Form */}
             <div className="mb-12">
-              <TrackingForm onSubmit={handleTrackingSubmit} loading={loading} />
+              <TrackingForm 
+                onSubmit={handleTrackingSubmit} 
+                loading={loading} 
+                submittedNumber={submittedTrackingNumber}
+                onReset={handleReset}
+                initialTrackingNumber={urlTrackingId}
+              />
             </div>
 
             {/* Error Message */}
@@ -90,11 +145,11 @@ const Tracking = () => {
 
             {/* Loading State with Automatic Processing */}
             {loading && (
-              <div className="max-w-2xl mx-auto text-center">
-                <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-6">
+              <div className="tracking-result-wrap max-w-2xl mx-auto text-center">
+                <div className="tracking-result-card tracking-result-card--loading bg-white rounded-xl shadow-xl border border-gray-200 p-6">
                   <div className="mb-4">
                     <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-600 rounded-full mb-3 animate-pulse">
-                      <svg className="w-6 h-6 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 tracking-icon text-white animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -151,34 +206,34 @@ const Tracking = () => {
 
             {/* Success Message */}
             {showSuccess && (
-              <div className="max-w-2xl mx-auto text-center">
-                <div className="bg-white border-2 border-green-300 rounded-2xl p-6 shadow-2xl">
+              <div
+                ref={successRef}
+                className="tracking-result-wrap max-w-2xl mx-auto text-center"
+              >
+                <div className="tracking-result-card tracking-result-card--success bg-white border-2 rounded-2xl p-6 shadow-2xl">
                   <div className="mb-4">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mb-3 shadow-lg animate-pulse">
-                      <svg className="w-6 h-6 text-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-primary to-primary-dark rounded-full mb-3 shadow-lg animate-pulse">
+                      <svg className="w-6 h-6 success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
                       </svg>
                     </div>
-                    <h3 className="text-lg font-bold text-green-800 mb-2">Tracking Details Retrieved Successfully!</h3>
-                    <p className="text-green-700 text-base mb-3">Your tracking information has been found and is ready to view</p>
+                    <h3 className="text-lg font-bold mb-2 text-white">Tracking Details Retrieved Successfully!</h3>
+                    <p className="text-base mb-3 text-white/90">Your tracking information has been found and is ready to view</p>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-xl p-4 border border-green-200 shadow-inner mb-4">
-                    <div className="flex items-center justify-center mb-2">
-                      <svg className="w-4 h-4 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                      </svg>
-                      <p className="text-xs font-semibold text-green-700 uppercase tracking-wide">Tracking Number</p>
+                  <div className="bg-gray-50 rounded-xl p-4 border border shadow-inner mb-4">
+                    <div className="text-center mb-4">
+                      <p className="text-sm font-bold uppercase tracking-wider text-gray-900 mb-2">Tracking Number</p>
                     </div>
-                    <div className="bg-white rounded-lg p-3 border-2 border-gray-300">
-                      <p className="text-base font-mono font-bold text-gray-900 tracking-wider">{submittedTrackingNumber}</p>
+                    <div className="tracking-number-container">
+                      <p className="text-base font-mono font-bold tracking-number-display tracking-wider text-primary">{submittedTrackingNumber}</p>
                     </div>
                   </div>
                   
-                  <div className="mb-4">
+                  <div className="mb-4 tracking-result-actions">
                     <button 
                       onClick={openAustraliaPostTracking}
-                      className="bg-green-600 text-yellow px-6 py-3 rounded-xl hover:bg-green-700 transition-all duration-300 font-bold text-base shadow-xl hover:shadow-2xl transform hover:scale-105"
+                      className="tracking-result-primary-btn px-6 py-3 rounded-xl transition-all duration-300 font-bold text-base shadow-xl hover:shadow-2xl transform hover:scale-105"
                     >
                       <div className="flex items-center justify-center space-x-2 ">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,11 +244,11 @@ const Tracking = () => {
                     </button>
                   </div>
                   
-                  <div className="text-center">
+                  <div className="text-center tracking-result-secondary-actions">
                     <p className="text-gray-600 text-sm mb-2">Click the button above to view your tracking results on Australia Post's official website</p>
                     <button 
                       onClick={handleReset}
-                      className="inline-flex items-center text-green-600 hover:text-green-800 font-semibold underline transition-colors text-sm"
+                      className="tracking-result-link-btn inline-flex items-center font-semibold underline transition-colors text-sm"
                     >
                       <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -208,6 +263,9 @@ const Tracking = () => {
             </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <TrackingFAQ />
     </div>
   );
 };

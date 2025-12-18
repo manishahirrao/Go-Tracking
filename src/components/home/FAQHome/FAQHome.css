@@ -1,0 +1,225 @@
+/* FAQ Home Section */
+.faq-home-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.faq-home-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.faq-home-title {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-transform: none;
+}
+
+.faq-home-subtitle {
+  font-size: 1.125rem;
+  color: #6c757d;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* FAQ Items */
+.faq-home-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-home-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  margin-bottom: 0;
+}
+
+.faq-home-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.faq-home-item.active {
+  border-color: #b71521;
+  box-shadow: 0 4px 20px rgba(183, 21, 33, 0.15);
+}
+
+.faq-home-question {
+  width: 100%;
+  padding: 24px;
+  background: white;
+  border: none;
+  text-align: left;
+  font-family: var(--font-primary);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #2c3e50;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.faq-home-question:hover {
+  background: #f8f9fa;
+  color: #2c3e50;
+  transform: none;
+  box-shadow: none;
+}
+
+.faq-home-question svg {
+  width: 24px;
+  height: 24px;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.faq-home-item.active .faq-home-question svg {
+  color: #b71521;
+  transform: rotate(180deg);
+}
+
+.faq-home-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background: #f8f9fa;
+  border-top: none;
+  padding: 0;
+}
+
+.faq-home-item.active .faq-home-answer {
+  max-height: 300px;
+  padding: 0 24px 24px 24px;
+}
+
+.faq-home-answer p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #495057;
+  font-family: var(--font-secondary);
+}
+
+/* FAQ CTA */
+.faq-home-cta {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.faq-home-cta p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-family: var(--font-primary);
+}
+
+.faq-home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #b71521;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(183, 21, 33, 0.3);
+  font-family: var(--font-primary);
+  text-transform: none;
+  border: none;
+  cursor: pointer;
+}
+
+.faq-home-button:hover {
+  background: #9a4018;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(183, 21, 33, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+.faq-home-button:active {
+  transform: translateY(0);
+}
+
+.faq-home-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+  transition: var(--transition-fast);
+}
+
+.faq-home-link:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .faq-home-section {
+    padding: 60px 0;
+  }
+
+  .faq-home-title {
+    font-size: 28px;
+  }
+
+  .faq-home-subtitle {
+    font-size: 15px;
+  }
+
+  .faq-home-question {
+    padding: 15px 20px;
+    font-size: 15px;
+  }
+
+  .faq-home-answer {
+    padding: 0 20px 15px;
+  }
+
+  .faq-home-answer p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .faq-home-section {
+    padding: 40px 0;
+  }
+
+  .faq-home-title {
+    font-size: 24px;
+  }
+
+  .faq-home-question {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+
+  .faq-home-answer {
+    padding: 0 15px 12px;
+  }
+
+  .faq-home-answer p {
+    font-size: 13px;
+  }
+}

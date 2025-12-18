@@ -37,42 +37,42 @@ const AboutSection = () => {
   const statistics = [
     {
       icon: FaTruck,
-      value: '15+',
-      label: 'Years in Business',
+      value: '15K+',
+      label: 'Shipments Helped to Track',
     },
     {
       icon: FaGlobeAmericas,
-      value: '50+',
-      label: 'Countries Served',
+      value: '1',
+      label: 'Courier Focused (Australia Post)',
     },
     {
       icon: FaAward,
-      value: '1M+',
-      label: 'Packages Delivered',
+      value: '4.8',
+      label: 'Average User Satisfaction ()',
     },
     {
       icon: FaTruck,
-      value: '10K+',
-      label: 'Happy Customers',
+      value: '99%',
+      label: 'Successful Redirects to Official Page',
     },
   ];
 
   const differentiators = [
     {
-      title: 'Real-Time Tracking',
-      description: 'Track your packages every step of the way with our advanced tracking system.',
+      title: 'Simple Tracking Flow',
+      description: 'Enter your Australia Post tracking ID once and go directly to the official tracking results.',
     },
     {
-      title: 'Competitive Pricing',
-      description: 'Get the best rates without compromising on quality and reliability.',
+      title: 'Independent & Transparent',
+      description: 'We clearly state that were not an official Australia Post service and always send you to their site for final details.',
     },
     {
-      title: '24/7 Support',
-      description: 'Our dedicated team is always available to assist you with any questions.',
+      title: 'Privacy-First',
+      description: 'We only use your tracking number to route you; we dont use it to create shipments or manage deliveries.',
     },
     {
-      title: 'Global Network',
-      description: 'Extensive network spanning over 50 countries for seamless delivery.',
+      title: 'Clear Status Guidance',
+      description: 'We explain what each tracking status means so you understand your shipment at a glance.',
     },
   ];
 
@@ -80,8 +80,8 @@ const AboutSection = () => {
     <div className="about-section">
       <div className="about-hero">
         <div className="container">
-          <h1>About Us</h1>
-          <p>Your trusted partner in courier and delivery services</p>
+          <h1>About This Tracker</h1>
+          <p>Independent helper for tracking your Australia Post shipments</p>
         </div>
       </div>
 
@@ -92,16 +92,14 @@ const AboutSection = () => {
             <div className="story-text">
               <h2>Our Story</h2>
               <p>
-                Founded in 2008, our courier service began with a simple mission: to provide fast,
-                reliable, and affordable delivery solutions for businesses and individuals alike.
-                What started as a small local operation has grown into a trusted global logistics
-                partner.
+                This tracker was created to solve a simple problem: finding and tracking Australia Post
+                shipments quickly without digging through multiple pages. Many users just want a clean
+                place to enter a tracking number and go straight to the official tracking details.
               </p>
               <p>
-                Over the years, we've invested heavily in technology, infrastructure, and our
-                people to ensure that every package we handle receives the care and attention it
-                deserves. Today, we're proud to serve customers in over 50 countries, delivering
-                millions of packages annually.
+                We are not affiliated with or endorsed by Australia Post. Instead, we focus on providing
+                a clear, user-friendly interface that helps you jump directly to the correct official
+                tracking page with confidence.
               </p>
             </div>
             <div className="story-image">

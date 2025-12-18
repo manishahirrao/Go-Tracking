@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../common/Button';
 import { validateTrackingNumber } from '../../../utils/validators';
 
-const TrackingForm = ({ onSubmit, loading = false }) => {
-  const [trackingNumber, setTrackingNumber] = useState('');
+const TrackingForm = ({ onSubmit, loading = false, submittedNumber = '', onReset, initialTrackingNumber = '' }) => {
+  const [trackingNumber, setTrackingNumber] = useState(initialTrackingNumber || '');
   const [error, setError] = useState('');
+
+  // Update input when submittedNumber changes (for reset)
+  useEffect(() => {
+    if (submittedNumber === '' && trackingNumber && !loading) {
+      setTrackingNumber('');
+      setError('');
+    }
+  }, [submittedNumber, loading]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,8 +52,8 @@ const TrackingForm = ({ onSubmit, loading = false }) => {
             type="text"
             value={trackingNumber}
             onChange={handleChange}
-            placeholder="Enter your tracking number (e.g., ABC1234567890)"
-            className={`w-full px-4 py-3 border rounded-sm focus:outline-none focus:ring-2 text-base transition-colors ${
+            placeholder="Enter your Australia Post tracking number (e.g., 1234567890, AB123456789, 9B0001234567890)"
+            className={`w-full px-4 py-3 border rounded-sm focus:outline-none focus:ring-2 text-base transition-colors text-black ${
               error 
                 ? 'border-red focus:ring-red' 
                 : 'border-border focus:ring-primary'
@@ -60,9 +68,9 @@ const TrackingForm = ({ onSubmit, loading = false }) => {
               className="mt-3 p-4 rounded-sm" 
               role="alert"
               style={{ 
-                backgroundColor: '#7f1d1d', 
-                borderLeft: '4px solid #450a0a',
-                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.3)'
+                backgroundColor: '#b71521', 
+                borderLeft: '4px solid #9a4018', 
+                boxShadow: '0 1px 3px 0 rgba(183, 21, 33, 0.3)'
               }}
             >
               <div className="flex items-start">
@@ -121,6 +129,9 @@ const TrackingForm = ({ onSubmit, loading = false }) => {
 TrackingForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool,
+  submittedNumber: PropTypes.string,
+  onReset: PropTypes.func,
+  initialTrackingNumber: PropTypes.string,
 };
 
 export default TrackingForm;

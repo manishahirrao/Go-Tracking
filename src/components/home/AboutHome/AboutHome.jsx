@@ -6,18 +6,18 @@ const AboutHome = ({ features }) => {
   const defaultFeatures = [
     {
       icon: '/icons/icon-2.png',
-      title: 'Fast delivery',
-      description: 'Express shipping options with same-day and next-day delivery available'
+      title: 'Fast Tracking Access',
+      description: 'Instantly identify the correct courier and reach the official tracking page without manual searching.'
     },
     {
       icon: '/icons/icon-3.png',
-      title: 'secured service',
-      description: 'Full insurance coverage and secure handling for all your packages'
+      title: 'Secure & Reliable Experience',
+      description: 'We do not store sensitive shipment data. Tracking is handled through secure and trusted sources.'
     },
     {
       icon: '/icons/icon-4.png',
-      title: 'worldwide shipping',
-      description: 'International delivery to over 200 countries with customs support'
+      title: 'Global Courier Coverage',
+      description: 'Track shipments across 200+ countries, including international transit and customs updates where supported.'
     }
   ];
 
@@ -32,10 +32,7 @@ const AboutHome = ({ features }) => {
             <div className="about-us">
               <h2 className="section-title pb-10">About Us</h2>
               <p className="fs-16">
-                With over 15 years of experience in the courier industry, we've built a reputation 
-                for reliability, speed, and exceptional customer service. Our state-of-the-art tracking 
-                system and dedicated team ensure your packages arrive safely and on time, every time. 
-                We serve thousands of satisfied customers worldwide, from individuals to large enterprises.
+                We are an independent courier tracking assistance platform designed to make parcel tracking simple, fast, and transparent. Our goal is to help users quickly find the correct Australia Post tracking page and access accurate shipment updates without confusion. We focus on user convenience, clarity, and trust, providing a smooth tracking experience for individuals and businesses worldwide — all through an easy-to-use interface.
               </p>
               <ul className="feature-list">
                 {featuresToDisplay.map((feature, index) => (

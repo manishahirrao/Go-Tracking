@@ -20,6 +20,53 @@
   z-index: 1;
 }
 
+/* Home Disclaimer Section */
+.home-disclaimer {
+  background: #f8f9fa;
+  padding: 40px 0;
+  border-top: 2px solid #b71521;
+}
+
+.disclaimer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(183, 21, 33, 0.2);
+}
+
+.home-disclaimer h3 {
+  color: #b71521;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.home-disclaimer p {
+  color: #495057;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.home-disclaimer .disclaimer-link {
+  color: #b71521;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  transition: all 0.3s ease;
+}
+
+.home-disclaimer .disclaimer-link:hover {
+  text-decoration: underline;
+  color: #9a4018;
+}
+
 .testimonials-section .container {
   position: relative;
   z-index: 2;
