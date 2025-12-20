@@ -6,8 +6,8 @@ const TrackingFAQ = () => {
 
   const faqs = [
     {
-      question: "How does this tracking helper work?",
-      answer: "This helper takes your Australia Post tracking number and creates a direct link to the official Australia Post tracking page. We don't store your tracking numbers or provide tracking ourselves - we simply help you get to the right place quickly."
+      question: "How does this online tracking service work?",
+      answer: "This service takes your Australia Post tracking number and creates a direct link to the official Australia Post tracking page. We don't store your tracking numbers or provide tracking ourselves - we simply help you get to the right place quickly."
     },
     {
       question: "What tracking numbers are supported?",
@@ -15,7 +15,7 @@ const TrackingFAQ = () => {
     },
     {
       question: "Is this service free to use?",
-      answer: "Yes! This tracking helper is completely free. We don't charge anything to help you access your Australia Post tracking information."
+      answer: "Yes! This online tracking service is completely free. We don't charge anything to help you access your Australia Post tracking information."
     },
     {
       question: "Do you store my tracking numbers?",
@@ -31,11 +31,11 @@ const TrackingFAQ = () => {
     },
     {
       question: "Can I track international packages?",
-      answer: "Yes, if your international package is being handled by Australia Post, you can use this helper to track it. The tracking will show updates once Australia Post receives and scans the package."
+      answer: "Yes, if your international package is being handled by Australia Post, you can use this online service to track it. The tracking will show updates once Australia Post receives and scans the package."
     },
     {
       question: "Is this affiliated with Australia Post?",
-      answer: "No, we are an independent helper service, not affiliated with or endorsed by Australia Post. We simply provide a convenient way to access their official tracking system."
+      answer: "No, we are an independent online service, not affiliated with or endorsed by Australia Post. We simply provide a convenient way to access their official tracking system."
     }
   ];
 
@@ -49,7 +49,7 @@ const TrackingFAQ = () => {
         <div className="tracking-faq-header">
           <h2 className="tracking-faq-title">Frequently Asked Questions</h2>
           <p className="tracking-faq-subtitle">
-            Common questions about using our Australia Post tracking helper
+            Common questions about using our Australia Post tracking service
           </p>
         </div>
 

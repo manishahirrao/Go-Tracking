@@ -34,7 +34,7 @@ export const updateMetaTags = (metaData) => {
   updateMetaTag('og:description', metaData.description, 'property');
   updateMetaTag('og:url', metaData.url, 'property');
   updateMetaTag('og:image', metaData.image, 'property');
-  updateMetaTag('og:site_name', 'Australia Post Tracking Helper', 'property');
+  updateMetaTag('og:site_name', 'Online Aus Post Tracking', 'property');
 
   // Update Twitter Card tags
   updateMetaTag('twitter:card', metaData.twitterCard || 'summary_large_image', 'property');
@@ -64,11 +64,11 @@ export const createArticleStructuredData = (article) => {
     "image": article.image || "/logo-black.png",
     "author": {
       "@type": "Organization",
-      "name": "Australia Post Tracking Helper"
+      "name": "Online Aus Post Tracking"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Australia Post Tracking Helper",
+      "name": "Online Aus Post Tracking",
       "logo": {
         "@type": "ImageObject",
         "url": "https://australiaposttracking.online/logo-black.png"
@@ -118,10 +118,10 @@ export const generateArticleMeta = (article) => {
   const articleUrl = `${baseUrl}/blog/${article.slug}`;
   
   return {
-    title: `${article.title} | Australia Post Tracking Helper`,
+    title: `${article.title} | Online Aus Post Tracking`,
     description: article.excerpt,
     keywords: `${article.category}, Australia Post, ${article.title}, postal service, tracking`,
-    author: 'Australia Post Tracking Helper',
+    author: 'Online Aus Post Tracking',
     url: articleUrl,
     image: article.image || '/logo-black.png',
     ogType: 'article',

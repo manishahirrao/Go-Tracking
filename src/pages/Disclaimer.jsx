@@ -5,7 +5,7 @@ const Disclaimer = () => (
     <div className="container">
       <h1 className="legal-title">Disclaimer</h1>
       <p className="legal-intro">
-        This website is an independent Australia Post tracking helper and is not affiliated with, endorsed by,
+        This website is an independent Australia Post tracking service and is not affiliated with, endorsed by,
         or officially connected to Australia Post.
       </p>
 

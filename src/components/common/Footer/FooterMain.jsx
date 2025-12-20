@@ -26,7 +26,7 @@ const FooterMain = () => {
               <span className="footer-logo-sub">Tracking</span>
             </Link>
             <p className="footer-description">
-              Your independent Australia Post tracking helper. Quick access to official tracking pages.
+              Your independent Australia Post tracking service. Quick access to official tracking pages.
             </p>
           </div>
 

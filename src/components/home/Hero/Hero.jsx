@@ -45,10 +45,10 @@ const Hero = () => {
        
         <h1 className="hero-title">
           Fast & Simple <br />
-          <span className="text-primary">Australia Post</span> Tracking Helper
+          <span className="text-primary">Australia Post</span> Tracking
         </h1>
         <p className="hero-subtitle">
-          Track your Australia Post shipments instantly with real-time updates — an independent helper, not an official AusPost website.
+          Track your Australia Post shipments instantly with real-time updates — an independent online service, not an official AusPost website.
         </p>
 
         <div className="hero-track-box">

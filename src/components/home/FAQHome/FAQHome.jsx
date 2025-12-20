@@ -26,10 +26,10 @@ const FAQHome = () => {
     {
       question: 'Is this an official Australia Post website?',
       answer:
-        'No. This is an independent tracking helper that sends you to the official Australia Post tracking page. We are not affiliated with, endorsed by, or operated by Australia Post.',
+        'No. This is an independent online tracking service that sends you to the official Australia Post tracking page. We are not affiliated with, endorsed by, or operated by Australia Post.',
     },
     {
-      question: 'How does this tracking helper work?',
+      question: 'How does this online tracking service work?',
       answer:
         "You enter your Australia Post tracking number on our site. We validate the format and then open the official Australia Post tracking page in a new tab so you can see your shipment details there.",
     },
@@ -60,7 +60,7 @@ const FAQHome = () => {
         <div className="faq-home-header">
           <h2 className="faq-home-title">Frequently Asked Questions</h2>
           <p className="faq-home-subtitle">
-            Learn how this independent Australia Post tracking helper works and what you can (and cant) do here.
+            Learn how this independent Australia Post tracking service works and what you can (and can't) do here.
           </p>
         </div>
         

@@ -6,10 +6,10 @@ const Terms = () => {
   useEffect(() => {
     // Update SEO meta tags for Terms page
     const termsMetaData = {
-      title: 'Terms of Service - Australia Post Tracking Helper',
-      description: 'Read our terms of service to understand the rules and guidelines for using our Australia Post tracking helper service.',
+      title: 'Terms of Service - Online Aus Post Tracking',
+      description: 'Read our terms of service to understand the rules and guidelines for using our online Australia Post tracking service.',
       keywords: 'terms of service, legal terms, Australia Post tracking, service terms, user agreement',
-      author: 'Australia Post Tracking Helper',
+      author: 'Online Aus Post Tracking',
       url: 'https://australiaposttracking.online/terms',
       image: '/logo-black.png',
       ogType: 'website',
@@ -23,7 +23,7 @@ const Terms = () => {
     <div className="container">
       <h1 className="legal-title">Terms of Service</h1>
       <p className="legal-intro">
-        These Terms of Service ("Terms") govern your use of this independent Australia Post tracking helper website
+        These Terms of Service ("Terms") govern your use of this independent Australia Post tracking service website
         (the "Service"). By using this website, you agree to these Terms.
       </p>
 

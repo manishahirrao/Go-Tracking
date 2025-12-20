@@ -5,7 +5,7 @@ const Cookies = () => (
     <div className="container">
       <h1 className="legal-title">Cookie Policy</h1>
       <p className="legal-intro">
-        This Cookie Policy explains how this independent Australia Post tracking helper website ("we", "our", "us")
+        This Cookie Policy explains how this independent Australia Post tracking service website ("we", "our", "us")
         uses cookies and similar technologies when you visit or use our Service.
       </p>
 

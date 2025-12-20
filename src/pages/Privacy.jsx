@@ -6,10 +6,10 @@ const Privacy = () => {
   useEffect(() => {
     // Update SEO meta tags for Privacy page
     const privacyMetaData = {
-      title: 'Privacy Policy - Australia Post Tracking Helper',
-      description: 'Read our privacy policy to understand how we handle your information when using our Australia Post tracking helper service.',
+      title: 'Privacy Policy - Online Aus Post Tracking',
+      description: 'Read our privacy policy to understand how we handle your information when using our online Australia Post tracking service.',
       keywords: 'privacy policy, data protection, Australia Post tracking, user privacy, personal information',
-      author: 'Australia Post Tracking Helper',
+      author: 'Online Aus Post Tracking',
       url: 'https://australiaposttracking.online/privacy',
       image: '/logo-black.png',
       ogType: 'website',
@@ -23,7 +23,7 @@ const Privacy = () => {
     <div className="container">
       <h1 className="legal-title">Privacy Policy</h1>
       <p className="legal-intro">
-        This Privacy Policy explains how this independent Australia Post tracking helper website ("we", "our", or "us")
+        This Privacy Policy explains how this independent Australia Post tracking service website ("we", "our", or "us")
         handles information when you use our tools to access official Australia Post tracking pages.
       </p>
 

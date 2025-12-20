@@ -15,10 +15,10 @@ const Home = () => {
   useEffect(() => {
     // Update SEO meta tags for Home page
     const homeMetaData = {
-      title: 'Australia Post Tracking - Fast & Reliable Package Tracking Helper',
-      description: 'Independent Australia Post tracking helper. Quick access to official tracking pages. Fast, reliable, and easy to use.',
+      title: 'Australia Post Tracking - Online Aus Post Tracking',
+      description: 'Online Australia Post tracking service. Quick access to official tracking pages. Fast, reliable, and easy to use.',
       keywords: 'Australia Post tracking, package tracking, shipment tracking, delivery tracking, postal tracking',
-      author: 'Australia Post Tracking Helper',
+      author: 'Online Aus Post Tracking',
       url: 'https://australiaposttracking.online/',
       image: '/logo-black.png',
       ogType: 'website',

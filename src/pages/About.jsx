@@ -7,10 +7,10 @@ const About = () => {
   useEffect(() => {
     // Update SEO meta tags for About page
     const aboutMetaData = {
-      title: 'About Us - Australia Post Tracking Helper',
-      description: 'Learn about our independent Australia Post tracking helper service. We provide quick access to official tracking pages and reliable postal information.',
-      keywords: 'about Australia Post, tracking helper, postal services, about us, company information',
-      author: 'Australia Post Tracking Helper',
+      title: 'About Us - Online Aus Post Tracking',
+      description: 'Learn about our online Australia Post tracking service. We provide quick access to official tracking pages and reliable postal information.',
+      keywords: 'about Australia Post, online tracking, postal services, about us, company information',
+      author: 'Online Aus Post Tracking',
       url: 'https://australiaposttracking.online/about',
       image: '/logo-black.png',
       ogType: 'website',

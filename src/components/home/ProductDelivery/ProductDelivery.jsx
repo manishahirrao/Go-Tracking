@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import './ProductDelivery.css';
 
 const ProductDelivery = ({ 
-  title = "Why use this Australia Post tracking helper?",
+  title = "Why use this Australia Post tracking service?",
   description = "Instead of searching around the web, you can use this simple tool to jump straight to the official Australia Post tracking page. No extra forms, no confusion  just enter your tracking ID and go directly to your shipment details."
 }) => {
   return (

@@ -16,7 +16,7 @@ const MoreAboutUs = ({ cards }) => {
     {
       title: 'Our Mission',
       description:
-        'Our mission is to make Australia Post tracking simple, clear, and stress-free. We are an independent helpernever a replacement for the official AusPost website.',
+        'Our mission is to make Australia Post tracking simple, clear, and stress-free. We are an independent online service—never a replacement for the official AusPost website.',
     },
   ];
 

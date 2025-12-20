@@ -181,7 +181,7 @@ export const getRecommendedTier = () => {
 export const TESTIMONIALS = [
   {
     id: 'testimonial-1',
-    text: 'This tracking helper is amazing! I can quickly find my Australia Post tracking details without searching through their website. Saves me so much time.',
+    text: 'This online tracking service is amazing! I can quickly find my Australia Post tracking details without searching through their website. Saves me so much time.',
     customerName: 'Sarah Johnson',
     customerPhoto: 'https://i.pravatar.cc/150?img=1',
     location: 'Sydney, Australia',
@@ -197,7 +197,7 @@ export const TESTIMONIALS = [
   },
   {
     id: 'testimonial-3',
-    text: 'I love how clear this site is about being an independent helper. No confusion, just direct access to AusPost tracking. Exactly what I needed!',
+    text: 'I love how clear this site is about being an independent online service. No confusion, just direct access to AusPost tracking. Exactly what I needed!',
     customerName: 'Emma Williams',
     customerPhoto: 'https://i.pravatar.cc/150?img=5',
     location: 'Brisbane, Australia',

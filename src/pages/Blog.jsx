@@ -16,10 +16,10 @@ const Blog = () => {
   // Update SEO meta tags for Blog page
   useEffect(() => {
     const blogMetaData = {
-      title: 'Blog - Australia Post Tracking Helper',
-      description: 'Find answers to your postal questions and learn about Australia Post services. Expert tips, guides, and tracking help.',
+      title: 'Blog - Online Aus Post Tracking',
+      description: 'Find answers to your postal questions and learn about Australia Post services. Expert tips, guides, and online tracking help.',
       keywords: 'Australia Post blog, postal services, shipping tips, tracking help, package delivery',
-      author: 'Australia Post Tracking Helper',
+      author: 'Online Aus Post Tracking',
       url: 'https://australiaposttracking.online/blog',
       image: '/logo-black.png',
       ogType: 'website',

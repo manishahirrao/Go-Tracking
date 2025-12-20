@@ -20,10 +20,10 @@ const Tracking = () => {
   // Update SEO meta tags for Tracking page
   useEffect(() => {
     const trackingMetaData = {
-      title: 'Track Your Package - Australia Post Tracking Helper',
-      description: 'Track your Australia Post packages quickly and easily. Get instant access to official tracking pages with our simple tracking tool.',
+      title: 'Track Your Package - Online Aus Post Tracking',
+      description: 'Track your Australia Post packages quickly and easily. Get instant access to official tracking pages with our simple online tracking tool.',
       keywords: 'Australia Post tracking, package tracking, shipment tracking, delivery tracking, track package',
-      author: 'Australia Post Tracking Helper',
+      author: 'Online Aus Post Tracking',
       url: 'https://australiaposttracking.online/tracking',
       image: '/logo-black.png',
       ogType: 'website',

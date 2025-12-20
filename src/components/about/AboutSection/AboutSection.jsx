@@ -81,7 +81,7 @@ const AboutSection = () => {
       <div className="about-hero">
         <div className="container">
           <h1>About This Tracker</h1>
-          <p>Independent helper for tracking your Australia Post shipments</p>
+          <p>Online service for tracking your Australia Post shipments</p>
         </div>
       </div>
 
