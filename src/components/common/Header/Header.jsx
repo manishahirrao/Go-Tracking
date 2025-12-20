@@ -11,6 +11,7 @@ const Header = ({ sticky = true }) => {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Tracking', path: '/tracking' },
+    { label: 'Blog', path: '/blog' },
   ];
 
   const toggleMobileMenu = () => {

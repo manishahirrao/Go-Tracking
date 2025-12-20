@@ -1,0 +1,509 @@
+/* Blog Page Styles - Matching Website Design System */
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/What time does the post office open today Branch Hours Guide');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-lg) 0;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-header .container {
+  position: relative;
+  z-index: 2;
+}
+
+.page-header h1 {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-black);
+  font-size: 48px;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.page-header p {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  color: var(--color-white);
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Blog Filters Section */
+.blog-filters {
+  padding: var(--spacing-sm) 0;
+  background: var(--color-bg-lighter);
+}
+
+/* Search Container */
+.search-container {
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+}
+
+.search-box {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--color-gray);
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 12px 12px 45px;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  transition: var(--transition-fast);
+}
+
+.search-input::placeholder {
+  color: var(--color-lighter-gray);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(183, 21, 33, 0.1);
+}
+
+/* Category Tabs */
+.category-tabs {
+  margin-bottom: var(--spacing-sm);
+}
+
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0;
+}
+
+.category-tab {
+  padding: 8px 16px;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-tab:hover {
+  color: var(--color-dark-gray);
+  border-bottom-color: var(--color-light-gray);
+}
+
+.category-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* Results Count */
+.results-count {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.results-count p {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  color: var(--color-light-gray);
+  margin: 0;
+}
+
+/* Articles Grid */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Article Card */
+.article-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  display: block;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.article-content {
+  padding: 30px;
+}
+
+/* Article Category */
+.article-category {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.category-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary);
+  margin-right: 8px;
+}
+
+.article-category span {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Article Title */
+.article-title {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-bold);
+  font-size: 20px;
+  color: var(--color-black);
+  margin: 0 0 15px 0;
+  line-height: 1.3;
+  /* Fallback for line-clamp */
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-line-clamp: 2;
+  -moz-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 2.6em; /* 2 lines * 1.3 line-height */
+}
+
+/* Article Excerpt */
+.article-excerpt {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  color: var(--color-light-gray);
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+  /* Fallback for line-clamp */
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-line-clamp: 3;
+  -moz-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 4.8em; /* 3 lines * 1.6 line-height */
+}
+
+/* Article Meta */
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+.meta-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  color: var(--color-gray);
+}
+
+/* Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-md);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-dark-gray);
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  background: var(--color-bg-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.pagination-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--color-lighter-gray);
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.pagination-btn.prev-btn .btn-icon {
+  margin-right: 8px;
+}
+
+.pagination-btn.next-btn .btn-icon {
+  margin-left: 8px;
+}
+
+/* Page Numbers */
+.page-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-dark-gray);
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.page-number:hover {
+  background: var(--color-bg-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.page-number.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.page-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray);
+}
+
+/* No Articles State */
+.no-articles {
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+}
+
+.no-articles-icon {
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-gray);
+}
+
+.no-articles-icon svg {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.no-articles h3 {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-bold);
+  font-size: 24px;
+  color: var(--color-black);
+  margin: 0 0 15px 0;
+}
+
+.no-articles p {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  color: var(--color-light-gray);
+  margin: 0;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-header {
+    min-height: 250px;
+    padding: var(--spacing-md) 0;
+  }
+  
+  .page-header h1 {
+    font-size: 36px;
+  }
+  
+  .page-header p {
+    font-size: var(--font-size-base);
+  }
+  
+  .search-input {
+    padding: 10px 10px 10px 40px;
+    font-size: var(--font-size-sm);
+  }
+  
+  .search-icon {
+    left: 12px;
+    width: 14px;
+    height: 14px;
+  }
+  
+  .tabs-container {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  
+  .category-tab {
+    padding: 6px 12px;
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+  }
+  
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .article-content {
+    padding: 20px;
+  }
+  
+  .article-title {
+    font-size: 18px;
+  }
+  
+  .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .pagination-btn {
+    padding: 10px 16px;
+    font-size: var(--font-size-xs);
+  }
+  
+  .page-number {
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    min-height: 200px;
+    padding: var(--spacing-sm) 0;
+  }
+  
+  .page-header h1 {
+    font-size: 28px;
+  }
+  
+  .page-header p {
+    font-size: var(--font-size-sm);
+  }
+  
+  .blog-filters {
+    padding: var(--spacing-xs) 0;
+  }
+  
+  .search-box {
+    max-width: 300px;
+  }
+  
+  .article-content {
+    padding: 15px;
+  }
+  
+  .pagination-btn {
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+  
+  .page-number {
+    width: 35px;
+    height: 35px;
+    font-size: 10px;
+  }
+}

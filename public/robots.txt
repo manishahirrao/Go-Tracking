@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://australiaposttracking.online/sitemap.xml
+
+# Allow search engines to crawl all important pages
+Allow: /blog/
+Allow: /blog/*
+Allow: /about
+Allow: /tracking
+Allow: /privacy
+Allow: /terms
+Allow: /cookies
+Allow: /disclaimer
+
+# Block development/admin pages if any
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*.json$
+
+# Crawl delay (optional - be nice to servers)
+Crawl-delay: 1

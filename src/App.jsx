@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/common/ErrorBoundary/ErrorBoundary';
@@ -8,6 +8,8 @@ import { ToastProvider } from './contexts/ToastContext';
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Tracking = lazy(() => import('./pages/Tracking'));
+const Blog = lazy(() => import('./pages/Blog'));
+const Article = lazy(() => import('./pages/Article'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Cookies = lazy(() => import('./pages/Cookies'));
@@ -33,6 +35,8 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="about" element={<About />} />
                 <Route path="tracking" element={<Tracking />} />
+                <Route path="blog" element={<Blog />} />
+                <Route path="blog/:slug" element={<Article />} />
                 <Route path="privacy" element={<Privacy />} />
                 <Route path="terms" element={<Terms />} />
                 <Route path="cookies" element={<Cookies />} />

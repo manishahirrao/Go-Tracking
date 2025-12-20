@@ -99,8 +99,8 @@ class ErrorBoundary extends Component {
               <p>If this problem persists, please contact our support team.</p>
               <p className="mt-2">
                 Email:{' '}
-                <a href="mailto:support@gocourier.com" className="text-primary hover:underline">
-                  support@gocourier.com
+                <a href="mailto:support@australiaposttracking.online" className="text-primary hover:underline">
+                  support@australiaposttracking.online
                 </a>
               </p>
             </div>
