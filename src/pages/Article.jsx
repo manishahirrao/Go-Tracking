@@ -109,7 +109,7 @@ const Article = () => {
           {/* Title and Meta */}
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{article.title}</h1>
           
-          <div className="flex flex-wrap items-center text-gray-600 space-y-2 sm:space-y-0 sm:space-x-6">
+          <div className="flex flex-wrap items-center text-gray-600 space-x-4 sm:space-x-6">
             <div className="flex items-center">
               <Tag className="h-4 w-4 mr-2 text-blue-500" />
               <span className="text-sm font-medium text-blue-600">{article.category}</span>

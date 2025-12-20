@@ -32,7 +32,11 @@ const Blog = () => {
     let articles = getArticlesByCategory(selectedCategory);
     
     if (searchQuery.trim()) {
-      articles = searchArticles(searchQuery);
+      const searchResults = searchArticles(searchQuery);
+      // Filter search results by selected category
+      articles = searchResults.filter(article => 
+        selectedCategory === 'All' || article.category === selectedCategory
+      );
     }
     
     return articles;
