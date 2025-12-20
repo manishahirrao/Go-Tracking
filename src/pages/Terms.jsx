@@ -1,6 +1,24 @@
+import { useEffect } from 'react';
 import './Legal.css';
+import { updateMetaTags } from '../utils/seo';
 
-const Terms = () => (
+const Terms = () => {
+  useEffect(() => {
+    // Update SEO meta tags for Terms page
+    const termsMetaData = {
+      title: 'Terms of Service - Australia Post Tracking Helper',
+      description: 'Read our terms of service to understand the rules and guidelines for using our Australia Post tracking helper service.',
+      keywords: 'terms of service, legal terms, Australia Post tracking, service terms, user agreement',
+      author: 'Australia Post Tracking Helper',
+      url: 'https://australiaposttracking.online/terms',
+      image: '/logo-black.png',
+      ogType: 'website',
+      twitterCard: 'summary'
+    };
+    updateMetaTags(termsMetaData);
+  }, []);
+
+  return (
   <div className="legal-page">
     <div className="container">
       <h1 className="legal-title">Terms of Service</h1>
@@ -76,6 +94,7 @@ const Terms = () => (
       </section>
     </div>
   </div>
-);
+  );
+};
 
 export default Terms;

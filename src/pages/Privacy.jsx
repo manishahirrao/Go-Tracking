@@ -1,6 +1,24 @@
+import { useEffect } from 'react';
 import './Legal.css';
+import { updateMetaTags } from '../utils/seo';
 
-const Privacy = () => (
+const Privacy = () => {
+  useEffect(() => {
+    // Update SEO meta tags for Privacy page
+    const privacyMetaData = {
+      title: 'Privacy Policy - Australia Post Tracking Helper',
+      description: 'Read our privacy policy to understand how we handle your information when using our Australia Post tracking helper service.',
+      keywords: 'privacy policy, data protection, Australia Post tracking, user privacy, personal information',
+      author: 'Australia Post Tracking Helper',
+      url: 'https://australiaposttracking.online/privacy',
+      image: '/logo-black.png',
+      ogType: 'website',
+      twitterCard: 'summary'
+    };
+    updateMetaTags(privacyMetaData);
+  }, []);
+
+  return (
   <div className="legal-page">
     <div className="container">
       <h1 className="legal-title">Privacy Policy</h1>
@@ -77,6 +95,7 @@ const Privacy = () => (
       </section>
     </div>
   </div>
-);
+  );
+};
 
 export default Privacy;

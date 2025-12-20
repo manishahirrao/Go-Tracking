@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getArticlesByCategory, searchArticles } from '../data/articles';
 import { Search, Clock, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { updateMetaTags } from '../utils/seo';
 import '../styles/global.css';
 import './Blog.css';
 
@@ -11,6 +12,21 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 9;
   const categories = getCategories();
+
+  // Update SEO meta tags for Blog page
+  useEffect(() => {
+    const blogMetaData = {
+      title: 'Blog - Australia Post Tracking Helper',
+      description: 'Find answers to your postal questions and learn about Australia Post services. Expert tips, guides, and tracking help.',
+      keywords: 'Australia Post blog, postal services, shipping tips, tracking help, package delivery',
+      author: 'Australia Post Tracking Helper',
+      url: 'https://australiaposttracking.online/blog',
+      image: '/logo-black.png',
+      ogType: 'website',
+      twitterCard: 'summary_large_image'
+    };
+    updateMetaTags(blogMetaData);
+  }, []);
 
   const filteredArticles = useMemo(() => {
     let articles = getArticlesByCategory(selectedCategory);

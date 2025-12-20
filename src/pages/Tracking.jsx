@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader/PageHeader';
 import TrackingForm from '../components/tracking/TrackingForm/TrackingForm';
 import TrackingFAQ from '../components/tracking/TrackingFAQ/TrackingFAQ';
+import { updateMetaTags } from '../utils/seo';
 import './Tracking.css';
 
 const Tracking = () => {
@@ -15,6 +16,21 @@ const Tracking = () => {
   const [statusText, setStatusText] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const successRef = useRef(null);
+
+  // Update SEO meta tags for Tracking page
+  useEffect(() => {
+    const trackingMetaData = {
+      title: 'Track Your Package - Australia Post Tracking Helper',
+      description: 'Track your Australia Post packages quickly and easily. Get instant access to official tracking pages with our simple tracking tool.',
+      keywords: 'Australia Post tracking, package tracking, shipment tracking, delivery tracking, track package',
+      author: 'Australia Post Tracking Helper',
+      url: 'https://australiaposttracking.online/tracking',
+      image: '/logo-black.png',
+      ogType: 'website',
+      twitterCard: 'summary_large_image'
+    };
+    updateMetaTags(trackingMetaData);
+  }, []);
 
   // Get tracking ID from URL for form prepopulation
   const urlTrackingId = searchParams.get('id');
