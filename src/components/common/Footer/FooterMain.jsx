@@ -21,8 +21,9 @@ const FooterMain = () => {
         <div className="footer-grid">
           {/* Logo Column */}
           <div className="footer-widget">
-            <Link to="/">
-              <img className="footer-logo" alt="Australia Post Tracking Helper" src="/logo-2.png" />
+            <Link to="/" className="footer-logo-text">
+              <span className="footer-logo-main">Australia Post</span>
+              <span className="footer-logo-sub">Tracking</span>
             </Link>
             <p className="footer-description">
               Your independent Australia Post tracking helper. Quick access to official tracking pages.

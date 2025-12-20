@@ -42,16 +42,7 @@ const Hero = () => {
   return (
     <section className="hero-banner">
       <div className="container mx-auto max-w-container px-4 relative">
-        <img 
-          src="/icons/icon-1.png" 
-          alt="Delivery Icon" 
-          className="hero-icon"
-        />
-        <ul className="hero-tags">
-          <li>australia post</li>
-          <li>tracking helper</li>
-          <li>independent</li>
-        </ul>
+       
         <h1 className="hero-title">
           Fast & Simple <br />
           <span className="text-primary">Australia Post</span> Tracking Helper

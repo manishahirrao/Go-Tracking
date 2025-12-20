@@ -10,13 +10,20 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const autoAdvanceRef = useRef(null);
+  const resumeTimeoutRef = useRef(null);
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex + 1;
+      return newIndex >= testimonials.length ? 0 : newIndex;
+    });
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex - 1;
+      return newIndex < 0 ? testimonials.length - 1 : newIndex;
+    });
   };
 
   const goToSlide = (index) => {
@@ -25,6 +32,16 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
 
   const handleUserInteraction = () => {
     setIsAutoRotating(false);
+    
+    // Clear any existing timeout
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+    }
+    
+    // Set timeout to resume auto-rotation after 5 seconds
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsAutoRotating(true);
+    }, 5000);
   };
 
   // Auto-advance functionality
@@ -32,12 +49,18 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
     if (!autoAdvance || isPaused || !isAutoRotating) return;
 
     autoAdvanceRef.current = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+      setCurrentIndex((prevIndex) => {
+        const newIndex = prevIndex + 1;
+        return newIndex >= testimonials.length ? 0 : newIndex;
+      });
     }, interval);
 
     return () => {
       if (autoAdvanceRef.current) {
         clearInterval(autoAdvanceRef.current);
+      }
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
       }
     };
   }, [autoAdvance, interval, isPaused, isAutoRotating, testimonials.length]);
@@ -70,16 +93,16 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
   return (
     <div
       className="testimonial-carousel"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onClick={handleUserInteraction}
     >
       <div className="carousel-container">
         <button
           className="carousel-button prev"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             handleUserInteraction();
             goToPrevious();
           }}
@@ -105,7 +128,8 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
 
         <button 
           className="carousel-button next" 
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             handleUserInteraction();
             goToNext();
           }} 
@@ -120,7 +144,8 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
           <button
             key={index}
             className={`dot ${index === currentIndex ? 'active' : ''}`}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               handleUserInteraction();
               goToSlide(index);
             }}

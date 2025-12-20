@@ -9,9 +9,7 @@ const FooterBottom = ({
     <div className="footer-bottom">
       <div className="container">
         <div className="footer-bottom-content">
-          <p className="copyright">
-            © {currentYear} Go-Tracking. All rights reserved.
-          </p>
+          {/* Copyright removed for cleaner design */}
         </div>
       </div>
     </div>

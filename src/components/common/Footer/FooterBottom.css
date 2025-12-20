@@ -1,6 +1,6 @@
 .footer-bottom {
   background: #1a1a1a;
-  padding: 25px 0;
+  padding: 10px 0;
   border-top: 1px solid rgba(183, 21, 33, 0.2);
   position: relative;
 }
@@ -36,7 +36,7 @@
 /* Responsive */
 @media (max-width: 767px) {
   .footer-bottom {
-    padding: 20px 0;
+    padding: 8px 0;
   }
 
   .copyright {

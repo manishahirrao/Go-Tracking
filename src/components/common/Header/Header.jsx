@@ -31,11 +31,9 @@ const Header = ({ sticky = true }) => {
           <div className="mobile-menu-content">
             {/* Mobile Logo */}
             <div className="mobile-menu-logo">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                <img 
-                  src="/logo-black.png" 
-                  alt="GO Courier Logo"
-                />
+              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="logo-text">
+                <span className="logo-main">Australia Post</span>
+                <span className="logo-sub">Tracking</span>
               </Link>
             </div>
             
@@ -80,11 +78,9 @@ const Header = ({ sticky = true }) => {
             </button>
 
             {/* Logo - Left Side */}
-            <Link to="/" className="navbar-logo">
-              <img 
-                src="/logo-black.png" 
-                alt="GO Courier Logo"
-              />
+            <Link to="/" className="navbar-logo logo-text">
+              <span className="logo-main">Australia Post</span>
+              <span className="logo-sub">Tracking</span>
             </Link>
 
             {/* Desktop Navigation Only */}

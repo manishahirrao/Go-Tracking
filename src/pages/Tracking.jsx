@@ -38,10 +38,12 @@ const Tracking = () => {
     }, 100);
     
     // Show processing steps
-    setTimeout(() => setStatusText('Validating tracking number format...'), 800);
-    setTimeout(() => setStatusText('Connecting to Australia Post tracking...'), 1600);
-    setTimeout(() => setStatusText('Opening official tracking details...'), 2400);
-    setTimeout(() => setStatusText('Finalising your tracking link...'), 3200);
+    setTimeout(() => setStatusText('Validating tracking number format...'), 3000);
+    setTimeout(() => setStatusText('Connecting to Australia Post tracking...'), 6000);
+    setTimeout(() => setStatusText('Opening official tracking details...'), 9000);
+    setTimeout(() => setStatusText('Finalising your tracking link...'), 12000);
+    setTimeout(() => setStatusText('Almost done... Preparing your results...'), 15000);
+    setTimeout(() => setStatusText('Final verification...'), 18000);
     
     // Show success message with button after processing
     setTimeout(() => {
@@ -49,7 +51,7 @@ const Tracking = () => {
       setStatusText('Tracking details retrieved successfully!');
       setShowSuccess(true);
       setLoading(false);
-    }, 4000);
+    }, 21000);
   };
 
   // Function to open Australia Post with tracking number
