@@ -3,60 +3,68 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import TestimonialCard from '../TestimonialCard/TestimonialCard';
 import './TestimonialCarousel.css';
 
-const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 7000 }) => {
+const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 25000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const autoAdvanceRef = useRef(null);
   const resumeTimeoutRef = useRef(null);
+  const trackRef = useRef(null);
+
+  // Create double array for seamless loop: [...original, ...original]
+  const extendedTestimonials = [...testimonials, ...testimonials];
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => {
-      const newIndex = prevIndex + 1;
-      return newIndex >= testimonials.length ? 0 : newIndex;
-    });
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => {
-      const newIndex = prevIndex - 1;
-      return newIndex < 0 ? testimonials.length - 1 : newIndex;
-    });
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
   };
 
   const goToSlide = (index) => {
+    setIsTransitioning(true);
     setCurrentIndex(index);
   };
 
   const handleUserInteraction = () => {
-    setIsAutoRotating(false);
+    setIsAutoRotating(true);
     
-    // Clear any existing timeout
     if (resumeTimeoutRef.current) {
       clearTimeout(resumeTimeoutRef.current);
     }
-    
-    // Set timeout to resume auto-rotation after 5 seconds
-    resumeTimeoutRef.current = setTimeout(() => {
-      setIsAutoRotating(true);
-    }, 5000);
   };
 
-  // Smooth transition for continuous loop
+  // Handle infinite loop seamless reset
+  useEffect(() => {
+    if (currentIndex === testimonials.length) {
+      // After showing the last card, instantly reset to start
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(0);
+      }, 500); // Wait for transition to complete
+
+      return () => clearTimeout(timer);
+    } else if (currentIndex < 0) {
+      // If going backward past start, jump to end
+      setIsTransitioning(false);
+      setCurrentIndex(testimonials.length - 1);
+    } else {
+      setIsTransitioning(true);
+    }
+  }, [currentIndex, testimonials.length]);
+
+  // Auto-advance - only forward direction
   useEffect(() => {
     if (!autoAdvance || isPaused || !isAutoRotating) return;
 
     autoAdvanceRef.current = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const newIndex = prevIndex + 1;
-        if (newIndex >= testimonials.length) {
-          // Instant reset to first card
-          return 0;
-        }
-        return newIndex;
-      });
+      goToNext();
     }, interval);
 
     return () => {
@@ -67,9 +75,9 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 7000
         clearTimeout(resumeTimeoutRef.current);
       }
     };
-  }, [autoAdvance, interval, isPaused, isAutoRotating, testimonials.length]);
+  }, [autoAdvance, interval, isPaused, isAutoRotating]);
 
-  // Touch/swipe support
+  // Touch support
   const handleTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -86,13 +94,18 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 7000
 
     if (distance > minSwipeDistance) {
       goToNext();
+      handleUserInteraction();
     } else if (distance < -minSwipeDistance) {
       goToPrevious();
+      handleUserInteraction();
     }
 
     setTouchStart(0);
     setTouchEnd(0);
   };
+
+  // Calculate which dot should be active
+  const activeDotIndex = currentIndex % testimonials.length;
 
   return (
     <div
@@ -117,13 +130,14 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 7000
 
         <div className="carousel-content">
           <div
-            className={`carousel-track ${currentIndex === 0 ? 'instant-transition' : ''}`}
+            ref={trackRef}
+            className={`carousel-track ${!isTransitioning ? 'instant-transition' : ''}`}
             style={{
-              transform: `translateX(-${currentIndex * 100}%)`,
+              transform: `translateX(-${currentIndex * 30}vw)`,
             }}
           >
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="carousel-slide">
+            {extendedTestimonials.map((testimonial, index) => (
+              <div key={`${testimonial.id}-${index}`} className="carousel-slide">
                 <TestimonialCard testimonial={testimonial} />
               </div>
             ))}
@@ -147,7 +161,7 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 7000
         {testimonials.map((_, index) => (
           <button
             key={index}
-            className={`dot ${index === currentIndex ? 'active' : ''}`}
+            className={`dot ${index === activeDotIndex ? 'active' : ''}`}
             onClick={(e) => {
               e.stopPropagation();
               handleUserInteraction();
