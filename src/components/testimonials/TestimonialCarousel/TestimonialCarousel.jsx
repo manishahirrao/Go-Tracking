@@ -3,7 +3,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import TestimonialCard from '../TestimonialCard/TestimonialCard';
 import './TestimonialCarousel.css';
 
-const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000 }) => {
+const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 7000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
@@ -44,14 +44,18 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
     }, 5000);
   };
 
-  // Auto-advance functionality
+  // Smooth transition for continuous loop
   useEffect(() => {
     if (!autoAdvance || isPaused || !isAutoRotating) return;
 
     autoAdvanceRef.current = setInterval(() => {
       setCurrentIndex((prevIndex) => {
         const newIndex = prevIndex + 1;
-        return newIndex >= testimonials.length ? 0 : newIndex;
+        if (newIndex >= testimonials.length) {
+          // Instant reset to first card
+          return 0;
+        }
+        return newIndex;
       });
     }, interval);
 
@@ -113,7 +117,7 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2000
 
         <div className="carousel-content">
           <div
-            className="carousel-track"
+            className={`carousel-track ${currentIndex === 0 ? 'instant-transition' : ''}`}
             style={{
               transform: `translateX(-${currentIndex * 100}%)`,
             }}

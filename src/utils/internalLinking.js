@@ -2,8 +2,8 @@ import { getArticleBySlug, getAllArticles } from '../data/articles';
 
 // Keywords and their corresponding article slugs
 const KEYWORD_MAPPINGS = {
-  'australia post tracking': 'what-time-does-the-mail-run',
-  'auspost tracking': 'what-time-does-the-mail-run-today',
+  'australia post tracking': 'TRACKING_PAGE',
+  'auspost tracking': 'TRACKING_PAGE',
   'tracking number': 'what-time-does-the-mailman-come',
   'parcel delivery': 'does-mail-run-today',
   'post office hours': 'when-does-the-post-office-open',
@@ -19,7 +19,21 @@ const KEYWORD_MAPPINGS = {
   'registered post': 'how-much-does-it-cost-to-mail-a-letter',
   'parcel collection': 'how-much-does-it-cost-to-mail-a-package',
   'po box access': 'how-much-does-a-post-office-box-cost',
-  'parcel lodgement': 'does-mail-run-today'
+  'parcel lodgement': 'does-mail-run-today',
+  // Navigation keywords for home and tracking pages
+  'track your parcel': 'HOME_PAGE',
+  'track shipment': 'HOME_PAGE',
+  'online tracking': 'HOME_PAGE',
+  'track now': 'HOME_PAGE',
+  'australia post home': 'HOME_PAGE',
+  'go to homepage': 'HOME_PAGE',
+  'visit homepage': 'HOME_PAGE',
+  'back to home': 'HOME_PAGE',
+  'tracking service': 'TRACKING_PAGE',
+  'tracking system': 'TRACKING_PAGE',
+  'package tracker': 'TRACKING_PAGE',
+  'shipment tracker': 'TRACKING_PAGE',
+  'delivery tracker': 'TRACKING_PAGE'
 };
 
 // Extract keywords from text and find matching articles
@@ -39,7 +53,27 @@ export function findInternalLinks(content, currentArticleSlug) {
     const matches = lowerContent.match(regex);
     
     if (matches && matches.length > 0) {
-      const targetArticle = allArticles.find(article => article.slug === targetSlug);
+      let targetArticle;
+      
+      if (targetSlug === 'HOME_PAGE') {
+        // Create a virtual article object for home page
+        targetArticle = {
+          slug: '/',
+          title: 'Australia Post Tracking Home',
+          category: 'Navigation'
+        };
+      } else if (targetSlug === 'TRACKING_PAGE') {
+        // Create a virtual article object for tracking page
+        targetArticle = {
+          slug: '/tracking',
+          title: 'Australia Post Tracking Service',
+          category: 'Navigation'
+        };
+      } else {
+        // Find actual article
+        targetArticle = allArticles.find(article => article.slug === targetSlug);
+      }
+      
       if (targetArticle) {
         links.push({
           keyword,
@@ -68,7 +102,16 @@ export function addInternalLinks(content, currentArticleSlug) {
     
     // Replace first occurrence with a link
     processedContent = processedContent.replace(regex, (match) => {
-      return `<a href="/blog/${targetArticle.slug}" class="internal-link" title="Read more about ${targetArticle.title}">${match}</a>`;
+      let href;
+      if (targetArticle.slug === '/') {
+        href = '/';
+      } else if (targetArticle.slug === '/tracking') {
+        href = '/tracking';
+      } else {
+        href = `/blog/${targetArticle.slug}`;
+      }
+      
+      return `<a href="${href}" class="internal-link" title="${targetArticle.title}">${match}</a>`;
     });
   });
   
