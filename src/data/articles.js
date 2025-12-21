@@ -1248,3 +1248,8 @@ export const searchArticles = (query) => {
 export const getArticleBySlug = (slug) => {
   return articlesData.find(article => article.slug === slug);
 };
+
+// Get all articles
+export const getAllArticles = () => {
+  return articlesData;
+};

@@ -1,8 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getArticleBySlug, getArticlesByCategory } from '../data/articles';
-import { Clock, Tag, ArrowLeft, Share2 } from 'lucide-react';
+import { getArticleBySlug, getArticlesByCategory, getAllArticles } from '../data/articles';
+import { Clock, Tag, ArrowLeft, Share2, Link2 } from 'lucide-react';
 import { updateMetaTags, createArticleStructuredData, addStructuredData, generateArticleMeta } from '../utils/seo';
+import { addInternalLinks, getSmartRelatedArticles } from '../utils/internalLinking';
+import '../styles/internal-links.css';
 
 const Article = () => {
   const { slug } = useParams();
@@ -17,11 +19,10 @@ const Article = () => {
       if (foundArticle) {
         setArticle(foundArticle);
         
-        // Get related articles from the same category (excluding current article)
-        const categoryArticles = getArticlesByCategory(foundArticle.category)
-          .filter(a => a.id !== foundArticle.id)
-          .slice(0, 3);
-        setRelatedArticles(categoryArticles);
+        // Get smart related articles based on content similarity
+        const allArticles = getAllArticles();
+        const smartRelated = getSmartRelatedArticles(foundArticle, allArticles, 3);
+        setRelatedArticles(smartRelated);
 
         // Update SEO meta tags
         const metaData = generateArticleMeta(foundArticle);
@@ -133,15 +134,41 @@ const Article = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <article className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
           <div className="prose prose-lg max-w-none">
-            {article.content.split('\n\n').map((paragraph, index) => (
-              <p key={index} className="mb-4 text-black leading-relaxed font-medium">
-                {paragraph}
-              </p>
-            ))}
+            {article.content.split('\n\n').map((paragraph, index) => {
+              const processedContent = addInternalLinks(paragraph, article.slug);
+              return (
+                <div 
+                  key={index} 
+                  className="mb-4 text-black leading-relaxed font-medium"
+                  dangerouslySetInnerHTML={{ __html: processedContent }}
+                />
+              );
+            })}
           </div>
         </article>
 
-        
+        {/* Internal Links Summary */}
+        <div className="bg-blue-50 rounded-lg border border-blue-200 p-6 mt-6">
+          <div className="flex items-center mb-4">
+            <Link2 className="h-5 w-5 text-blue-600 mr-2" />
+            <h3 className="text-lg font-semibold text-blue-900">Helpful Links</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {getSmartRelatedArticles(article, getAllArticles(), 6).slice(0, 4).map((relatedArticle) => (
+              <Link
+                key={relatedArticle.id}
+                to={`/blog/${relatedArticle.slug}`}
+                className="flex items-start p-3 bg-white rounded border border-blue-100 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              >
+                <Tag className="h-4 w-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h4 className="text-sm font-medium text-blue-900 mb-1">{relatedArticle.title}</h4>
+                  <p className="text-xs text-blue-700">{relatedArticle.category}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Related Articles */}

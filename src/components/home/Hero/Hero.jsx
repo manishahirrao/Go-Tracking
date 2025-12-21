@@ -52,8 +52,8 @@ const Hero = () => {
         </p>
 
         <div className="hero-track-box">
-          <h2 className="track-box-title">Track Your Product</h2>
-          <p className="track-box-subtitle">Enter your tracking number to see real-time updates</p>
+          <h2 className="track-box-title">Australia Post Tracking </h2>
+          <p className="track-box-subtitle">Enter tracking number for Australia Post parcels, letters & express post delivery status</p>
           <form onSubmit={handleSubmit} className="hero-track-form">
             <div className="track-form-group">
               <input
