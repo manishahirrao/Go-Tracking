@@ -1,6 +1,13 @@
 User-agent: *
 Allow: /
 
+# Specific major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 # Sitemap
 Sitemap: https://australiaposttracking.online/sitemap.xml
 
@@ -19,5 +26,5 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /*.json$
 
-# Crawl delay (optional - be nice to servers)
+# Crawl delay (optional, helps with server load)
 Crawl-delay: 1
