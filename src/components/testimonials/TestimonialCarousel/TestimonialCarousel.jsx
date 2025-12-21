@@ -3,7 +3,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import TestimonialCard from '../TestimonialCard/TestimonialCard';
 import './TestimonialCarousel.css';
 
-const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 25000 }) => {
+const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 45000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
@@ -33,11 +33,19 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2500
   };
 
   const handleUserInteraction = () => {
-    setIsAutoRotating(true);
+    // Stop auto-rotation immediately
+    setIsAutoRotating(false);
     
+    // Clear any existing timeout
     if (resumeTimeoutRef.current) {
       clearTimeout(resumeTimeoutRef.current);
     }
+    
+    // Resume auto-rotation after 5 seconds
+    resumeTimeoutRef.current = setTimeout(() => {
+      console.log('Resuming auto-rotation');
+      setIsAutoRotating(true);
+    }, 5000);
   };
 
   // Handle infinite loop seamless reset
@@ -71,9 +79,7 @@ const TestimonialCarousel = ({ testimonials, autoAdvance = true, interval = 2500
       if (autoAdvanceRef.current) {
         clearInterval(autoAdvanceRef.current);
       }
-      if (resumeTimeoutRef.current) {
-        clearTimeout(resumeTimeoutRef.current);
-      }
+      // Don't clear resumeTimeoutRef here - let it run its course
     };
   }, [autoAdvance, interval, isPaused, isAutoRotating]);
 
